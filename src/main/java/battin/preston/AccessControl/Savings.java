@@ -5,10 +5,12 @@ import java.util.ArrayList;
 /**
  * Created by prestonbattin on 1/17/17.
  */
-public class Checking extends Account {
+public class Savings extends Account {
 
 
-    public Checking(String type, String name){
+
+
+    public Savings(String type, String name){
         super(type, name);
         setRate();
     }
@@ -96,12 +98,12 @@ public class Checking extends Account {
             this.status = status;
         }
 
-        else {
+            else {
             this.status = "OFAC Freeze";
         }
 
         this.statuses.add(status);
-    }
+        }
 
     protected String getStatus() {
 
@@ -116,6 +118,18 @@ public class Checking extends Account {
     protected String getOverDraftProtection() {
 
         return this.overDraftProtection;
+    }
+
+    protected void setRate() {
+
+        if(this.accountType.equals("Savings")) {
+            this.rate = .06;
+            this.interestRates.add(.06);
+        }
+        else
+            this.rate = .05;
+        this.interestRates.add(.05);
+
     }
 
     protected double getRate() {
@@ -138,21 +152,7 @@ public class Checking extends Account {
         return this.savingAccountNumber;
     }
 
-    protected String getHoldersName() {
-
-        return this.holdersName;
-    }
-
-    protected void setRate() {
-
-        if(this.accountType.equals("Savings")) {
-            this.rate = .06;
-            this.interestRates.add(.06);
-        }
-        else
-            this.rate = .05;
-        this.interestRates.add(.05);
-
-    }
-
 }
+
+
+

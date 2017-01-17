@@ -1,5 +1,7 @@
 package squier.john.accessControl;
 
+import java.util.ArrayList;
+
 /**
  * Created by johnsquier on 1/17/17.
  */
@@ -12,5 +14,8 @@ public class BankAccount {
     private String accountHoldersName;
     private double interestRate;
     private BankAccountStatus accountStatus;
+    private OverdraftProtection overdraftProtection;
+    private ArrayList<BankAccountTransaction> transactionRecord;
+
 
 }

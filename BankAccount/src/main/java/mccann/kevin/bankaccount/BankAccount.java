@@ -11,8 +11,9 @@ public class BankAccount {
     private double interestRate;
     private AcctStatus acctStatus;
     private ODPStatus overdraftPreventionStatus;
+    public String approvalState;
 
-    private BankAccount(char acctType, String acctNum, String name) {
+    protected BankAccount(char acctType, String acctNum, String name) {
         setAcctNumber(acctNum);
         setAcctType(acctType);
         setAcctHolderName(name);
@@ -47,7 +48,14 @@ public class BankAccount {
     }
 
     public void setAcctStatus(AcctStatus status) {
-        acctStatus = status;
+        if(status == AcctStatus.CLOSED && getAcctBalance() == 0)
+            acctStatus = status;
+        if (acctStatus == AcctStatus.CLOSED) {
+            acctStatus = AcctStatus.CLOSED;
+            }
+        else {
+            acctStatus = status;
+        }
     }
 
     private AcctStatus getAcctStatus() {
@@ -72,41 +80,43 @@ public class BankAccount {
         return 0;
     }
 
-    private boolean credit(double amount) {
+    private String credit(double amount) {
         if(getAcctStatus() == AcctStatus.OPEN) {
             acctBalance += amount;
-            return true;
+            return approvalState = "Approved!";
         }
-        else return false;
+        else return approvalState = "Not Approved!";
     }
 
-    private boolean debit(double amount) {
+    private String debit(double amount) {
         if(getOverdraftPreventionStatus() == ODPStatus.ON && getAcctBalance() < amount)
-            return false;
+            return approvalState = "Not Approved!";
         if(getAcctStatus()==AcctStatus.OPEN && getAcctBalance() > amount) {
             acctBalance -= amount;
-            return true;
+            return approvalState = "Approved!";
         }
-        return false;
+        return approvalState = "Not Approved!";
     }
 
-    private boolean transferTo(double amount, BankAccount BA) {
+    private String transferTo(double amount, BankAccount BA) {
         if (BA.getAcctHolderName().equals(this.getAcctHolderName()) && this.getAcctBalance() > amount) {
             debit(amount);
             BA.credit(amount);
+            return approvalState = "Approved!";
         }
         else
-            return false;
+            return approvalState = "Not Approved!";
 
     }
 
-    private boolean transferFrom(double amount, BankAccount BA) {
+    private String transferFrom(double amount, BankAccount BA) {
         if (BA.getAcctHolderName().equals(this.getAcctHolderName()) && BA.getAcctBalance() > amount) {
             credit(amount);
             BA.debit(amount);
+            return approvalState = "Approved!";
         }
-        else
-            return false;
-
+        else {
+            return approvalState = "Not Approved!";
+        }
     }
 }

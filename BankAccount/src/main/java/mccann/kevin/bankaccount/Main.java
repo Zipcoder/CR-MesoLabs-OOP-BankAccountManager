@@ -6,7 +6,6 @@ package mccann.kevin.bankaccount;
 public class Main {
 
     public static void main(String[] args) {
-        BankAccount BA = new BankAccount('C', 44445555, "John Jacob Schmidt");
-        BA.setOverdraftPreventionStatus(ODPStatus.ON);
+        BankAccount BA = new BankAccount('C', "44445555", "John Jacob Schmidt");
     }
 }

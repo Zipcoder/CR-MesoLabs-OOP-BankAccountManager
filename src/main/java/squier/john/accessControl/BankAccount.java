@@ -45,6 +45,9 @@ public class BankAccount {
     public void setAccountHoldersName(String newName) {
         if ( accountStatus.equals(BankAccountStatus.OPEN) ) {
             accountHoldersName = newName;
+
+            transactionRecord.add(new BankAccountTransaction(TransactionType.NAME_CHANGE, 0.0,
+                                                            accountStatus, this.accountHoldersName));
         }
 
         return;
@@ -60,10 +63,16 @@ public class BankAccount {
             if ( isNewAccountStatusClose(accountStatus) ) {
                 if ( this.balance == 0.0 ) {
                     this.accountStatus = accountStatus;
+
+                    transactionRecord.add(new BankAccountTransaction(TransactionType.STATUS_CHANGE, 0.0,
+                                                                    this.accountStatus, accountHoldersName));
                 }
             }
             else {
                 this.accountStatus = accountStatus;
+
+                transactionRecord.add(new BankAccountTransaction(TransactionType.STATUS_CHANGE, 0.0,
+                        this.accountStatus, accountHoldersName));
             }
         }
 
@@ -109,6 +118,9 @@ public class BankAccount {
 
         // check if balance updated
         if ( (previousBalance + amountToCredit) == getBalance() ) {
+            // create new transaction record and add to list
+            transactionRecord.add(new BankAccountTransaction(TransactionType.DEPOSIT,
+                                                            amountToCredit, accountStatus, accountHoldersName));
             return ApprovalStatus.APPROVED;
         }
         else {
@@ -117,9 +129,18 @@ public class BankAccount {
     }
 
     private ApprovalStatus debit(double amountToDebit) {
-        // add overdraft logic
+        Double previousBalance = getBalance();
         balance += amountToDebit;
-        return ApprovalStatus.APPROVED;
+
+        if ( (previousBalance - amountToDebit) == getBalance() ) {
+            // create new transaction record
+            transactionRecord.add(new BankAccountTransaction(TransactionType.WITHDRAWL, amountToDebit,
+                                                            accountStatus, accountHoldersName));
+            return ApprovalStatus.APPROVED;
+        }
+        else {
+            return ApprovalStatus.NOT_APPROVED;
+        }
     }
 
 
@@ -134,6 +155,9 @@ public class BankAccount {
             if ( doesAccountHaveSufficientBalance(transferFrom, amountToTransfer) ) {
                 ApprovalStatus debitApproval = transferFrom.updateBalanceWithCreditOrDebit(-amountToTransfer);
                 ApprovalStatus creditApproval = this.updateBalanceWithCreditOrDebit(amountToTransfer);
+
+                transactionRecord.add(new BankAccountTransaction(TransactionType.TRANSFER, amountToTransfer,
+                                                                accountStatus, accountHoldersName));
 
                 // pull out into check approvals method
                 if ( (debitApproval.equals(ApprovalStatus.APPROVED))
@@ -156,6 +180,10 @@ public class BankAccount {
                 // do the transfer
                 ApprovalStatus debitApproval = this.updateBalanceWithCreditOrDebit(-amountToTransfer);
                 ApprovalStatus creditApproval = transferTo.updateBalanceWithCreditOrDebit(amountToTransfer);
+
+                transactionRecord.add(new BankAccountTransaction(TransactionType.TRANSFER, amountToTransfer,
+                        accountStatus, accountHoldersName));
+
 
                 if ((debitApproval.equals(ApprovalStatus.APPROVED))
                         && creditApproval.equals(ApprovalStatus.APPROVED)) {

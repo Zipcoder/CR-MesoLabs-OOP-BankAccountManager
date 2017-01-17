@@ -41,13 +41,36 @@ public class BankAccount {
     }
 
     public boolean setAccountStatus(AccountStatus accountStatus) {
-        if (accountStatus == AccountStatus.CLOSED && accountBalance != 0.0) {
+        if (accountStatus == AccountStatus.CLOSED) {
+            System.out.println("You can not modify a closed account.");
             return false;
-        } else {
+        } else if (this.accountStatus == AccountStatus.FROZEN && accountStatus == AccountStatus.FROZEN) {
+            System.out.println("This account is already frozen.");
+            return false;
+        } else if (this.accountStatus == AccountStatus.FROZEN && accountStatus == AccountStatus.CLOSED) {
+            System.out.println("You can't close a frozen account.");
+            return false;
+        } else if (this.accountStatus == AccountStatus.FROZEN && accountStatus == AccountStatus.OPEN) {
             this.accountStatus = accountStatus;
             writeToLog("Account Status Changed to " + this.accountStatus);
             return true;
-        }
+        } else if (this.accountStatus == AccountStatus.OPEN && accountStatus == AccountStatus.OPEN) {
+            System.out.println("This account is already open.");
+            return false;
+        } else if (this.accountStatus == AccountStatus.OPEN && accountStatus == AccountStatus.FROZEN) {
+            this.accountStatus = accountStatus;
+            writeToLog("Account Status Changed to " + this.accountStatus);
+            return true;
+        } else if (this.accountStatus == AccountStatus.OPEN && accountStatus == AccountStatus.CLOSED) {
+            if (accountBalance != 0.0) {
+                this.accountStatus = accountStatus;
+                writeToLog("Account Status Changed to " + this.accountStatus);
+                return true;
+            } else {
+                System.out.println("You must have a 0 balance to close an account.");
+                return false;
+            }
+        } return true;
     }
 
     public String getBalance() {

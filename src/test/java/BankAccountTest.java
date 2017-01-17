@@ -45,29 +45,6 @@ public class BankAccountTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    public void setAccountStatus() {
-
-    }
-
-    @Test
-    public void getBalance(){
-
-    }
-
-    @Test
-    public void creditAccount() {
-
-    }
-
-    @Test
-    public void debitAccount() {
-
-    }
-
-    @Test
-    public void writeToLog() {
-
-    }
+    
 
 }

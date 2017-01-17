@@ -45,6 +45,85 @@ public class BankAccountTest {
         assertEquals(expected, actual);
     }
 
-    
+    @Test
+    public void setAccountTypeFromFrozenToFrozen() {
+        BankAccount bankAccount = new BankAccount();
+        System.out.println(bankAccount.getAccountStatus());
+        bankAccount.setAccountStatus(AccountStatus.FROZEN);
+        System.out.println(bankAccount.getAccountStatus());
+        bankAccount.setAccountStatus(AccountStatus.FROZEN);
+        Boolean expected = false, actual = false;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void setAccountTypeFromFrozenToClosed() {
+        BankAccount bankAccount = new BankAccount();
+        System.out.println(bankAccount.getAccountStatus());
+        bankAccount.setAccountStatus(AccountStatus.FROZEN);
+        System.out.println(bankAccount.getAccountStatus());
+        boolean expected = false, actual = bankAccount.setAccountStatus(AccountStatus.CLOSED);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void setAccountTypeFromFrozenToOpen() {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setAccountStatus(AccountStatus.FROZEN);
+        bankAccount.setAccountStatus(AccountStatus.OPEN);
+        Boolean expected = false, actual = false;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void setAccountTypeFromOpenToOpen() {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setAccountStatus(AccountStatus.OPEN);
+        Boolean expected = false, actual = false;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void setAccountTypeFromOpenToClosed() {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setAccountStatus(AccountStatus.CLOSED);
+        Boolean expected = false, actual = false;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void setAccountTypeFromOpenToFrozen() {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setAccountStatus(AccountStatus.FROZEN);
+        Boolean expected = false, actual = false;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void setAccountTypeFromClosedToOpen() {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setAccountStatus(AccountStatus.CLOSED);
+        bankAccount.setAccountStatus(AccountStatus.OPEN);
+        Boolean expected = false, actual = false;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void setAccountTypeFromClosedToClosed() {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setAccountStatus(AccountStatus.CLOSED);
+        bankAccount.setAccountStatus(AccountStatus.CLOSED);
+        Boolean expected = false, actual = false;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void setAccountTypeFromClosedToFrozen() {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setAccountStatus(AccountStatus.CLOSED);
+        bankAccount.setAccountStatus(AccountStatus.FROZEN);
+        Boolean expected = false, actual = false;
+        assertEquals(expected, actual);
+    }
 
 }

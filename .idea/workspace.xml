@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aaeb29ca-9c32-41e2-a80b-09a4c59ccbbf" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/BankAccount.java" afterPath="$PROJECT_DIR$/src/main/java/BankAccount.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/BankAccountTest.java" afterPath="$PROJECT_DIR$/src/test/java/BankAccountTest.java" />
     </list>
@@ -44,19 +43,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BankAccount.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BankAccount.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/BankAccount.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="73" column="5" lean-forward="true" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
+            <state relative-caret-position="450">
+              <caret line="72" column="68" lean-forward="false" selection-start-line="72" selection-start-column="68" selection-end-line="72" selection-end-column="68" />
               <folding>
-                <element signature="e#465#466#0" expanded="true" />
-                <element signature="e#515#516#0" expanded="true" />
-                <element signature="e#707#708#0" expanded="true" />
-                <element signature="e#746#747#0" expanded="true" />
-                <element signature="e#1137#1138#0" expanded="true" />
-                <element signature="e#1182#1183#0" expanded="true" />
+                <element signature="e#509#510#0" expanded="true" />
+                <element signature="e#559#560#0" expanded="true" />
+                <element signature="e#751#752#0" expanded="true" />
+                <element signature="e#790#791#0" expanded="true" />
+                <element signature="e#1181#1182#0" expanded="true" />
+                <element signature="e#1226#1227#0" expanded="true" />
+                <element signature="e#3233#3234#0" expanded="true" />
+                <element signature="e#3274#3275#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ODPStatus.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ODPStatus.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccountStatus.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/AccountStatus.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -71,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BankAccountTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BankAccountTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/BankAccountTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="47" column="4" lean-forward="false" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="4" />
+            <state relative-caret-position="375">
+              <caret line="123" column="57" lean-forward="false" selection-start-line="123" selection-start-column="57" selection-end-line="123" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -257,15 +278,15 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BankAccountTest.changeAccountHolderNameForOpenAccountTest">
-    <configuration default="false" name="BankAccountTest.setAccountType" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.BankAccountTest.setAccountTypeFromClosedToFrozen">
+    <configuration default="false" name="BankAccountTest.setAccountTypeFromOpenToClosed" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="Access_Control_Lab" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="BankAccountTest" />
-      <option name="METHOD_NAME" value="setAccountType" />
+      <option name="METHOD_NAME" value="setAccountTypeFromOpenToClosed" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -279,14 +300,14 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="BankAccountTest.changeAccountHolderNameForClosedAccountTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="BankAccountTest.setAccountTypeFromOpenToFrozen" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="Access_Control_Lab" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="BankAccountTest" />
-      <option name="METHOD_NAME" value="changeAccountHolderNameForClosedAccountTest" />
+      <option name="METHOD_NAME" value="setAccountTypeFromOpenToFrozen" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -300,14 +321,14 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="BankAccountTest.changeAccountHolderNameForFrozenAccountTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="BankAccountTest.setAccountTypeFromClosedToOpen" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="Access_Control_Lab" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="BankAccountTest" />
-      <option name="METHOD_NAME" value="changeAccountHolderNameForFrozenAccountTest" />
+      <option name="METHOD_NAME" value="setAccountTypeFromClosedToOpen" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -321,14 +342,35 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="BankAccountTest.changeAccountHolderNameForOpenAccountTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="BankAccountTest.setAccountTypeFromClosedToClosed" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="Access_Control_Lab" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="BankAccountTest" />
-      <option name="METHOD_NAME" value="changeAccountHolderNameForOpenAccountTest" />
+      <option name="METHOD_NAME" value="setAccountTypeFromClosedToClosed" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="BankAccountTest.setAccountTypeFromClosedToFrozen" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="Access_Control_Lab" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="BankAccountTest" />
+      <option name="METHOD_NAME" value="setAccountTypeFromClosedToFrozen" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -715,18 +757,20 @@
     <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
       <method />
     </configuration>
-    <list size="4">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountType" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.BankAccountTest.changeAccountHolderNameForClosedAccountTest" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.BankAccountTest.changeAccountHolderNameForFrozenAccountTest" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.BankAccountTest.changeAccountHolderNameForOpenAccountTest" />
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountTypeFromOpenToClosed" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountTypeFromOpenToFrozen" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountTypeFromClosedToOpen" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountTypeFromClosedToClosed" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountTypeFromClosedToFrozen" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.BankAccountTest.changeAccountHolderNameForOpenAccountTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.BankAccountTest.changeAccountHolderNameForFrozenAccountTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.BankAccountTest.changeAccountHolderNameForClosedAccountTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountType" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountTypeFromClosedToFrozen" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountTypeFromClosedToClosed" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountTypeFromClosedToOpen" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountTypeFromOpenToFrozen" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountTypeFromOpenToClosed" />
       </list>
     </recent_temporary>
   </component>
@@ -740,44 +784,44 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1484677517447</updated>
-      <workItem from="1484677522661" duration="9506000" />
+      <workItem from="1484677522661" duration="12142000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="BankAccountTest_changeAccountHolderNameForClosedAccountTest - 2017.01.17 at 17h 16m 10s.xml">
-      <configuration name="BankAccountTest.changeAccountHolderNameForClosedAccountTest" configurationId="JUnit" />
+    <history-entry file="BankAccountTest_setAccountTypeFromClosedToClosed - 2017.01.17 at 18h 36m 53s.xml">
+      <configuration name="BankAccountTest.setAccountTypeFromClosedToClosed" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BankAccountTest_changeAccountHolderNameForClosedAccountTest - 2017.01.17 at 17h 19m 15s.xml">
-      <configuration name="BankAccountTest.changeAccountHolderNameForClosedAccountTest" configurationId="JUnit" />
+    <history-entry file="BankAccountTest_setAccountTypeFromClosedToFrozen - 2017.01.17 at 18h 37m 16s.xml">
+      <configuration name="BankAccountTest.setAccountTypeFromClosedToFrozen" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BankAccountTest_changeAccountHolderNameForClosedAccountTest - 2017.01.17 at 17h 19m 27s.xml">
-      <configuration name="BankAccountTest.changeAccountHolderNameForClosedAccountTest" configurationId="JUnit" />
+    <history-entry file="BankAccountTest_setAccountTypeFromClosedToOpen - 2017.01.17 at 18h 26m 31s.xml">
+      <configuration name="BankAccountTest.setAccountTypeFromClosedToOpen" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BankAccountTest_changeAccountHolderNameForClosedAccountTest - 2017.01.17 at 17h 22m 46s.xml">
-      <configuration name="BankAccountTest.changeAccountHolderNameForClosedAccountTest" configurationId="JUnit" />
+    <history-entry file="BankAccountTest_setAccountTypeFromClosedToOpen - 2017.01.17 at 18h 26m 53s.xml">
+      <configuration name="BankAccountTest.setAccountTypeFromClosedToOpen" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BankAccountTest_changeAccountHolderNameForClosedAccountTest - 2017.01.17 at 17h 22m 58s.xml">
-      <configuration name="BankAccountTest.changeAccountHolderNameForClosedAccountTest" configurationId="JUnit" />
+    <history-entry file="BankAccountTest_setAccountTypeFromClosedToOpen - 2017.01.17 at 18h 27m 56s.xml">
+      <configuration name="BankAccountTest.setAccountTypeFromClosedToOpen" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BankAccountTest_changeAccountHolderNameForFrozenAccountTest - 2017.01.17 at 17h 23m 18s.xml">
-      <configuration name="BankAccountTest.changeAccountHolderNameForFrozenAccountTest" configurationId="JUnit" />
+    <history-entry file="BankAccountTest_setAccountTypeFromClosedToOpen - 2017.01.17 at 18h 28m 20s.xml">
+      <configuration name="BankAccountTest.setAccountTypeFromClosedToOpen" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BankAccountTest_changeAccountHolderNameForOpenAccountTest - 2017.01.17 at 17h 24m 31s.xml">
-      <configuration name="BankAccountTest.changeAccountHolderNameForOpenAccountTest" configurationId="JUnit" />
+    <history-entry file="BankAccountTest_setAccountTypeFromClosedToOpen - 2017.01.17 at 18h 28m 44s.xml">
+      <configuration name="BankAccountTest.setAccountTypeFromClosedToOpen" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BankAccountTest_changeAccountHolderNameForOpenAccountTest - 2017.01.17 at 17h 24m 39s.xml">
-      <configuration name="BankAccountTest.changeAccountHolderNameForOpenAccountTest" configurationId="JUnit" />
+    <history-entry file="BankAccountTest_setAccountTypeFromClosedToOpen - 2017.01.17 at 18h 29m 29s.xml">
+      <configuration name="BankAccountTest.setAccountTypeFromClosedToOpen" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BankAccountTest_setAccountType - 2017.01.17 at 17h 07m 35s.xml">
-      <configuration name="BankAccountTest.setAccountType" configurationId="JUnit" />
+    <history-entry file="BankAccountTest_setAccountTypeFromClosedToOpen - 2017.01.17 at 18h 30m 31s.xml">
+      <configuration name="BankAccountTest.setAccountTypeFromClosedToOpen" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BankAccountTest_setAccountType - 2017.01.17 at 17h 07m 50s.xml">
-      <configuration name="BankAccountTest.setAccountType" configurationId="JUnit" />
+    <history-entry file="BankAccountTest_setAccountTypeFromClosedToOpen - 2017.01.17 at 18h 36m 24s.xml">
+      <configuration name="BankAccountTest.setAccountTypeFromClosedToOpen" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9506000" />
+    <option name="totallyTimeSpent" value="12142000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1920" height="978" extended-state="6" />
@@ -792,7 +836,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3204983" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3295583" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3295583" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -821,7 +865,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -853,22 +899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AccountStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ODPStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AccountType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -893,6 +923,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ODPStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AccountStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Bank.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -904,26 +950,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BankAccount.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/BankAccountTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="73" column="5" lean-forward="true" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
-          <folding>
-            <element signature="e#465#466#0" expanded="true" />
-            <element signature="e#515#516#0" expanded="true" />
-            <element signature="e#707#708#0" expanded="true" />
-            <element signature="e#746#747#0" expanded="true" />
-            <element signature="e#1137#1138#0" expanded="true" />
-            <element signature="e#1182#1183#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="375">
+          <caret line="123" column="57" lean-forward="false" selection-start-line="123" selection-start-column="57" selection-end-line="123" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/BankAccountTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/BankAccount.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
-          <caret line="47" column="4" lean-forward="false" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="4" />
-          <folding />
+          <caret line="72" column="68" lean-forward="false" selection-start-line="72" selection-start-column="68" selection-end-line="72" selection-end-column="68" />
+          <folding>
+            <element signature="e#509#510#0" expanded="true" />
+            <element signature="e#559#560#0" expanded="true" />
+            <element signature="e#751#752#0" expanded="true" />
+            <element signature="e#790#791#0" expanded="true" />
+            <element signature="e#1181#1182#0" expanded="true" />
+            <element signature="e#1226#1227#0" expanded="true" />
+            <element signature="e#3233#3234#0" expanded="true" />
+            <element signature="e#3274#3275#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

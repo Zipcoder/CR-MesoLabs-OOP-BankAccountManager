@@ -71,7 +71,10 @@ public class BankAccount {
             this.balance += deposit;
             this.recordTransaction("Credit");
             return true;
-        } else return false;
+        } else {
+            this.recordTransaction("Debit");
+            return false;
+        }
     }
 
     protected boolean debit(double withdraw, boolean OFACFreeze){
@@ -79,17 +82,38 @@ public class BankAccount {
             this.balance -= withdraw;
             this.recordTransaction("Debit");
             return  true;
-        } else return  false;
+        } else {
+            this.recordTransaction("Debit");
+            return  false;
+        }
     }
 
     private boolean positiveBalance(){
         return getBalance()>0 ? true : false;
     }
 
+    private boolean positiveBalance(double debit){
+        return getBalance() - debit > 0 ? true : false;
+    }
+
+    protected boolean transferFunds(BankAccount receiving, double transferAmount){
+        if(positiveBalance(transferAmount)) {
+            this.debit(transferAmount, OFACFreeze);
+            receiving.credit(transferAmount);
+            this.recordTransaction("transfer successful");
+            return true;
+        } else{
+            this.recordTransaction("transfer failed");
+            return false;
+        }
+    }
+
     private void recordTransaction(String transaction){
-        oneTransaction = new String[]{transaction, Double.toString(this.rate), Double.toString(this.balance), Boolean.toString(this.OFACFreeze), "AC Open", getHoldersName()};
+        oneTransaction = new String[]{transaction, Double.toString(this.rate), Double.toString(this.balance), Boolean.toString(this.OFACFreeze), Boolean.toString(this.accountOpen), getHoldersName()};
         allTransactions.add(Arrays.toString(oneTransaction));
     }
+
+
 
 
 }

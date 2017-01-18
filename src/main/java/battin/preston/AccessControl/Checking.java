@@ -13,8 +13,9 @@ public class Checking extends Account {
         setOverDraftProtection("On");
     }
 
-    protected int getCheckingAccountNumber() {
+    public int getCheckingAccountNumber() {
 
         return this.getCheckingAccountNumber();
     }
+
 }

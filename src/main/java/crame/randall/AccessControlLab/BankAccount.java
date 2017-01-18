@@ -7,7 +7,7 @@ public class BankAccount {
     private AccountTypes accountType;
     final long accountNumber = AccountNumberGenerator.createAccountNumber();
 
-    double accountBalance =  0.00;
+    double accountBalance =  100.00;
 
     String accountHoldersName = "Enter Name";
     double accountInterestRate = 0.00;
@@ -32,7 +32,7 @@ public class BankAccount {
       return this.accountNumber;
     }
 
-    void setAccountBalance(int input){
+    void setAccountBalance(double input){
         this.accountBalance = input;
     }
 
@@ -40,7 +40,7 @@ public class BankAccount {
         return this.accountBalance;
     }
 
-    void setAccountHoldersName(String input) {
+    public void setAccountHoldersName(String input) {
         this.accountHoldersName = input;
     }
 
@@ -70,10 +70,6 @@ public class BankAccount {
         return input.equals(AccountStatus.FROZEN);
     }
 
-    private boolean isAccountClosed(AccountStatus input) {
-        return (input == AccountStatus.CLOSED);
-    }
-
     private boolean isNSF(double input){
         return (input <= this.getAccountBalance());
     }
@@ -99,8 +95,38 @@ public class BankAccount {
         return "Credit Complete";
     }
 
-    public String requestCreditAccount(double input){
+    public String requestCreditAccount(double input) {
         return (isAccountOpen(getAccountStatus()))? creditAccount(input) : unableToCompleteRequest();
+    }
+    private boolean accountOwnershipCheck(BankAccount input){
+        return (getAccountHoldersName().equals(input.getAccountHoldersName()));
+    }
+
+    private boolean areFundsTransferable(BankAccount account){
+        return (accountOwnershipCheck(account)
+                && isAccountOpen(this.getAccountStatus())
+                && isAccountOpen(account.getAccountStatus()));
+    }
+
+    private String debitTransfer(BankAccount account, double amount){
+        this.setAccountBalance(this.accountBalance-= amount);
+        account.setAccountBalance(account.accountBalance+=amount);
+        return "Transfer Complete";
+    }
+    private String creditTransfer(BankAccount account, double amount){
+        account.setAccountBalance(account.accountBalance-=amount);
+        this.setAccountBalance(this.accountBalance+=amount);
+        return "Transfer Complete";
+    }
+
+    public String requestTransferToAccount(BankAccount account, double amount) {
+        return areFundsTransferable(account) && this.isNSF(amount)
+                    ? debitTransfer(account, amount): unableToCompleteRequest();
+    }
+
+    public String requestTransferFromAccount(BankAccount account, double amount) {
+        return areFundsTransferable(account) && account.isNSF(amount)
+                    ? creditTransfer(account, amount): unableToCompleteRequest();
     }
 
 }

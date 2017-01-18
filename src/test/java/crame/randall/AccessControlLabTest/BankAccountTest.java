@@ -9,7 +9,8 @@ import org.junit.*;
  * Created by randallcrame on 1/17/17.
  */
 public class BankAccountTest {
-BankAccount testAccount = new BankAccount(AccountTypes.CHECKING);
+    BankAccount testAccount = new BankAccount(AccountTypes.CHECKING);
+    BankAccount secondTestAccount = new BankAccount(AccountTypes.CHECKING);
 
     @Test
     public void getAccountTypesTest(){
@@ -20,7 +21,6 @@ BankAccount testAccount = new BankAccount(AccountTypes.CHECKING);
 
     @Test
     public void createAccountNumberTest(){
-        BankAccount secondTestAccount = new BankAccount(AccountTypes.CHECKING);
         long expected = 360000004;
         long actual = secondTestAccount.getAccountNumber();
         Assert.assertEquals(expected,actual);
@@ -72,6 +72,22 @@ BankAccount testAccount = new BankAccount(AccountTypes.CHECKING);
     public void requestCreditAccount(){
         String expected = "Credit Complete";
         String actual = testAccount.requestCreditAccount(20);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void requestTransferToAccountTest(){
+        String expected = "Transfer Complete";
+        String actual = testAccount.requestTransferToAccount(secondTestAccount, 25);
+        System.out.println(testAccount.getAccountBalance());
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void requestTransferFromAccountTest(){
+        String expected = "Transfer Complete";
+        String actual = testAccount.requestTransferFromAccount(secondTestAccount, 25);
+        System.out.println(testAccount.getAccountBalance());
         Assert.assertEquals(expected, actual);
     }
 }

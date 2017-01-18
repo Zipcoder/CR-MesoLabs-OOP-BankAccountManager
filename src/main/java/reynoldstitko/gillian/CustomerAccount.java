@@ -9,7 +9,6 @@ public class CustomerAccount {
     private Double accountBalance;
     private String accountHolderName;
 
-
     private StatusType accountStatus;
     //private OverdraftStatus overdraftStatus = new OverdraftStatus();
     //private StatusType statusType = new StatusType();
@@ -38,11 +37,33 @@ public class CustomerAccount {
         this.accountBalance = accountBalance;
     }
 
-    //Accounts can transfer funds to or from another account with the same account holder
-    // ‐‐ Neither account's balance should fall below zero as a result of a transfer.
-    public void transferFunds(Long accountNumber, Double amountToTransfer){
+    public String debit(Double reduceByAmount){
+        accountBalance = accountBalance - reduceByAmount;
+        return "Account debited successfully";
 
     }
+
+    public String credit(Double increaseByAmount){
+        accountBalance = accountBalance + increaseByAmount;
+        return "Account credited successfully";
+
+    }
+
+    //Accounts can transfer funds to or from another account with the same account holder
+    // ‐‐ Neither account's balance should fall below zero as a result of a transfer.
+//    public void transferFunds(CustomerAccount fromCustomerAccount, CustomerAccount toCustomerAccount, Double amountToTransfer){
+//        String sourceName = fromCustomerAccount.getAccountHolderName();
+//        String destinationName = toCustomerAccount.getAccountHolderName();
+//        if(sourceName.equals(destinationName) && (fromCustomerAccount.accountStatus.equals(StatusType.OPEN))
+//                && (toCustomerAccount.accountStatus.equals(StatusType.OPEN)) &&
+//                fromCustomerAccount.accountBalance >= amountToTransfer)
+//        {
+//            fromCustomerAccount.debit(amountToTransfer);
+//            toCustomerAccount.credit(amountToTransfer);
+//
+//        }
+//
+//    }
 
     public void setAccountStatus(StatusType accountStatus) {
         this.accountStatus = accountStatus;
@@ -51,8 +72,6 @@ public class CustomerAccount {
     public StatusType getAccountStatus() {
         return accountStatus;
     }
-
-
 
 
 }

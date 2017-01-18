@@ -7,6 +7,13 @@ public class BankManager {
 
     //private enum AccountType { CHECKING, SAVINGS, INVESTMENT}
     private AccountType accountType;
+
+    public static Double getAccountNumber() {
+        return accountNumber;
+    }
+
+    //BankManager(){};
+
     private static Double accountNumber = 12345678d;
     private CustomerAccount account = new CustomerAccount();
 

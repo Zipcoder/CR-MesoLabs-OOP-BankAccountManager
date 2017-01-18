@@ -1,7 +1,7 @@
 package reynoldsgillian.titko;
 
 import org.junit.Test;
-import reynoldstitko.gillian.AccountStatus;
+//import reynoldstitko.gillian.AccountStatus;
 import reynoldstitko.gillian.CustomerAccount;
 import reynoldstitko.gillian.StatusType;
 
@@ -59,7 +59,7 @@ public class CustomerAccountTest {
     }
 
     @Test
-    public void getAccountStatusTest(){
+    public void getAccountStatusTestOpen(){
         StatusType expected = StatusType.OPEN;
         customerAccount.setAccountStatus(StatusType.OPEN);
         StatusType actual = customerAccount.getAccountStatus();
@@ -67,10 +67,20 @@ public class CustomerAccountTest {
     }
 
     @Test
-    public void getAccountStatusTest2(){
+    public void getAccountStatusTestClosed(){
         StatusType expected = StatusType.CLOSED;
         customerAccount.setAccountStatus(StatusType.CLOSED);
         StatusType actual = customerAccount.getAccountStatus();
-        assertEquals("I expected OPEN", expected, actual);
+        assertEquals("I expected CLOSED", expected, actual);
     }
+
+    @Test
+    public void getAccountStatusTestOFAC(){
+        StatusType expected = StatusType.OFAC;
+        customerAccount.setAccountStatus(StatusType.OFAC);
+        StatusType actual = customerAccount.getAccountStatus();
+        assertEquals("I expected OFAC", expected, actual);
+    }
+
+
 }

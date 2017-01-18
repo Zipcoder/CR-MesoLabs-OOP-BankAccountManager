@@ -8,13 +8,13 @@ import java.util.ArrayList;
 public class Account {
 
 
-    protected String accountType, holdersName, status, overDraftProtection;
-    protected  int checkingAccountNumber, savingAccountNumber;
-    protected static int totalSavingAccount, totalCheckingAccounts;
-    protected double balance, rate;
-    protected ArrayList<Double> withdrawals = new ArrayList<>(), deposits = new ArrayList<>(),
+    private String accountType, holdersName, status, overDraftProtection;
+    private  int checkingAccountNumber, savingAccountNumber;
+    private static int totalSavingAccount, totalCheckingAccounts;
+    private double balance, rate;
+    private ArrayList<Double> withdrawals = new ArrayList<>(), deposits = new ArrayList<>(),
             interestRates = new ArrayList<>(), transfers = new ArrayList<>();
-    protected ArrayList<String> statuses = new ArrayList<>(), names = new ArrayList<>();
+    private ArrayList<String> statuses = new ArrayList<>(), names = new ArrayList<>();
 
 
     protected Account() {
@@ -35,48 +35,48 @@ public class Account {
     }
 
 
-    public int getAccountNumber(){
+    protected int getAccountNumber(){
 
         return this.savingAccountNumber;
 
     }
 
-    public void creditAccount(double credit){
+    protected void creditAccount(double credit){
 
         this.balance += credit;
         deposits.add(credit);
         System.out.println("Account successfully credited +" + credit);
     }
 
-    public void debitAccount(double debit){
+    protected void debitAccount(double debit){
 
         this.balance -= debit;
         withdrawals.add(-debit);
         System.out.println("Account successfully debited -" + debit);
     }
 
-    public ArrayList<Double> getDeposits(){
+    protected ArrayList<Double> getDeposits(){
 
         return deposits;
     }
 
-    public ArrayList<Double> getWithdrawls(){
+    protected ArrayList<Double> getWithdrawls(){
 
         return withdrawals;
     }
 
-    public void setAccountHoldersName(String name){
+    protected void setAccountHoldersName(String name){
 
         this.holdersName = name;
         this.names.add(name);
     }
 
-    public ArrayList<Double> getTransfers(){
+    protected ArrayList<Double> getTransfers(){
 
         return transfers;
     }
 
-    public void makeTransfer(Account receiving, double money){
+    protected void makeTransfer(Account receiving, double money){
 
         if((this.holdersName.equals(receiving.holdersName)) && (this.balance > money)){
             this.balance -= money;
@@ -87,23 +87,23 @@ public class Account {
             System.out.println("Not enough money to transfer.");
     }
 
-    public ArrayList<String> getStatuses(){
+    protected ArrayList<String> getStatuses(){
 
         return statuses;
     }
 
-    public ArrayList<String> getNames(){
+    protected ArrayList<String> getNames(){
 
         return names;
     }
 
-    public ArrayList<Double> getInterestRates(){
+    protected ArrayList<Double> getInterestRates(){
 
         return interestRates;
     }
 
 
-    public void setInterestRates(double rate){
+    protected void setInterestRates(double rate){
 
         this.rate = rate;
         this.interestRates.add(rate);
@@ -150,8 +150,6 @@ public class Account {
 
         return this.balance;
     }
-
-
 
     protected String getHoldersName() {
 

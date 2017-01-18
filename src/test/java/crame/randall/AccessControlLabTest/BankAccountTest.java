@@ -54,5 +54,10 @@ BankAccount testAccount = new BankAccount(AccountTypes.CHECKING);
         Assert.assertEquals(expected, actual);
     }
 
-
+    @Test
+    public void balanceInquiryTest(){
+        String expected = "0.0";
+        String actual = testAccount.balanceInquiry();
+        Assert.assertEquals(expected, actual);
+    }
 }

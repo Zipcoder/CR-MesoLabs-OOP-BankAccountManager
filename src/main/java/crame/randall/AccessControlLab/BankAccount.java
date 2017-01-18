@@ -63,7 +63,22 @@ public class BankAccount {
     }
 
     private boolean isAccountOpen(AccountStatus input) {
-        return (input == AccountStatus.OPEN) ? true :false;
+        return input.equals(AccountStatus.OPEN);
+    }
+
+    private boolean isAccountFrozen(AccountStatus input) {
+        return input.equals(AccountStatus.FROZEN);
+    }
+
+    private boolean isAccountClosed(AccountStatus input) {
+        return (input == AccountStatus.CLOSED);
+    }
+
+    private boolean isNSF(long input){
+        return (input <= this.getAccountBalance());
+    }
+    public String balanceInquiry(){
+        return (isAccountFrozen(getAccountStatus())) ? "Unable to complete request..." : String.valueOf(getAccountBalance());
     }
 
 

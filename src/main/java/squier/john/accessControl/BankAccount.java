@@ -43,13 +43,14 @@ public class BankAccount {
     }
 
     public void setAccountHoldersName(String newName) {
-        if ( accountStatus.equals(BankAccountStatus.OPEN) ) {
+        if (accountStatus.equals(BankAccountStatus.OPEN)) {
             accountHoldersName = newName;
 
             transactionRecord.add(new BankAccountTransaction(TransactionType.NAME_CHANGE, 0.0,
-                                                            accountStatus, this.accountHoldersName)); 
+                    accountStatus, this.accountHoldersName));
 
-        return;
+            return;
+        }
     }
 
     public BankAccountStatus getAccountStatus() {

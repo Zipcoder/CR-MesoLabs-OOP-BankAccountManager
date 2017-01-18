@@ -20,5 +20,5 @@ public class BankAccountTransaction {
     public TransactionType getTransactionType() { return transactionType; }
     public Double getTransactionAmount() { return transactionAmount; }
     public BankAccountStatus getBankAccountStatus() { return newStatus; }
-    public String getName() { return  newName}
+    public String getName() { return  newName; }
 }

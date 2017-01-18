@@ -19,7 +19,7 @@ public class Savings extends Account {
 
     protected int getSavingAccountNumber() {
 
-        return this.savingAccountNumber;
+        return this.getSavingAccountNumber();
     }
 
 }

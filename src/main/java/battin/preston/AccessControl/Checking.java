@@ -15,6 +15,6 @@ public class Checking extends Account {
 
     protected int getCheckingAccountNumber() {
 
-        return this.checkingAccountNumber;
+        return this.getCheckingAccountNumber();
     }
 }

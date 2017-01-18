@@ -33,7 +33,7 @@ public class AccountTest {
         Checking test = new Checking("Checking", "Sally");
         test.creditAccount(100.0);
         double expected = 100;
-        double actual = test.balance;
+        double actual = test.getBalance();
        Assert.assertEquals(expected, actual,0);
        Assert.assertEquals(expected, test.getDeposits().get(0),0);
     }
@@ -43,7 +43,7 @@ public class AccountTest {
         Checking test = new Checking("Checking", "Foo");
         test.debitAccount(100);
         double expected = -100;
-        double actual = test.balance;
+        double actual = test.getBalance();
         Assert.assertEquals(expected, actual, 0);
         Assert.assertEquals(expected, test.getWithdrawls().get(0), 0);
     }

@@ -1,5 +1,6 @@
 package crame.randall.AccessControlLabTest;
 
+import crame.randall.AccessControlLab.AccountStatus;
 import crame.randall.AccessControlLab.AccountTypes;
 import crame.randall.AccessControlLab.BankAccount;
 import org.junit.*;
@@ -26,10 +27,32 @@ BankAccount testAccount = new BankAccount(AccountTypes.CHECKING);
     }
 
     @Test
-    public void getAccountBalance(){
+    public void getAccountBalanceTest(){
         double expected = 0.0;
         double  actual = testAccount.getAccountBalance();
         Assert.assertEquals(expected,actual, 0.0);
     }
+
+    @Test
+    public void getAccountHolderNameTest(){
+        String expected = "Enter Name";
+        String actual = testAccount.getAccountHoldersName();
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getAccountInterestRateTest(){
+        double expected = 0.0;
+        double actual = testAccount.getAccountInterestRate();
+        Assert.assertEquals(expected, actual, 0.0);
+    }
+
+    @Test
+    public void getAccountStatusTest(){
+        AccountStatus expected = AccountStatus.OPEN;
+        AccountStatus actual = testAccount.getAccountStatus();
+        Assert.assertEquals(expected, actual);
+    }
+
 
 }

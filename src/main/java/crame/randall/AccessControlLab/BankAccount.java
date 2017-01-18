@@ -37,7 +37,7 @@ public class BankAccount {
     }
 
     public double getAccountBalance(){
-        return 0.0;
+        return this.accountBalance;
     }
 
     void setAccountHoldersName(String input) {
@@ -45,8 +45,28 @@ public class BankAccount {
     }
 
     public String getAccountHoldersName() {
-        return null;
+        return this.accountHoldersName;
     }
+
+    void setAccountInterestRate(double input){
+        this.accountInterestRate = input;
+    }
+    public double getAccountInterestRate() {
+        return this.accountInterestRate;
+    }
+    void setAccountStatus(AccountStatus input) {
+        this.accountStatus = input;
+    }
+
+    public AccountStatus getAccountStatus() {
+        return this.accountStatus;
+    }
+
+    private boolean isAccountOpen(AccountStatus input) {
+        return (input == AccountStatus.OPEN) ? true :false;
+    }
+
+
 }
 
 

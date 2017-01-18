@@ -7,8 +7,8 @@ public class BankManager {
 
     //private enum AccountType { CHECKING, SAVINGS, INVESTMENT}
     private AccountType accountType;
-
     public static Double getAccountNumber() {
+
         return accountNumber;
     }
 
@@ -18,14 +18,13 @@ public class BankManager {
     private CustomerAccount account = new CustomerAccount();
 
     //Create a constructor; include account number, account type and account name
-    BankManager(AccountType accountType, String customerName){
+    public BankManager(AccountType accountType, String customerName){
         accountNumber = accountNumber + 1; //Set the account number
         this.accountType = accountType;
         account.setAccountHolderName(customerName);
     }
 
     public void openAccount(AccountType accountType, String customerName){
-
         BankManager account = new BankManager(accountType, customerName);
     }
 

@@ -13,6 +13,7 @@ import static junit.framework.TestCase.assertEquals;
 public class CustomerAccountTest {
 
     CustomerAccount customerAccount = new CustomerAccount();
+    CustomerAccount customerAccount2 = new CustomerAccount();
 
 
     @Test
@@ -80,6 +81,63 @@ public class CustomerAccountTest {
         customerAccount.setAccountStatus(StatusType.OFAC);
         StatusType actual = customerAccount.getAccountStatus();
         assertEquals("I expected OFAC", expected, actual);
+    }
+
+    @Test
+    public void transferFundsTest(){
+        customerAccount.setAccountStatus(StatusType.OPEN);
+        customerAccount2.setAccountStatus(StatusType.OPEN);
+        customerAccount.setAccountHolderName("Ted");
+        customerAccount2.setAccountHolderName("Ted");
+        customerAccount.setAccountBalance(20.0);
+        customerAccount2.setAccountBalance(100.0);
+        String expected = "Transfer successful";
+        String actual = customerAccount.transferFunds(customerAccount2, customerAccount, 5.0);
+        assertEquals("I expected success", expected, actual);
+    }
+
+    @Test
+    public void transferFundsFail1Test(){
+        customerAccount.setAccountStatus(StatusType.OPEN);
+        customerAccount2.setAccountStatus(StatusType.OPEN);
+        customerAccount.setAccountHolderName("Tom");
+        customerAccount2.setAccountHolderName("Ted");
+        customerAccount.setAccountBalance(20.0);
+        customerAccount2.setAccountBalance(100.0);
+        String expected = "Transfer not successful";
+        String actual = customerAccount.transferFunds(customerAccount2, customerAccount, 5.0);
+        assertEquals("I expected not successful", expected, actual);
+    }
+
+    @Test
+    public void transferFundsFail2Test(){
+        customerAccount.setAccountStatus(StatusType.CLOSED);
+        customerAccount2.setAccountStatus(StatusType.OPEN);
+        customerAccount.setAccountHolderName("Tom");
+        customerAccount2.setAccountHolderName("Ted");
+        customerAccount.setAccountBalance(20.0);
+        customerAccount2.setAccountBalance(100.0);
+        String expected = "Transfer not successful";
+        String actual = customerAccount.transferFunds(customerAccount2, customerAccount, 5.0);
+        assertEquals("I expected not successful", expected, actual);
+    }
+
+    @Test
+    public  void  debitTest(){
+        String expected = "Account debited successfully";
+        customerAccount.setAccountBalance(100.0);
+        customerAccount.setAccountStatus(StatusType.OPEN);
+        String actual =  customerAccount.debit(50.0);
+        assertEquals("I expected account debited successfully", expected, actual);
+    }
+
+    @Test
+    public  void  creditTest(){
+        String expected = "Account credited successfully";
+        customerAccount.setAccountBalance(100.0);
+        customerAccount.setAccountStatus(StatusType.OPEN);
+        String actual =  customerAccount.credit(50.0);
+        assertEquals("I expected account debited successfully", expected, actual);
     }
 
 

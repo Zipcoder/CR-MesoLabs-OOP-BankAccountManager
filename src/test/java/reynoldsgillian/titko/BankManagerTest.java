@@ -1,6 +1,7 @@
 package reynoldsgillian.titko;
 
 import org.junit.Test;
+import reynoldstitko.gillian.AccountType;
 import reynoldstitko.gillian.BankManager;
 
 /**
@@ -8,8 +9,13 @@ import reynoldstitko.gillian.BankManager;
  */
 public class BankManagerTest {
 
-    BankManager bankManager = new BankManager();
+    BankManager bankManager = new BankManager(AccountType.CHECKING, "Jane Doe");
 
+
+    @Test
+    public void BankManagerTest(){
+
+    }
 
     @Test
     public void closeAccountTest(){

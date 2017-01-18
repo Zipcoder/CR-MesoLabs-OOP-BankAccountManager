@@ -51,25 +51,28 @@ public class CustomerAccount {
 
     //Accounts can transfer funds to or from another account with the same account holder
     // ‐‐ Neither account's balance should fall below zero as a result of a transfer.
-//    public void transferFunds(CustomerAccount fromCustomerAccount, CustomerAccount toCustomerAccount, Double amountToTransfer){
-//        String sourceName = fromCustomerAccount.getAccountHolderName();
-//        String destinationName = toCustomerAccount.getAccountHolderName();
-//        if(sourceName.equals(destinationName) && (fromCustomerAccount.accountStatus.equals(StatusType.OPEN))
-//                && (toCustomerAccount.accountStatus.equals(StatusType.OPEN)) &&
-//                fromCustomerAccount.accountBalance >= amountToTransfer)
-//        {
-//            fromCustomerAccount.debit(amountToTransfer);
-//            toCustomerAccount.credit(amountToTransfer);
-//
-//        }
-//
-//    }
+    public String transferFunds(CustomerAccount fromCustomerAccount, CustomerAccount toCustomerAccount,
+                              Double amountToTransfer){
+        String sourceName = fromCustomerAccount.getAccountHolderName();
+        String destinationName = toCustomerAccount.getAccountHolderName();
+        if(sourceName.equals(destinationName) && (fromCustomerAccount.accountStatus.equals(StatusType.OPEN))
+                && (toCustomerAccount.accountStatus.equals(StatusType.OPEN)) &&
+                fromCustomerAccount.accountBalance >= amountToTransfer)
+        {
+            fromCustomerAccount.debit(amountToTransfer);
+            toCustomerAccount.credit(amountToTransfer);
+            return "Transfer successful";
+        }
+        return "Transfer not successful";
+    }
 
     public void setAccountStatus(StatusType accountStatus) {
+
         this.accountStatus = accountStatus;
     }
 
     public StatusType getAccountStatus() {
+
         return accountStatus;
     }
 

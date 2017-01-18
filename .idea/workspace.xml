@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="20c0cd24-1645-49e6-beab-4f7aeb01ee60" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/BankAccount.java" afterPath="$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/BankAccount.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -63,7 +62,7 @@
       <file leaf-file-name="BankAccount.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/BankAccount.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1965">
+            <state relative-caret-position="225">
               <caret line="131" column="0" lean-forward="false" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
               <folding>
                 <element signature="e#715#716#0" expanded="true" />
@@ -887,7 +886,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1484681836300</updated>
-      <workItem from="1484681838033" duration="28537000" />
+      <workItem from="1484681838033" duration="28698000" />
     </task>
     <servers />
   </component>
@@ -924,7 +923,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28537000" />
+    <option name="totallyTimeSpent" value="28698000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-640" y="-1080" width="1280" height="732" extended-state="0" />
@@ -1052,7 +1051,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/BankAccount.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1965">
+        <state relative-caret-position="225">
           <caret line="131" column="0" lean-forward="false" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
           <folding>
             <element signature="e#715#716#0" expanded="true" />

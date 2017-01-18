@@ -60,4 +60,18 @@ BankAccount testAccount = new BankAccount(AccountTypes.CHECKING);
         String actual = testAccount.balanceInquiry();
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void requestDebitAccount(){
+        String expected = "Unable to Complete Request...";
+        String actual = testAccount.requestDebitAccount(10000);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void requestCreditAccount(){
+        String expected = "Credit Complete";
+        String actual = testAccount.requestCreditAccount(20);
+        Assert.assertEquals(expected, actual);
+    }
 }

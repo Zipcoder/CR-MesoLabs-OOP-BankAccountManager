@@ -74,13 +74,34 @@ public class BankAccount {
         return (input == AccountStatus.CLOSED);
     }
 
-    private boolean isNSF(long input){
+    private boolean isNSF(double input){
         return (input <= this.getAccountBalance());
     }
+
+    private String unableToCompleteRequest(){
+        return "Unable to Complete Request...";
+    }
     public String balanceInquiry(){
-        return (isAccountFrozen(getAccountStatus())) ? "Unable to complete request..." : String.valueOf(getAccountBalance());
+        return (isAccountFrozen(getAccountStatus())) ? unableToCompleteRequest(): String.valueOf(getAccountBalance());
     }
 
+    private String debitAccount(double input){
+        this.accountBalance-= input;
+        return "Debit Complete";
+    }
+
+    public String requestDebitAccount(double input){
+        return (isAccountOpen(getAccountStatus()) && isNSF(input)) ? debitAccount(input) : unableToCompleteRequest();
+    }
+
+    private String creditAccount(double input){
+        this.accountBalance+= input;
+        return "Credit Complete";
+    }
+
+    public String requestCreditAccount(double input){
+        return (isAccountOpen(getAccountStatus()))? creditAccount(input) : unableToCompleteRequest();
+    }
 
 }
 

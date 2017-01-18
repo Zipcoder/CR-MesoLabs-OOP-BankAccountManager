@@ -13,7 +13,7 @@ public class BankAccount {
     double accountInterestRate = 0.00;
     AccountStatus accountStatus = AccountStatus.OPEN;
     OverDraftStatus overDraftStatus = OverDraftStatus.OFF;
-
+    private String bankLog= "";
     private BankAccount() {}
 
     public BankAccount(AccountTypes accountTypes,String accountHoldersName) {
@@ -21,6 +21,9 @@ public class BankAccount {
         setAccountHoldersName(accountHoldersName);
     }
 
+    public String getBankLog() {
+        return bankLog;
+    }
     void setAccountType(AccountTypes input){
         this.accountType = input;
     }
@@ -34,8 +37,11 @@ public class BankAccount {
     }
 
     void setAccountBalance(double input){
-       if (isAccountOpen(getAccountStatus()))
-        this.accountBalance = input;
+       if (isAccountOpen(getAccountStatus())) {
+           this.accountBalance = input;
+           bankLog += "change balance" + getAccountBalance()+", \n";
+       }
+
     }
 
     public double getAccountBalance(){
@@ -43,8 +49,10 @@ public class BankAccount {
     }
 
     public void setAccountHoldersName(String input) {
-        if (isAccountOpen(getAccountStatus()))
+        if (isAccountOpen(getAccountStatus())) {
             this.accountHoldersName = input;
+            bankLog += "change name " + getAccountHoldersName()+", \n";
+        }
     }
 
     public String getAccountHoldersName() {
@@ -53,6 +61,7 @@ public class BankAccount {
 
     void setAccountInterestRate(double input){
         this.accountInterestRate = input;
+        bankLog += "change Interest Rate " + getAccountInterestRate()+", \n";
     }
     public double getAccountInterestRate() {
         return this.accountInterestRate;
@@ -60,18 +69,21 @@ public class BankAccount {
     void setAccountStatus(AccountStatus input) {
         if (isAccountOpen(getAccountStatus()) || isAccountFrozen(getAccountStatus()))
         this.accountStatus = input;
+        bankLog += "change Account Status " + getAccountStatus()+", \n";
     }
     void setAccountToClose(){
-        if (getAccountBalance() == 0.00)
-            accountStatus = AccountStatus.CLOSED;
-
+        if (getAccountBalance() == 0.00) {
+            setAccountStatus(AccountStatus.CLOSED);
+        }
     }
+
     public AccountStatus getAccountStatus() {
         return accountStatus;
     }
 
     public void setOverDraftStatus(OverDraftStatus input){
         this.overDraftStatus = input;
+        bankLog += "change Overdraft " + getOverDraftStatus()+", \n";
     }
 
     public OverDraftStatus getOverDraftStatus(){
@@ -102,6 +114,7 @@ public class BankAccount {
 
     private String debitAccount(double input){
         this.accountBalance-= input;
+        bankLog += "change balance " + getAccountBalance() +", \n";
         return "Debit Complete";
     }
 
@@ -111,6 +124,7 @@ public class BankAccount {
 
     private String creditAccount(double input){
         this.accountBalance+= input;
+        bankLog += "change Balance " + getAccountBalance()+", \n";
         return "Credit Complete";
     }
 
@@ -130,11 +144,16 @@ public class BankAccount {
     private String debitTransfer(BankAccount account, double amount){
         this.setAccountBalance(this.accountBalance-= amount);
         account.setAccountBalance(account.accountBalance+=amount);
+        bankLog += "change balance " + getAccountNumber() + ": " + getAccountBalance() +
+                " " + account.getAccountNumber() + ": " + account.getAccountBalance() + ", \n";
         return "Transfer Complete";
     }
+
     private String creditTransfer(BankAccount account, double amount){
         account.setAccountBalance(account.accountBalance-=amount);
         this.setAccountBalance(this.accountBalance+=amount);
+        bankLog += "change balance " + getAccountNumber() + ": " + getAccountBalance() +
+                " " + account.getAccountNumber() + ": " + account.getAccountBalance() + ", \n";
         return "Transfer Complete";
     }
 

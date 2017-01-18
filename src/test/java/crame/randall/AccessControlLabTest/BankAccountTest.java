@@ -88,6 +88,7 @@ public class BankAccountTest {
         String expected = "Transfer Complete";
         String actual = testAccount.requestTransferFromAccount(secondTestAccount, 25);
         System.out.println(testAccount.getAccountBalance());
+        System.out.println(testAccount.getBankLog());
         Assert.assertEquals(expected, actual);
     }
 

@@ -9,8 +9,8 @@ import org.junit.*;
  * Created by randallcrame on 1/17/17.
  */
 public class BankAccountTest {
-    BankAccount testAccount = new BankAccount(AccountTypes.CHECKING);
-    BankAccount secondTestAccount = new BankAccount(AccountTypes.CHECKING);
+    BankAccount testAccount = new BankAccount(AccountTypes.CHECKING, "Randall");
+    BankAccount secondTestAccount = new BankAccount(AccountTypes.CHECKING, "Randall");
 
     @Test
     public void getAccountTypesTest(){
@@ -89,5 +89,12 @@ public class BankAccountTest {
         String actual = testAccount.requestTransferFromAccount(secondTestAccount, 25);
         System.out.println(testAccount.getAccountBalance());
         Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void setAccountNameTest(){
+        String expected = "Randall";
+        String actual = testAccount.getAccountHoldersName();
+        Assert.assertEquals(expected,actual);
     }
 }

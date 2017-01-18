@@ -16,8 +16,9 @@ public class BankAccount {
 
     private BankAccount() {}
 
-    public BankAccount(AccountTypes input) {
-        setAccountType(input);
+    public BankAccount(AccountTypes accountTypes,String accountHoldersName) {
+        setAccountType(accountTypes);
+        setAccountHoldersName(accountHoldersName);
     }
 
     void setAccountType(AccountTypes input){
@@ -41,7 +42,8 @@ public class BankAccount {
     }
 
     public void setAccountHoldersName(String input) {
-        this.accountHoldersName = input;
+        if (isAccountOpen(getAccountStatus()))
+            this.accountHoldersName = input;
     }
 
     public String getAccountHoldersName() {

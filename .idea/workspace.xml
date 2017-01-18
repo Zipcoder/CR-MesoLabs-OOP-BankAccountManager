@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="20c0cd24-1645-49e6-beab-4f7aeb01ee60" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AccessControlLabUML.xml" afterPath="$PROJECT_DIR$/AccessControlLabUML.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/BankAccount.java" afterPath="$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/BankAccount.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/crame/randall/AccessControlLabTest/BankAccountTest.java" afterPath="$PROJECT_DIR$/src/test/java/crame/randall/AccessControlLabTest/BankAccountTest.java" />
     </list>
@@ -26,8 +26,8 @@
             <file leaf-file-name="BankAccountTest.java" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/test/java/crame/randall/AccessControlLabTest/BankAccountTest.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="494">
-                    <caret line="91" column="5" lean-forward="true" selection-start-line="91" selection-start-column="5" selection-end-line="91" selection-end-column="5" />
+                  <state relative-caret-position="569">
+                    <caret line="96" column="43" lean-forward="false" selection-start-line="96" selection-start-column="43" selection-end-line="96" selection-end-column="43" />
                     <folding />
                   </state>
                 </provider>
@@ -64,41 +64,37 @@
       <file leaf-file-name="BankAccount.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/BankAccount.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="47">
-              <caret line="118" column="35" lean-forward="true" selection-start-line="118" selection-start-column="35" selection-end-line="118" selection-end-column="35" />
+            <state relative-caret-position="497">
+              <caret line="59" column="8" lean-forward="true" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="8" />
               <folding>
-                <element signature="e#541#542#0" expanded="true" />
-                <element signature="e#578#579#0" expanded="true" />
-                <element signature="e#624#625#0" expanded="true" />
-                <element signature="e#664#665#0" expanded="true" />
-                <element signature="e#708#709#0" expanded="true" />
-                <element signature="e#747#748#0" expanded="true" />
-                <element signature="e#785#786#0" expanded="true" />
-                <element signature="e#824#825#0" expanded="true" />
-                <element signature="e#867#868#0" expanded="true" />
-                <element signature="e#910#911#0" expanded="true" />
-                <element signature="e#950#951#0" expanded="true" />
-                <element signature="e#992#993#0" expanded="true" />
-                <element signature="e#1047#1048#0" expanded="true" />
-                <element signature="e#1094#1095#0" expanded="true" />
-                <element signature="e#1139#1140#0" expanded="true" />
-                <element signature="e#1185#1186#0" expanded="true" />
-                <element signature="e#1233#1234#0" expanded="true" />
+                <element signature="e#715#716#0" expanded="true" />
+                <element signature="e#755#756#0" expanded="true" />
+                <element signature="e#799#800#0" expanded="true" />
+                <element signature="e#838#839#0" expanded="true" />
+                <element signature="e#876#877#0" expanded="true" />
+                <element signature="e#915#916#0" expanded="true" />
+                <element signature="e#958#959#0" expanded="true" />
+                <element signature="e#1001#1002#0" expanded="true" />
+                <element signature="e#1041#1042#0" expanded="true" />
+                <element signature="e#1083#1084#0" expanded="true" />
                 <element signature="e#1281#1282#0" expanded="true" />
-                <element signature="e#1326#1327#0" expanded="true" />
-                <element signature="e#1373#1374#0" expanded="true" />
-                <element signature="e#1422#1423#0" expanded="true" />
-                <element signature="e#1464#1465#0" expanded="true" />
-                <element signature="e#1511#1512#0" expanded="true" />
-                <element signature="e#1552#1553#0" expanded="true" />
-                <element signature="e#1610#1611#0" expanded="true" />
-                <element signature="e#1665#1666#0" expanded="true" />
-                <element signature="e#1725#1726#0" expanded="true" />
-                <element signature="e#1782#1783#0" expanded="true" />
-                <element signature="e#1824#1825#0" expanded="true" />
-                <element signature="e#1882#1883#0" expanded="true" />
-                <element signature="e#1929#1930#0" expanded="true" />
-                <element signature="e#1983#1984#0" expanded="true" />
+                <element signature="e#1327#1328#0" expanded="true" />
+                <element signature="e#1375#1376#0" expanded="true" />
+                <element signature="e#1423#1424#0" expanded="true" />
+                <element signature="e#1468#1469#0" expanded="true" />
+                <element signature="e#1515#1516#0" expanded="true" />
+                <element signature="e#1564#1565#0" expanded="true" />
+                <element signature="e#1606#1607#0" expanded="true" />
+                <element signature="e#1653#1654#0" expanded="true" />
+                <element signature="e#1694#1695#0" expanded="true" />
+                <element signature="e#1752#1753#0" expanded="true" />
+                <element signature="e#1807#1808#0" expanded="true" />
+                <element signature="e#1867#1868#0" expanded="true" />
+                <element signature="e#1924#1925#0" expanded="true" />
+                <element signature="e#1966#1967#0" expanded="true" />
+                <element signature="e#2024#2025#0" expanded="true" />
+                <element signature="e#2071#2072#0" expanded="true" />
+                <element signature="e#2125#2126#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -162,8 +158,8 @@
         <option value="$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/test.java" />
         <option value="$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/BankAccountTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/AccountStatus.java" />
-        <option value="$PROJECT_DIR$/src/test/java/crame/randall/AccessControlLabTest/BankAccountTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/BankAccount.java" />
+        <option value="$PROJECT_DIR$/src/test/java/crame/randall/AccessControlLabTest/BankAccountTest.java" />
       </list>
     </option>
   </component>
@@ -361,33 +357,7 @@
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
   </component>
-  <component name="RunManager" selected="JUnit.BankAccountTest.requestTransferToAccountTest">
-    <configuration default="false" name="BankAccountTest.getAndSetDebit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="crame.randall.AccessControlLabTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="Access_Control_Lab" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="crame.randall.AccessControlLabTest" />
-      <option name="MAIN_CLASS_NAME" value="crame.randall.AccessControlLabTest.BankAccountTest" />
-      <option name="METHOD_NAME" value="getAndSetDebit" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.BankAccountTest.setAccountNameTest">
     <configuration default="false" name="BankAccountTest.requestDebitAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -479,6 +449,32 @@
       <option name="PACKAGE_NAME" value="crame.randall.AccessControlLabTest" />
       <option name="MAIN_CLASS_NAME" value="crame.randall.AccessControlLabTest.BankAccountTest" />
       <option name="METHOD_NAME" value="requestTransferFromAccountTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="BankAccountTest.setAccountNameTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="crame.randall.AccessControlLabTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="Access_Control_Lab" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="crame.randall.AccessControlLabTest" />
+      <option name="MAIN_CLASS_NAME" value="crame.randall.AccessControlLabTest.BankAccountTest" />
+      <option name="METHOD_NAME" value="setAccountNameTest" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -866,19 +862,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.BankAccountTest.getAndSetDebit" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestDebitAccount" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestCreditAccount" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestTransferToAccountTest" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestTransferFromAccountTest" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestDebitAccount" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestCreditAccount" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestTransferToAccountTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestTransferFromAccountTest" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountNameTest" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestTransferToAccountTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestTransferFromAccountTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestCreditAccount" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestDebitAccount" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.BankAccountTest.getAndSetDebit" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.BankAccountTest.setAccountNameTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestTransferToAccountTest" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestTransferFromAccountTest" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestCreditAccount" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.BankAccountTest.requestDebitAccount" />
       </list>
     </recent_temporary>
   </component>
@@ -892,7 +888,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1484681836300</updated>
-      <workItem from="1484681838033" duration="25703000" />
+      <workItem from="1484681838033" duration="26511000" />
     </task>
     <servers />
   </component>
@@ -929,11 +925,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25703000" />
+    <option name="totallyTimeSpent" value="26511000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-640" y="-1080" width="1280" height="732" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -947,7 +943,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4578125" sideWeight="0.49676898" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1047,52 +1043,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/crame/randall/AccessControlLabTest/BankAccountTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/BankAccount.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="91" column="5" lean-forward="true" selection-start-line="91" selection-start-column="5" selection-end-line="91" selection-end-column="5" />
-          <folding />
+        <state relative-caret-position="497">
+          <caret line="59" column="8" lean-forward="true" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="8" />
+          <folding>
+            <element signature="e#715#716#0" expanded="true" />
+            <element signature="e#755#756#0" expanded="true" />
+            <element signature="e#799#800#0" expanded="true" />
+            <element signature="e#838#839#0" expanded="true" />
+            <element signature="e#876#877#0" expanded="true" />
+            <element signature="e#915#916#0" expanded="true" />
+            <element signature="e#958#959#0" expanded="true" />
+            <element signature="e#1001#1002#0" expanded="true" />
+            <element signature="e#1041#1042#0" expanded="true" />
+            <element signature="e#1083#1084#0" expanded="true" />
+            <element signature="e#1281#1282#0" expanded="true" />
+            <element signature="e#1327#1328#0" expanded="true" />
+            <element signature="e#1375#1376#0" expanded="true" />
+            <element signature="e#1423#1424#0" expanded="true" />
+            <element signature="e#1468#1469#0" expanded="true" />
+            <element signature="e#1515#1516#0" expanded="true" />
+            <element signature="e#1564#1565#0" expanded="true" />
+            <element signature="e#1606#1607#0" expanded="true" />
+            <element signature="e#1653#1654#0" expanded="true" />
+            <element signature="e#1694#1695#0" expanded="true" />
+            <element signature="e#1752#1753#0" expanded="true" />
+            <element signature="e#1807#1808#0" expanded="true" />
+            <element signature="e#1867#1868#0" expanded="true" />
+            <element signature="e#1924#1925#0" expanded="true" />
+            <element signature="e#1966#1967#0" expanded="true" />
+            <element signature="e#2024#2025#0" expanded="true" />
+            <element signature="e#2071#2072#0" expanded="true" />
+            <element signature="e#2125#2126#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/crame/randall/AccessControlLab/BankAccount.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/crame/randall/AccessControlLabTest/BankAccountTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="47">
-          <caret line="118" column="35" lean-forward="true" selection-start-line="118" selection-start-column="35" selection-end-line="118" selection-end-column="35" />
-          <folding>
-            <element signature="e#541#542#0" expanded="true" />
-            <element signature="e#578#579#0" expanded="true" />
-            <element signature="e#624#625#0" expanded="true" />
-            <element signature="e#664#665#0" expanded="true" />
-            <element signature="e#708#709#0" expanded="true" />
-            <element signature="e#747#748#0" expanded="true" />
-            <element signature="e#785#786#0" expanded="true" />
-            <element signature="e#824#825#0" expanded="true" />
-            <element signature="e#867#868#0" expanded="true" />
-            <element signature="e#910#911#0" expanded="true" />
-            <element signature="e#950#951#0" expanded="true" />
-            <element signature="e#992#993#0" expanded="true" />
-            <element signature="e#1047#1048#0" expanded="true" />
-            <element signature="e#1094#1095#0" expanded="true" />
-            <element signature="e#1139#1140#0" expanded="true" />
-            <element signature="e#1185#1186#0" expanded="true" />
-            <element signature="e#1233#1234#0" expanded="true" />
-            <element signature="e#1281#1282#0" expanded="true" />
-            <element signature="e#1326#1327#0" expanded="true" />
-            <element signature="e#1373#1374#0" expanded="true" />
-            <element signature="e#1422#1423#0" expanded="true" />
-            <element signature="e#1464#1465#0" expanded="true" />
-            <element signature="e#1511#1512#0" expanded="true" />
-            <element signature="e#1552#1553#0" expanded="true" />
-            <element signature="e#1610#1611#0" expanded="true" />
-            <element signature="e#1665#1666#0" expanded="true" />
-            <element signature="e#1725#1726#0" expanded="true" />
-            <element signature="e#1782#1783#0" expanded="true" />
-            <element signature="e#1824#1825#0" expanded="true" />
-            <element signature="e#1882#1883#0" expanded="true" />
-            <element signature="e#1929#1930#0" expanded="true" />
-            <element signature="e#1983#1984#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="569">
+          <caret line="96" column="43" lean-forward="false" selection-start-line="96" selection-start-column="43" selection-end-line="96" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>

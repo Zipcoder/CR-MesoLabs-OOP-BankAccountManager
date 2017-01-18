@@ -5,7 +5,7 @@ package squier.john.accessControl;
  */
 public class BankAccountTransaction {
     private TransactionType transactionType;
-    private double transactionAmount;
+    private Double transactionAmount;
     private BankAccountStatus newStatus;
     private String newName;
 
@@ -16,4 +16,9 @@ public class BankAccountTransaction {
         this.newStatus = newStatus;
         this.newName = newName;
     }
+
+    public TransactionType getTransactionType() { return transactionType; }
+    public Double getTransactionAmount() { return transactionAmount; }
+    public BankAccountStatus getBankAccountStatus() { return newStatus; }
+    public String getName() { return  newName}
 }

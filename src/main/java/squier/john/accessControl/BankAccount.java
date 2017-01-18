@@ -47,8 +47,7 @@ public class BankAccount {
             accountHoldersName = newName;
 
             transactionRecord.add(new BankAccountTransaction(TransactionType.NAME_CHANGE, 0.0,
-                                                            accountStatus, this.accountHoldersName));
-        }
+                                                            accountStatus, this.accountHoldersName)); 
 
         return;
     }

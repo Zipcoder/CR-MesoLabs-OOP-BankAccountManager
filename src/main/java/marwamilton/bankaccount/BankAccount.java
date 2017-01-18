@@ -72,18 +72,18 @@ public class BankAccount {
             this.recordTransaction("Credit");
             return true;
         } else {
-            this.recordTransaction("Debit");
+            this.recordTransaction("failed credit");
             return false;
         }
     }
 
     protected boolean debit(double withdraw, boolean OFACFreeze){
-        if(!OFACFreeze && accountOpen && balance>=0){
+        if(!OFACFreeze && accountOpen && this.positiveBalance(withdraw)){
             this.balance -= withdraw;
             this.recordTransaction("Debit");
             return  true;
         } else {
-            this.recordTransaction("Debit");
+            this.recordTransaction("failed debit");
             return  false;
         }
     }
@@ -112,8 +112,6 @@ public class BankAccount {
         oneTransaction = new String[]{transaction, Double.toString(this.rate), Double.toString(this.balance), Boolean.toString(this.OFACFreeze), Boolean.toString(this.accountOpen), getHoldersName()};
         allTransactions.add(Arrays.toString(oneTransaction));
     }
-
-
 
 
 }

@@ -40,11 +40,13 @@ public class BankAccount_Caller {
             System.out.println(account.debit(credits[counter++]/2, false));
         }
 
+        // transfer funds between accounts, a number of times
         for(int i=1; i<4; i++) {
             System.out.println(bankAccount3.transferFunds(bankAccount1, 1000));
-            System.out.println(bankAccount3.transferFunds(bankAccount2, 1000));
+            System.out.println(bankAccount3.transferFunds(bankAccount2, 2500));
         }
 
+        // print accounts info after performing the transactions
         System.out.println();
         System.out.println("Accounts After Modification: \n");
         System.out.format("%15s %5s %6s %6s \n", "Name", "Type", "Rate", "BAL");
@@ -52,15 +54,12 @@ public class BankAccount_Caller {
             System.out.format("%15s %4s %7.2f %6.2f \n", account.getHoldersName(), account.getAcType(),account.getRate(), account.getBalance());
         }
 
-
-        // make
+        // print out the records of each account
         for(BankAccount account : accounts) {
             System.out.println();
             for (String record : account.allTransactions) {
                 System.out.println(record);
             }
         }
-
-
     }
 }

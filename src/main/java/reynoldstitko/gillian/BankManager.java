@@ -5,9 +5,9 @@ package reynoldstitko.gillian;
  */
 public class BankManager {
 
-    private enum AccountType { CHECKING, SAVINGS, INVESTMENT}
+    //private enum AccountType { CHECKING, SAVINGS, INVESTMENT}
     private AccountType accountType;
-    private static long accountNumber = 12345678L;
+    private static Double accountNumber = 12345678d;
     private CustomerAccount account = new CustomerAccount();
 
     //Create a constructor; include account number, account type and account name
@@ -17,12 +17,16 @@ public class BankManager {
         account.setAccountHolderName(customerName);
     }
 
-    public void openAccount(){
+    public void openAccount(AccountType accountType, String customerName){
 
+        BankManager account = new BankManager(accountType, customerName);
     }
 
-    public void closeAccount(){
+    public void closeAccount(Double accountNumber){
         //Account balance must be zero before it can be closed
+        if(account.getAccountBalance() == 0.0){
+            accountNumber = 0.0;
+        }
     }
 
 }

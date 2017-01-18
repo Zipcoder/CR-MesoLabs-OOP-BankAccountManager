@@ -5,33 +5,48 @@ package crame.randall.AccessControlLab;
  */
 public class BankAccount {
     private AccountTypes accountType;
-    private int some;
     final long accountNumber = AccountNumberGenerator.createAccountNumber();
 
     double accountBalance =  0.00;
 
-    String accountHoldersName;
+    String accountHoldersName = "Enter Name";
     double accountInterestRate = 0.00;
     AccountStatus accountStatus = AccountStatus.OPEN;
     OverDraftStatus overDraftStatus = OverDraftStatus.OFF;
+
+    private BankAccount() {}
+
+    public BankAccount(AccountTypes input) {
+        setAccountType(input);
+    }
 
     void setAccountType(AccountTypes input){
         this.accountType = input;
     }
 
-    AccountTypes getAccountType() {
+    public AccountTypes getAccountType() {
         return this.accountType;
     }
 
-    void setAccountNumber(long input) {
-        this.accountNumber = input;
-    }
-
-    long getAccountNumber() {
+    public long getAccountNumber() {
       return this.accountNumber;
     }
 
+    void setAccountBalance(int input){
+        this.accountBalance = input;
+    }
 
+    public double getAccountBalance(){
+        return 0.0;
+    }
+
+    void setAccountHoldersName(String input) {
+        this.accountHoldersName = input;
+    }
+
+    public String getAccountHoldersName() {
+        return null;
+    }
 }
 
 

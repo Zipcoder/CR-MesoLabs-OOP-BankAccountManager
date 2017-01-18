@@ -34,6 +34,7 @@ public class BankAccount {
     }
 
     void setAccountBalance(double input){
+       if (isAccountOpen(getAccountStatus()))
         this.accountBalance = input;
     }
 
@@ -57,23 +58,39 @@ public class BankAccount {
         return this.accountInterestRate;
     }
     void setAccountStatus(AccountStatus input) {
+        if (isAccountOpen(getAccountStatus()) || isAccountFrozen(getAccountStatus()))
         this.accountStatus = input;
     }
+    void setAccountToClose(){
+        if (getAccountBalance() == 0.00)
+            accountStatus = AccountStatus.CLOSED;
 
+    }
     public AccountStatus getAccountStatus() {
-        return this.accountStatus;
+        return accountStatus;
     }
 
+    public void setOverDraftStatus(OverDraftStatus input){
+        this.overDraftStatus = input;
+    }
+
+    public OverDraftStatus getOverDraftStatus(){
+        return overDraftStatus;
+    }
     private boolean isAccountOpen(AccountStatus input) {
         return input.equals(AccountStatus.OPEN);
     }
 
+
     private boolean isAccountFrozen(AccountStatus input) {
         return input.equals(AccountStatus.FROZEN);
     }
+    private boolean isOverDraftEnabled(OverDraftStatus input){
+        return input.equals((OverDraftStatus.ON));
+    }
 
-    private boolean isNSF(double input){
-        return (input <= this.getAccountBalance());
+    private boolean isNSF(double amount){
+        return (amount <= getAccountBalance() || isOverDraftEnabled(getOverDraftStatus()));
     }
 
     private String unableToCompleteRequest(){

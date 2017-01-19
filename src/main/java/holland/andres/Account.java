@@ -4,45 +4,54 @@ public class Account {
 
     private String accountName;
     private String accountType;
-    private static int accountNumber = 0;
-    private String accountStatus = "open";
-    private boolean overdraftProtection;
-    private double accountBalance = 0;
+    private String overdraftProtection;
     private double interest;
+    private String accountStatus = "open";
+    private static int accountNumberCreator = 0;
+    private int accountNumber;
+    private double accountBalance = 0;
 
-    protected void createAccount (String name, String type, boolean overdraft, double interestRate) {
-        accountName = name;
-        accountType = type;
-        accountNumber++;
-        overdraftProtection = overdraft;
-        interest = interestRate;
+    public Account (String name, String type, String overdraft, double interestRate) {
+        this.accountName = name;
+        this.accountType = type;
+        this.overdraftProtection = overdraft;
+        this.interest = interestRate;
+        accountNumber = accountNumberCreator;
+        accountNumberCreator++;
     }
 
-    protected void setAccountName (String name) {
+    public void setAccountName (String name) {
         if (accountStatus != "closed") {
             accountName = name;
         }
     }
 
-    protected String getAccountStatus () {
+    public String getAccountStatus () {
         return accountStatus;
     }
 
-    protected void setAccountStatus (String status) {
+    public void setAccountStatus (String status) {
         accountStatus = status;
     }
 
-    protected double getAccountBalance () {
+    public double getAccountBalance () {
         return accountBalance;
     }
 
-    protected void setAccountBalance (double balance) {
+    public String getAccountName () {
+        return accountName;
+    }
+
+    public void setAccountBalance (double balance) {
         accountBalance = balance;
     }
 
-    protected boolean getOverdraftProtection () {
+    public String getOverdraftProtection () {
         return overdraftProtection;
     }
+
+    public int getAccountNumber () {
+        return accountNumber;
     }
 
-
+    }

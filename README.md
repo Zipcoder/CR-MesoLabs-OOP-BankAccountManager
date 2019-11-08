@@ -1,50 +1,41 @@
-# project-2-ATM
-Week 2 project: ATM Simulator
+# Access Control Lab - Bank Account 
+The original lab can be found [here](https://gist.github.com/DavidGinzberg/5ccd3191eed52b04c4c3541fa2b2cbf7)
+## Description
 
-## Notes for Use
-- The DB class defines database objects and a number of attendant methods to delete, search, modify, and add rows in the database
-- Information is stored in csv files in the /data folder. An example data set is included and will be run when you run `main()`. Any changes to accounts, users, or additional transactions will be saved there. These files are in the `.gitignore`, so any changes you make locally wouldn't overwrite them
-- One example user, for convenience of entry during testing, has card number 1 and password 1234
-- There are also a couple of test database files (`test.db` and `testbad.csv` which are used in certain tests. Other tests create and destory temporary database files
-- Every time a user logs in, interest is earned on savings accounts and investments get returns, based on random chance and risk tolerance defined when creating the account
+This lab focuses on implementing a simulated bank account and practicing using access control features of the Java language. By the end of this lab students should feel comfortable setting class members to be private or public, creating accessor and mutator functions for fields as needed, and using those methods to access the underlying fields.
 
+The bank account functionality produced in this lab will be integrated into the weekly project and may be further enhanced during the project.
 
-## ATM Requirements
+## Testing
 
-Every feature must have corresponding unit tests
-Tests should demonstrate proper behavior, and proper handling of misuse (eg. attempts to deposit/transfer/withdraw negative amounts
+All features should be developed following a Test-Driven Development methodology. All features should be thoroughly tested and demonstrated through unit tests.
 
-- User interface: CLI (Command line interface) Only
-  - Direct Input
-  - Numbered options (instead of on-screen buttons)
-  - ASCII art welcome but not required
-- Must support account types:
-  - Checking
-  - Savings
-  - Investment
-- Account Actions
-  - Withdraw from acct
-  - Deposit to acct
-  - Transfer across accounts (self)
-  - Open new account
-  - Close account (must be empty)
-  - Print transaction history
-  - Check balance
-  - **Challenge:** Transfer to another user's account (but not from)
-- Support multiple users
-  - Users have associated accounts
-  - Can create new user
-  - Users are authenticated with a password (generated or provided on user creation)
-  - Can exit a user and enter another user
-- **BONUS** Persistence
-  - Users and accounts remain persistent
-  - Opportunity for research
+## Instructions
+
+Create a class for bank accounts.
+
+Accounts must have: 
+
+- Account type (Checking, Savings, Investment, etc.)
+- Account number (Must be unique for each account created)
+- Balance
+- Account Holder's name
+- Interest rate (some accounts may not draw interest)
+- Status (Open, Closed, [OFAC](https://www.treasury.gov/about/organizational-structure/offices/Pages/Office-of-Foreign-Assets-Control.aspx) Freeze...)
+- Overdraft prevention (enabled, disabled, or automatic account transfer*)
+- A record of all transactions that have taken place on the accounts (withdrawals, deposits, transfers, and changes to the status, name, or interest rate)
 
 
-Recommended:
-Create a `Console` class that manages console interactions.
-Create a `ConsoleMock` for testing (provide scripted user input using this object).
+Code that uses the Account class should not be able to change the properties of an account directly; this should be something handled by methods provided by the account class. The methods should enforce the following behavior:
 
-## What's next?
-The next lab is located [here](https://github.com/Zipcoder/ZCW-MesoLabs-OOP-BankAccountManager).
-
+- Account type and account number must be set during account creation (in the constructor) and cannot be changed afterward.
+- Balance inquiries are allowed at any time except while an account is under an OFAC freeze
+- The balance can be changed with a credit (add money) or debit (remove money)
+  - Balance changes can only occur on `Open` accounts.
+  - The `debit` and `credit` methods should return an approval status indicating whether the transaction was approved.
+  - Accounts can transfer funds to or from another account with the same account holder -- Neither account's balance should fall below zero as a result of a transfer.
+- Account holder's name must be set during account creation. It can be changed later (but not on closed accounts)
+- Accounts with overdraft prevention enabled cannot over-draw (a debit that is greater than the account balance will be declined and the balance will not change)
+- Accounts, once closed, cannot be reopened (frozen accounts can be unfrozen).
+  - No changes to the balance of an account can take place while it is closed or frozen
+  - Accounts must have a zero balance before they can be closed.

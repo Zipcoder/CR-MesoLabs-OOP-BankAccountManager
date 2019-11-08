@@ -1,11 +1,17 @@
 abstract public class Account implements Storeable {
+
     public Double balance;
     public Integer ownerID;
     public Integer acctNum;
+    enum Status {
+        OPEN, CLOSED, OFAC
+    };
+    private Status acctStatus;
 
     public Account(Double balance, Integer ownerID, Integer acctNum) {
         this.balance = balance;
         this.ownerID = ownerID;
+        // TODO: make account number here, via something better than wild-assed guess
         this.acctNum = acctNum;
     }
 
@@ -19,6 +25,14 @@ abstract public class Account implements Storeable {
 
     public Integer getAcctNum() {
         return this.acctNum;
+    }
+
+    public Status getAcctStatus() {
+        return acctStatus;
+    }
+
+    public void setAcctStatus(Status acctStatus) {
+        this.acctStatus = acctStatus;
     }
 
     public void deposit(Double amount){

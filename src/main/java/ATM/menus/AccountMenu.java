@@ -12,7 +12,6 @@ import ATM.accounts.Savings;
 import ATM.services.AccountServices;
 import ATM.services.TransactionServices;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class AccountMenu implements Menu {
@@ -40,85 +39,97 @@ public class AccountMenu implements Menu {
     public void displayMenu() {
         Console.clearScreen();
 
-        String header = account.getClass().getName() + " Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
-        if (account instanceof Savings) {
-            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate())+"%%";
-        } else if (account instanceof Investment) {
-            header += "  Risk: " + String.format("%d", Math.round(100*((Investment) account).getRisk()))+"/10";
-        }
+        String header = getHeader();
         int input = Console.getInput(header, new String[] {"View Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Back to Main Menu" });
         handleChoice(input);
     }
 
+    public String getHeader() {
+        String header = account.getClass().getSimpleName() + " Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
+        if (account instanceof Savings) {
+            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate())+"%";
+        } else if (account instanceof Investment) {
+            header += "  Risk: " + String.format("%d", Math.round(100*((Investment) account).getRisk()))+"/10";
+        }
+        return header;
+    }
+
     public String getName() {
-        return null;
+        return this.name;
     }
 
     public void handleChoice(int choice) {
-        Double deposit;
+        double amount;
         Transaction transaction;
             switch (choice) {
             case 1:
                 Console.outputTransactionsWithHeader("Transaction History", transactionServices.getTransactionsForAccount(account));
                 break;
-            case 2:
-                deposit = Console.getCurrency("Deposit amount: ");
-                account.deposit(deposit);
-                accountServices.saveAccountToDB(account);
-                transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM deposit", true);
-                transactionServices.saveTransactionToDB(transaction);
+            case 2: // deposit
+                amount = Console.getCurrency("Deposit amount: ");
+                attemptDeposit(amount);
                 break;
-            case 3:
-                deposit = Console.getCurrency("Withdrawal amount: ");
-                if (deposit <= account.getBalance()) {
-                    account.deposit(-1 * deposit);
-                    accountServices.saveAccountToDB(account);
-                    transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM withdrawal", false);
-                    transactionServices.saveTransactionToDB(transaction);
-                } else {
-                    Console.println("Insufficient funds");
-                    Console.getInput("\nPress Enter");
-                }
+            case 3: // withdrawal
+                amount = Console.getCurrency("Withdrawal amount: ");
+                attemptWithdrawal(amount);
                 break;
             case 4:
-
-                if (account.getBalance() == 0) {
-
-                    accountServices.deleteAccountFromDB(account);
-                    transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "Account Closed", false);
-                    transactionServices.saveTransactionToDB(transaction);
-                } else {
-                    Console.println("Account still contains funds. Withdraw or transfer all funds before closing.");
-                    Console.getInput("\nPress Enter");
-                }
+                accountServices.closeAccount(account);
+                // TODO: take this code for closeAccount(Account account);
+//                if (account.getBalance() == 0) {
+//
+//                    accountServices.deleteAccountFromDB(account);
+//                    transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "Account Closed", false);
+//                    transactionServices.saveTransactionToDB(transaction);
+//                } else {
+//                    Console.println("Account still contains funds. Withdraw or transfer all funds before closing.");
+//                    Console.getInput("\nPress Enter");
+//                }
                 break;
             case 5:
-
-                Console.println("Number of Account to transfer to");
-                int ActToTransferTo = Console.getInteger();
-                String[] actInfo = accountServices.getAccountInfoByID(ActToTransferTo);
-                // 0: accountID 1: ownerID 2: balance 3: type 4: risk/interest/null (type-dependent)
-                Account act = accountServices.getAccountByInfo(actInfo);
-                deposit = Console.getCurrency("Transfer amount");
-
-                if(deposit < account.getBalance()) {
-                    account.deposit(-1 * deposit);
-                    act.deposit(deposit);
-
-                    accountServices.saveAccountToDB(account);
-                    transaction = new Transaction(-1 * deposit, new Date(), account.getAcctNum(), "ATM.ATM Transfer", false);
-                    transactionServices.saveTransactionToDB(transaction);
-
-                    accountServices.saveAccountToDB(act);
-                    transaction = new Transaction(deposit, new Date(), act.getAcctNum(), "ATM.ATM Transfer", true);
-                    transactionServices.saveTransactionToDB(transaction);
-                } else {
-                    Console.println("Insufficient funds in account");
-                }
+                new TransferServicesMenu(this.atm, account);
+                // TODO: take this code for account transfers
+//                Console.println("Number of Account to transfer to");
+//                int ActToTransferTo = Console.getInteger();
+//                String[] actInfo = accountServices.getAccountInfoByID(ActToTransferTo);
+//                // 0: accountID 1: ownerID 2: balance 3: type 4: risk/interest/null (type-dependent)
+//                Account act = accountServices.getAccountByInfo(actInfo);
+//                deposit = Console.getCurrency("Transfer amount");
+//
+//                if(deposit < account.getBalance()) {
+//                    account.deposit(-1 * deposit);
+//                    act.deposit(deposit);
+//
+//                    accountServices.saveAccountToDB(account);
+//                    transaction = new Transaction(-1 * deposit, new Date(), account.getAcctNum(), "ATM.ATM Transfer", false);
+//                    transactionServices.saveTransactionToDB(transaction);
+//
+//                    accountServices.saveAccountToDB(act);
+//                    transaction = new Transaction(deposit, new Date(), act.getAcctNum(), "ATM.ATM Transfer", true);
+//                    transactionServices.saveTransactionToDB(transaction);
+//                } else {
+//                    Console.println("Insufficient funds in account");
+//                }
 
                 break;
             case 6:
                 break;
+        }
+    }
+
+    private void attemptWithdrawal(double amount) {
+        if (accountServices.withdraw(account, amount)) {
+            Console.getInput("Withdrawal successful; press Enter to continue");
+        } else {
+        Console.getInput("Insufficient funds; press Enter to continue");
+        }
+    }
+
+    private void attemptDeposit(double amount) {
+        if (accountServices.deposit(account, amount)) {
+            Console.getInput("Deposit successful; press Enter to continue");
+        } else {
+            Console.getInput("Deposit error; press Enter to continue");
         }
     }
 

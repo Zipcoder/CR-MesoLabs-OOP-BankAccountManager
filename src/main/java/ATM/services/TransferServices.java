@@ -1,7 +1,5 @@
 package ATM.services;
 
-import ATM.ATM;
-import ATM.User;
 import ATM.accounts.Account;
 
 import java.util.ArrayList;

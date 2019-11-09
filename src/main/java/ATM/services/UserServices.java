@@ -52,4 +52,12 @@ public class UserServices {
             this.userDB.replaceRow(rowNum, stringRepOfUser);
         }
     }
+    public void clearUserDB(){
+        this.userDB.clear();
+    }
+
+    public int getUserDBLength(){
+        return userDB.length();
+
+    }
 }

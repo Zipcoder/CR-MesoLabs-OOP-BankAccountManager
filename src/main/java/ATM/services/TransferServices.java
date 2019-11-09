@@ -5,7 +5,7 @@ import ATM.Exceptions.ClosedAccountException;
 import ATM.Exceptions.FrozenAccountException;
 import ATM.Exceptions.InsufficientFundsException;
 import ATM.User;
-
+import ATM.Transaction;
 import ATM.ATM;
 import ATM.accounts.Account;
 
@@ -25,12 +25,16 @@ public class TransferServices {
     private String acctStatus;
     private ATM atm;
     private Integer acctTransferTo;
+    private AccountServices accountServices;
+    private TransactionServices transactionServices;
 
     //Constructor
     public TransferServices(ATM atm, Account account) {
         this.currentUser = this.atm.getCurrentUser();
         this.atm = atm;
         this.account = account;
+        this.transactionServices = this.atm.getTransactionServices();
+        this.accountServices = this.atm.getAccountServices();
     }
 
     //From menu: Account to Transfer to will equal acctTransferTo
@@ -59,12 +63,9 @@ public class TransferServices {
 //            //transferMenu();
 //    }
 
-    public void checkTransferAmount () {
-
-        }
 
 
-    public String transfer (Account sourceAccount, Account targetAccount, double amountToDeposit) throws InsufficientFundsException, ClosedAccountException, FrozenAccountException {
+    public boolean transfer (Account sourceAccount, Account targetAccount, double amountToDeposit) throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
 
         if(amountToDeposit > sourceAccount.balance){
             throw new InsufficientFundsException();}
@@ -73,12 +74,16 @@ public class TransferServices {
         else if (targetAccount.getAcctStatus() == Account.Status.CLOSED) {
             throw new FrozenAccountException();}
 
-            targetAccount.balance = targetAccount.balance + amountToDeposit;
-            sourceAccount.balance = sourceAccount.balance - amountToDeposit;
+        targetAccount.balance = targetAccount.balance + amountToDeposit;
+        sourceAccount.balance = sourceAccount.balance - amountToDeposit;
+        accountServices.saveAccountToDB(targetAccount);
+        accountServices.saveAccountToDB(sourceAccount);
 
-
-        return "";
+        transactionServices.saveTransactionToDB(new Transaction(amountToDeposit * -1, new Date(), sourceAccount.getAcctNum(),String.format("Transfer to account %d", targetAccount.getAcctNum()), false ));
+        transactionServices.saveTransactionToDB(new Transaction(amountToDeposit, new Date(), targetAccount.getAcctNum(),String.format("Transfer from account %d", sourceAccount.getAcctNum()), true ));
+        return true;
     }
+
 }
 
 

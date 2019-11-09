@@ -26,8 +26,8 @@ public class AccountServices {
     }
 
     public void addAccount(ArrayList<Account> usrAccounts, Double deposit, User currentUser) {
-        String header = "Choose accounts.Account Type:";
-        String input = Console.getInput(header, new String[] {"accounts.Checking", "accounts.Savings", "accounts.Investment", "Back to ATM.Main ATM.Menu" });
+        String header = "Choose Account Type:";
+        String input = Console.getInput(header, new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" });
         Account newAccount;
         Transaction transaction;
 
@@ -89,11 +89,11 @@ public class AccountServices {
 
     // account instance from info (pre-existing account)
     public Account getAccountByInfo (String[] info) {
-        if (info[3].equals("accounts.Checking")) {
+        if (info[3].equals("Checking")) {
             return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]));
-        } else if (info[3].equals("accounts.Savings")) {
+        } else if (info[3].equals("Savings")) {
             return new Savings(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
-        } else if (info[3].equals("accounts.Investment")) {
+        } else if (info[3].equals("Investment")) {
             return new Investment(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
         }
         return null;
@@ -123,7 +123,7 @@ public class AccountServices {
         String[] stringRepOfAccount = account.toStringArray();
         int accountNum = account.getAcctNum();
         int rowNum = getAccountRowByID(accountNum);
-        if (rowNum == -1) { // account isn't in ATM.DB yet
+        if (rowNum == -1) { // account isn't in DB yet
             this.accountDB.addRow(stringRepOfAccount);
         } else { // update a found row
             this.accountDB.replaceRow(rowNum, stringRepOfAccount);
@@ -134,7 +134,7 @@ public class AccountServices {
         String[] stringRepOfAccount = account.toStringArray();
         int accountNum = account.getAcctNum();
         int rowNum = getAccountRowByID(accountNum);
-        if (rowNum == -1) { // account isn't in ATM.DB yet
+        if (rowNum == -1) { // account isn't in DB yet
             this.accountDB.addRow(stringRepOfAccount);
             return;
         } else { // update a found row

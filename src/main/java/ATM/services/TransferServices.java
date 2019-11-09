@@ -33,27 +33,48 @@ public class TransferServices {
 
     //From menu: Account to Transfer to will equal acctTransferTo
 
-    public String acctFrozen (Account account){
-        String frozen = "";
-   // if (account.getAcctNum == Account.Status.OFAC) {
-        if (true){
-            frozen = "THIS ACCOUNT IS FROZEN!  PLEASE TRY AGAIN.";
+
+
+    //
+//    public String acctFrozen (Integer acctTransferTo ) { //Account account)
+//        String frozen = "";
+//        if (account.getAcctStatus() == Account.Status.OFAC) {
+//            if (true) {
+//                frozen = "THIS ACCOUNT IS FROZEN!  PLEASE TRY AGAIN.";
+//            }
+//
+//        }
+//        return frozen;
+//        //transferMenu();
+//    }
+//
+//        public String acctClosed (){
+//            String closed ="";
+//            if (account.getAcctStatus() == Account.Status.CLOSED){
+//                closed = "THIS ACCOUNT IS CLOSED!  PLEASE TRY AGAIN.";
+//            }
+//            return closed;
+//            //transferMenu();
+//    }
+
+    public void checkTransferAmount () {
+
         }
-        return frozen;
-        //transferMenu();
-    }
-
-        public String acctClosed (){
-            String closed ="";
-            if (account.getAcctStatus() == Account.Status.CLOSED){
-                closed = "THIS ACCOUNT IS CLOSED!  PLEASE TRY AGAIN.";
-            }
-            return closed;
-            //transferMenu();
-    }
 
 
-    public String transfer (Account sourceAccount, Account TargetAccount) {
+    public String transfer (Account sourceAccount, Account targetAccount, Double amountToDeposit) throws InsufficientFundsException, ClosedAccountException, FrozenAccountException, {
+
+        if(amountToDeposit > sourceAccount.balance){
+            throw InsufficientFundsException;}
+        else if (targetAccount.getAcctStatus() == Account.Status.OFAC) {
+            throw ClosedAccountException;}
+        else if (targetAccount.getAcctStatus() == Account.Status.CLOSED) {
+            throw FrozenAccountExeption;}
+
+        targetAccountBalance = targetAccountBalance + amountTodeposit;
+            sourceAccountBalance = sourceAccountBalance - amountToDeposit;
+
+
         return "";
     }
 }

@@ -1,6 +1,7 @@
 package ATM.menus;
 
 import ATM.ATM;
+import ATM.Exceptions.FrozenAccountException;
 import ATM.accounts.Account;
 import ATM.accounts.Checking;
 import ATM.accounts.Investment;
@@ -19,7 +20,7 @@ public class AccountMenuTest {
     }
 
     @Test
-    public void getName() {
+    public void getName() throws FrozenAccountException {
         Account account = new Checking(123.45, 123, 9675, Account.Status.OPEN);
         AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
         Assert.assertEquals("Account Menu", acctMenu.getName());
@@ -27,7 +28,7 @@ public class AccountMenuTest {
     }
 
     @Test
-    public void getHeaderTest() {
+    public void getHeaderTest() throws FrozenAccountException{
         Account account = new Checking(123.45, 123, 9675, Account.Status.OPEN);
         AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
         String actual = acctMenu.getHeader();
@@ -36,7 +37,7 @@ public class AccountMenuTest {
     }
 
     @Test
-    public void getHeaderTest2() {
+    public void getHeaderTest2() throws FrozenAccountException{
         Account account = new Savings(123.45, 123, 9675, .03, Account.Status.OPEN);
         AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
         String actual = acctMenu.getHeader();
@@ -45,7 +46,7 @@ public class AccountMenuTest {
     }
 
     @Test
-    public void getHeaderTest3() {
+    public void getHeaderTest3() throws FrozenAccountException{
         Account account = new Investment(123.45, 123, 9675, .08, Account.Status.OPEN);
         AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
         String actual = acctMenu.getHeader();

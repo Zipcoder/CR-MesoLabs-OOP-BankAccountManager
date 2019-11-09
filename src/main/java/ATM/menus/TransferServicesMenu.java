@@ -26,9 +26,14 @@ public class TransferServicesMenu implements Menu {
     private TransferServices transferServices;
     private User currentUser;
 
-    public TransferServicesMenu(ATM atm, Account sourceAccount) {
+    public TransferServicesMenu(ATM atm, Account sourceAccount) throws ClosedAccountException, FrozenAccountException {
         this.atm = atm;
         this.sourceAccount = sourceAccount;
+        if (this.sourceAccount.getAcctStatus() == Account.Status.CLOSED) {
+            throw new ClosedAccountException();
+        } else if (this.sourceAccount.getAcctStatus() == Account.Status.OFAC) {
+            throw new FrozenAccountException();
+        }
         this.accountServices = this.atm.getAccountServices();
         this.transferServices = new TransferServices(this.atm, sourceAccount);
         this.currentUser = this.atm.getCurrentUser();

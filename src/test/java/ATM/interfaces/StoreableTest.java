@@ -28,15 +28,16 @@ public class StoreableTest {
 
     @Test
     public void toStringArrayAccountChecking() {
-        Account account = new Checking(12.23, 23, 3432, Account.Status.valueOf("OPEN"));
+        Account account = new Checking(12.23, 23, 3432, Account.Status.CLOSED);
 
         String[] actual = account.toStringArray();
         String[] expected = new String[] {
                 "3432",
                 "23",
                 "12.23",
-                "accounts.Checking",
-                ""
+                "Checking",
+                "",
+                "CLOSED"
         };
 
         Assert.assertEquals(actual, expected);
@@ -44,15 +45,16 @@ public class StoreableTest {
 
     @Test
     public void toStringArrayAccountSavings() {
-        Account account = new Savings(12.23, 23, 3432, 0.05, Account.Status.valueOf("OPEN"));
+        Account account = new Savings(12.23, 23, 3432, 0.05, Account.Status.OFAC);
 
         String[] actual = account.toStringArray();
         String[] expected = new String[] {
                 "3432",
                 "23",
                 "12.23",
-                "accounts.Savings",
-                "0.05"
+                "Savings",
+                "0.05",
+                "OFAC"
         };
 
         Assert.assertEquals(actual, expected);
@@ -60,15 +62,16 @@ public class StoreableTest {
 
     @Test
     public void toStringArrayAccountInvestment() {
-        Account account = new Investment(12.23, 23, 3432, 0.2, Account.Status.valueOf("OPEN"));
+        Account account = new Investment(12.23, 23, 3432, 0.2, Account.Status.OPEN);
 
         String[] actual = account.toStringArray();
         String[] expected = new String[] {
                 "3432",
                 "23",
                 "12.23",
-                "accounts.Investment",
-                "0.2"
+                "Investment",
+                "0.2",
+                "OPEN"
         };
 
         Assert.assertEquals(actual, expected);

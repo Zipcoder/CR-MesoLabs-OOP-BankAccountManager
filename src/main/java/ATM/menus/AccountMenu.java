@@ -26,13 +26,17 @@ public class AccountMenu implements Menu {
 
     /**
      * Account Menu - the menu to deal with a single account
-     * @param atm - ATM instance
+     *
+     * @param atm     - ATM instance
      * @param account - the account we're dealing with
      */
-    public AccountMenu(ATM atm, Account account){
+    public AccountMenu(ATM atm, Account account) throws FrozenAccountException {
         this.atm = atm;
         this.currentUser = this.atm.getCurrentUser();
         this.account = account;
+        if (this.account.getAcctStatus() == Account.Status.OFAC) {
+            throw new FrozenAccountException();
+        }
         this.transactionServices = this.atm.getTransactionServices();
         this.accountServices = this.atm.getAccountServices();
     }
@@ -41,16 +45,20 @@ public class AccountMenu implements Menu {
         Console.clearScreen();
 
         String header = getHeader();
-        int input = Console.getInput(header, new String[] {"View Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Back to Main Menu" });
+        int input = Console.getInput(header, new String[]{"View Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Back to Main Menu"});
         handleChoice(input);
     }
 
     public String getHeader() {
         String header = account.getClass().getSimpleName() + " Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
         if (account instanceof Savings) {
-            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate())+"%";
+            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate()) + "%";
         } else if (account instanceof Investment) {
-            header += "  Risk: " + String.format("%d", Math.round(100*((Investment) account).getRisk()))+"/10";
+            header += "  Risk: " + String.format("%d", Math.round(100 * ((Investment) account).getRisk())) + "/10";
+        }
+        Account.Status status = account.getAcctStatus();
+        if (status == Account.Status.CLOSED || status == Account.Status.OFAC) {
+            header += String.format("  (%s)", status.toString());
         }
         return header;
     }
@@ -62,7 +70,7 @@ public class AccountMenu implements Menu {
     public void handleChoice(int choice) {
         double amount;
         Transaction transaction;
-            switch (choice) {
+        switch (choice) {
             case 1:
                 Console.outputTransactionsWithHeader("Transaction History", transactionServices.getTransactionsForAccount(account));
                 break;
@@ -74,28 +82,55 @@ public class AccountMenu implements Menu {
                 amount = Console.getCurrency("Withdrawal amount: ");
                 attemptWithdrawal(amount);
                 break;
-            case 4:
+            case 4: // close account
                 attemptCloseAccount();
                 break;
-            case 5:
-                new TransferServicesMenu(this.atm, account).displayMenu();
+            case 5: //  transfer money
+                attemptTransfer();
                 break;
             case 6:
                 break;
         }
     }
 
-    private void attemptCloseAccount()  {
+    private void attemptTransfer() {
+        try {
+            new TransferServicesMenu(this.atm, account).displayMenu();
+        } catch (ClosedAccountException e) {
+            Console.getInput("Error - this account is closed. Press Enter to continue");
+        } catch (FrozenAccountException e) {
+            Console.getInput("Error - this account is frozen by OFAC. Press Enter to continue");
+        }
+    }
+
+    private void attemptCloseAccount() {
         try {
             if (accountServices.closeAccount(account)) {
                 Console.getInput("Account closed; press Enter to continue");
             }
         } catch (BalanceRemainingException e) {
-            Console.getInput("Unable to close account - account is not empty; press Enter to continue");
+            closedAcctNotice();
         } catch (ClosedAccountException e) {
             Console.getInput("Error - account is already closed; press Enter to continue");
         } catch (FrozenAccountException e) {
             Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
+        }
+    }
+
+    private void closedAcctNotice() {
+        Console.getInput(("Account still contains funds. Do you wish to transfer funds to a different account?"));
+        String closeAccountInput = Console.getInput("\nEnter \"Y/N\" or \"exit\" to go back:");
+        if (closeAccountInput == "N"){
+            //gives user the money
+        }else if(closeAccountInput == "Y"){
+            try {
+                new TransferServicesMenu(atm, account).displayMenu();
+            } catch (ClosedAccountException e) {
+                Console.getInput("Error - account is closed; press Enter to continue");
+            } catch (FrozenAccountException e) {
+                Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
+
+            }
         }
     }
 
@@ -110,6 +145,7 @@ public class AccountMenu implements Menu {
             Console.getInput("Error - account is closed; press Enter to continue");
         } catch (FrozenAccountException e) {
             Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
+
         }
     }
 
@@ -122,8 +158,7 @@ public class AccountMenu implements Menu {
             Console.getInput("Error - account is closed; press Enter to continue");
         } catch (FrozenAccountException e) {
             Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
+
         }
     }
-
-
 }

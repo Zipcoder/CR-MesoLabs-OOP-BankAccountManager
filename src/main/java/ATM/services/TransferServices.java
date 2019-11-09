@@ -1,5 +1,9 @@
 package ATM.services;
 
+
+import ATM.User;
+
+import ATM.ATM;
 import ATM.accounts.Account;
 
 import java.util.ArrayList;
@@ -23,21 +27,32 @@ public class TransferServices {
     }
 
     //Constructor
-    public TransferServices(User currentUser, ATM atm, Account account) {
+    public TransferServices(ATM atm, Account account) {
         this.currentUser = currentUser;
         this.atm = atm;
         this.account = account;
     }
+
+
+    public String acctFrozen (){
+        String frozen = "";
+    if (account.getAcctStatus() == Account.Status.OFAC) {
+            frozen = "THIS ACCOUNT IS FROZEN!  PLEASE TRY AGAIN.";
+        }
+        return frozen;
+        //transferMenu();
+    }
 }
 
+    public string transfer (acctnum, ) {
 
-//
-//    public String acctFrozen (){
-//        if (Account.getAcctStatus() == Status.OPAC {
-//            return "THIS ACCOUNT IS FROZEN!  PLEASE TRY AGAIN.";
-//        }
-//        //transferMenu();
-//    }
+
+    }
+
+
+
+
+
 //
 //
 //

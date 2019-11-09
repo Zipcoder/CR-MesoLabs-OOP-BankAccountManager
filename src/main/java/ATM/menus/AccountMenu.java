@@ -79,7 +79,7 @@ public class AccountMenu implements Menu {
                 }
                 break;
             case 5:
-                new TransferServicesMenu(this.atm, account);
+                new TransferServicesMenu(this.atm, account).displayMenu();
                 break;
             case 6:
                 break;

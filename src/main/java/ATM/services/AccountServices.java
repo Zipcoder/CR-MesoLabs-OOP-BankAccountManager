@@ -135,10 +135,12 @@ public class AccountServices {
             this.accountDB.replaceRow(rowNum, stringRepOfAccount);
         }
     }
-    public DB getAccountDB(){
+
+    public DB getAccountDB() {
         return this.accountDB;
     }
-    public int getAccountDBLength(){
+
+    public int getAccountDBLength() {
         return accountDB.length();
     }
 
@@ -159,27 +161,40 @@ public class AccountServices {
     }
 
 
+    public Boolean closeAccount(Account account) throws BalanceRemainingException, FrozenAccountException, InsufficientFundsException{
+        boolean status = true;
+        if (account.getBalance() == 0) {
+            deleteAccountFromDB(account);
+            Transaction transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "Account Closed", false);
+            transactionServices.saveTransactionToDB(transaction);
+            status = true;
+        } else {
+            Console.println("Account still contains funds. Withdraw or transfer all funds before closing.");
+            Console.getInput("\nPress Enter");
+            status = false;
+        }
+        return status;
+    }
 
 
-    public void closeAccount(Account account) {
-                 // TODO: take this code for closeAccount(Account account);
-                 /*  if (account.getBalance() == 0) {
+    public void accountDeposit(Account account, double amount) throws BalanceRemainingException, FrozenAccountException{
+        saveAccountToDB(account);
+        Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM deposit", true);
+        transactionServices.saveTransactionToDB(transaction);
+        saveAccountToDB(account);
+    }
 
-                      accountServices.deleteAccountFromDB(account);
-                      transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "Account Closed", false);
-                      transactionServices.saveTransactionToDB(transaction);
-                  } else {
-                       Console.println("Account still contains funds. Withdraw or transfer all funds before closing.");
-                       Console.getInput("\nPress Enter");
-                    }
-                 break;*/
-
-             }
-
-
-public void depositToAccount (int amount, Account accountType) {
-}
-public void accountWithdraw(){
+    public void accountWithdraw(Account account, double amount) throws BalanceRemainingException, FrozenAccountException, InsufficientFundsException{
+        amount = Console.getCurrency("Withdrawal amount: ");
+        if (amount <= account.getBalance()) {
+            account.deposit(-1 * amount);
+            saveAccountToDB(account);
+            Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM withdrawal", false);
+            transactionServices.saveTransactionToDB(transaction);
+        } else {
+            Console.println("Insufficient funds");
+            Console.getInput("\nPress Enter");
+        }
 
 /*    account.deposit(deposit);
 
@@ -208,7 +223,8 @@ public void accountWithdraw(){
             Console.println("Insufficient funds");
             Console.getInput("\nPress Enter");
             }*/
-        }
+    }
 }
+
 
 

@@ -87,7 +87,7 @@ public class AccountMenu implements Menu {
     }
 
     private void attemptWithdrawal(double amount) {
-        if (accountServices.accountWithdraw(account, amount);) {
+        if (accountServices.accountWithdraw(account, amount) {
             Console.getInput("Withdrawal successful; press Enter to continue");
         } else {
             Console.getInput("Insufficient funds; press Enter to continue");
@@ -95,7 +95,7 @@ public class AccountMenu implements Menu {
     }
 
     private void attemptDeposit(double amount) {
-        if (accountServices.depositToAccount(account, amount);) {
+        if (accountServices.depositToAccount(account, amount) {
             Console.getInput("Deposit successful; press Enter to continue");
         } else {
             Console.getInput("Deposit error; press Enter to continue");

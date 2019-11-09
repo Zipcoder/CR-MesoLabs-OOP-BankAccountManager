@@ -1,4 +1,6 @@
-package ATM;
+package ATM.interfaces;
+
+import ATM.ATM;
 
 public interface Menu {
 

@@ -21,7 +21,7 @@ public class ConsoleTest {
     @Test
     public void menuOptionsTest() {
         String[] options = new String[] {"Live", "Die", "Repeat"};
-        String header = "accounts.Account Creation ATM.Menu";
+        String header = "accounts.Account Creation ATM.interfaces.Menu";
         options = new String[] {"Live", "Die", "Repeat", "Bump", "Set", "Spike", "Towel"};
         //ATM.Console.getInput(options);
         //ATM.Console.getInput(header, options);

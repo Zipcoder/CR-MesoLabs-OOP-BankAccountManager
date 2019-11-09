@@ -12,10 +12,12 @@ import org.junit.Test;
 public class UserServicesTest {
 
     private ATM atm;
+    private UserServices userServices;
 
     @Before
     public void setUp() throws Exception {
         atm = new ATM("testuserDB.csv", "testaccountDB.csv", "testtransactionDB.csv");
+        userServices = atm.getUserServices();
     }
 
     @Test
@@ -24,35 +26,35 @@ public class UserServicesTest {
             DB userDB = atm.getUserDB();
             userDB.clear();
 
-            int actual = atm.getMaxUserNumber();
+            int actual = userServices.getMaxUserNumber();
             int expected = 0;
 
             Assert.assertEquals(actual,expected);
 
             User user1 = new User("Jim","Brown","goolybib", 12, 12343);
-            atm.saveUserToDB(user1);
+            userServices.saveUserToDB(user1);
             User user2 = new User("Ji123m","Bro23wn","gool321ybib", 122, 1234313);
-            atm.saveUserToDB(user2);
+            userServices.saveUserToDB(user2);
             User user3 = new User("Jane","Himne","gasdsdool321ybib", 32, 313);
-            atm.saveUserToDB(user3);
+            userServices.saveUserToDB(user3);
 
-            actual = atm.getMaxUserNumber();
+            actual = userServices.getMaxUserNumber();
             expected = 122;
 
             Assert.assertEquals(actual,expected);
 
             User user4 = new User("Jane","Himne","gasdsdool321ybib", 29, 313);
-            atm.saveUserToDB(user4);
+            userServices.saveUserToDB(user4);
 
-            actual = atm.getMaxUserNumber();
+            actual = userServices.getMaxUserNumber();
             expected = 122;
 
             Assert.assertEquals(actual,expected);
 
             User user5 = new User("Jane","Himne","gasdsdool321ybib", 199, 313);
-            atm.saveUserToDB(user5);
+            userServices.saveUserToDB(user5);
 
-            actual = atm.getMaxUserNumber();
+            actual = userServices.getMaxUserNumber();
             expected = 199;
 
             Assert.assertEquals(actual,expected);
@@ -67,28 +69,28 @@ public class UserServicesTest {
             userDB.clear();
 
             User user1 = new User("Jim","Brown","goolybib", 12, 12343);
-            userDB.addRow(user1.toStringArray());
+            userServices.saveUserToDB(user1);
             User user2 = new User("Ji123m","Bro23wn","gool321ybib", 122, 1234313);
-            userDB.addRow(user2.toStringArray());
+            userServices.saveUserToDB(user2);
             User user3 = new User("Jane","Himne","gasdsdool321ybib", 32, 313);
-            userDB.addRow(user3.toStringArray());
+            userServices.saveUserToDB(user3);
 
-            int actual = atm.getUserRowByID(122);
+            int actual = userServices.getUserRowByID(122);
             int expected = 1;
 
             Assert.assertEquals(actual,expected);
 
-            actual = atm.getUserRowByID(12);
+            actual = userServices.getUserRowByID(12);
             expected = 0;
 
             Assert.assertEquals(actual,expected);
 
-            actual = atm.getUserRowByID(32);
+            actual = userServices.getUserRowByID(32);
             expected = 2;
 
             Assert.assertEquals(actual,expected);
 
-            actual = atm.getUserRowByID(323232);
+            actual = userServices.getUserRowByID(323232);
             expected = -1;
 
             Assert.assertEquals(actual,expected);
@@ -103,13 +105,13 @@ public class UserServicesTest {
             userDB.clear();
 
             User user1 = new User("Jim","Brown","goolybib", 12, 12343);
-            userDB.addRow(user1.toStringArray());
+            userServices.saveUserToDB(user1);
             User user2 = new User("Ji123m","Bro23wn","gool321ybib", 122, 1234313);
-            userDB.addRow(user2.toStringArray());
+            userServices.saveUserToDB(user2);
             User user3 = new User("Jane","Himne","gasdsdool321ybib", 32, 313);
-            userDB.addRow(user3.toStringArray());
+            userServices.saveUserToDB(user3);
 
-            String[] actual = atm.getUserInfoByID(122);
+            String[] actual = userServices.getUserInfoByID(122);
             String[] expected = user2.toStringArray();
 
             Assert.assertEquals(actual,expected);
@@ -123,18 +125,18 @@ public class UserServicesTest {
             userDB.clear();
 
             User user1 = new User("Jim","Brown","goolybib", 12, 12343);
-            userDB.addRow(user1.toStringArray());
+            userServices.saveUserToDB(user1);
             User user2 = new User("Ji123m","Bro23wn","gool321ybib", 122, 1234313);
-            userDB.addRow(user2.toStringArray());
+            userServices.saveUserToDB(user2);
             User user3 = new User("Jane","Himne","gasdsdool321ybib", 32, 313);
-            userDB.addRow(user3.toStringArray());
+            userServices.saveUserToDB(user3);
 
-            String[] actual = atm.getUserInfoByCardNum(1234313);
+            String[] actual = userServices.getUserInfoByCardNum(1234313);
             String[] expected = user2.toStringArray();
 
             Assert.assertEquals(actual,expected);
 
-            actual = atm.getUserInfoByCardNum(313);
+            actual = userServices.getUserInfoByCardNum(313);
             expected = user3.toStringArray();
 
             Assert.assertEquals(actual,expected);
@@ -149,18 +151,18 @@ public class UserServicesTest {
             userDB.clear();
 
             User user1 = new User("Jim","Brown","goolybib", 12, 12343);
-            atm.saveUserToDB(user1);
+            userServices.saveUserToDB(user1);
             User user2 = new User("Ji123m","Bro23wn","gool321ybib", 122, 1234313);
-            atm.saveUserToDB(user2);
+            userServices.saveUserToDB(user2);
             User user3 = new User("Jane","Himne","gasdsdool321ybib", 32, 313);
-            atm.saveUserToDB(user3);
+            userServices.saveUserToDB(user3);
 
-            String[] actual = atm.getUserInfoByID(122);
+            String[] actual = userServices.getUserInfoByID(122);
             String[] expected = user2.toStringArray();
 
             Assert.assertEquals(actual,expected);
 
-            actual = atm.getUserInfoByID(12);
+            actual = userServices.getUserInfoByID(12);
             expected = user1.toStringArray();
 
             Assert.assertEquals(actual,expected);
@@ -171,14 +173,14 @@ public class UserServicesTest {
             Assert.assertEquals(actual,expected);
 
             User user4 = new User("Ji123m","Bro23wn","gool321ysdasdbib", 12, 1234313);
-            atm.saveUserToDB(user4);
+            userServices.saveUserToDB(user4);
 
             actual2 = userDB.length();
             expected2 = 3;
 
             Assert.assertEquals(actual,expected);
 
-            actual = atm.getUserInfoByID(12);
+            actual = userServices.getUserInfoByID(12);
             expected = user4.toStringArray();
 
             Assert.assertEquals(actual,expected);

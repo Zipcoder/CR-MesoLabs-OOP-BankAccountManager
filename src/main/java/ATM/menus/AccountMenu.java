@@ -2,17 +2,14 @@ package ATM.menus;
 
 import ATM.ATM;
 import ATM.Console;
-import ATM.Menu;
+import ATM.interfaces.Menu;
 import ATM.User;
 import ATM.Transaction;
 import ATM.accounts.Account;
-import ATM.accounts.Checking;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
 import ATM.services.AccountServices;
 import ATM.services.TransactionServices;
-
-import java.util.Date;
 
 public class AccountMenu implements Menu {
 
@@ -74,43 +71,15 @@ public class AccountMenu implements Menu {
                 attemptWithdrawal(amount);
                 break;
             case 4:
-                accountServices.closeAccount(account);
-                // TODO: take this code for closeAccount(Account account);
-//                if (account.getBalance() == 0) {
-//
-//                    accountServices.deleteAccountFromDB(account);
-//                    transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "Account Closed", false);
-//                    transactionServices.saveTransactionToDB(transaction);
-//                } else {
-//                    Console.println("Account still contains funds. Withdraw or transfer all funds before closing.");
-//                    Console.getInput("\nPress Enter");
-//                }
+                if (accountServices.closeAccount(account)) {
+                    Console.getInput("Account closed; press Enter to continue");
+                } else {
+                    //TODO: deal with different kinds of errors and allow user to transfer funds
+                    Console.getInput("Error closing account; press Enter to continue");
+                }
                 break;
             case 5:
-                new TransferServicesMenu(this.atm, account);
-                // TODO: take this code for account transfers
-//                Console.println("Number of Account to transfer to");
-//                int ActToTransferTo = Console.getInteger();
-//                String[] actInfo = accountServices.getAccountInfoByID(ActToTransferTo);
-//                // 0: accountID 1: ownerID 2: balance 3: type 4: risk/interest/null (type-dependent)
-//                Account act = accountServices.getAccountByInfo(actInfo);
-//                deposit = Console.getCurrency("Transfer amount");
-//
-//                if(deposit < account.getBalance()) {
-//                    account.deposit(-1 * deposit);
-//                    act.deposit(deposit);
-//
-//                    accountServices.saveAccountToDB(account);
-//                    transaction = new Transaction(-1 * deposit, new Date(), account.getAcctNum(), "ATM.ATM Transfer", false);
-//                    transactionServices.saveTransactionToDB(transaction);
-//
-//                    accountServices.saveAccountToDB(act);
-//                    transaction = new Transaction(deposit, new Date(), act.getAcctNum(), "ATM.ATM Transfer", true);
-//                    transactionServices.saveTransactionToDB(transaction);
-//                } else {
-//                    Console.println("Insufficient funds in account");
-//                }
-
+                new TransferServicesMenu(this.atm, account).displayMenu();
                 break;
             case 6:
                 break;
@@ -121,7 +90,7 @@ public class AccountMenu implements Menu {
         if (accountServices.withdraw(account, amount)) {
             Console.getInput("Withdrawal successful; press Enter to continue");
         } else {
-        Console.getInput("Insufficient funds; press Enter to continue");
+            Console.getInput("Insufficient funds; press Enter to continue");
         }
     }
 

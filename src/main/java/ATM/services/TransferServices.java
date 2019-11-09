@@ -1,6 +1,11 @@
 package ATM.services;
 
+
+import ATM.User;
+
+import ATM.ATM;
 import ATM.accounts.Account;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,27 +22,45 @@ public class TransferServices {
     private User currentUser;
     private String acctStatus;
     private ATM atm;
-
-    enum Status {
-        OPEN, CLOSED, OFAC
-    }
+    private Integer acctTransferTo;
 
     //Constructor
-    public TransferServices(User currentUser, ATM atm, Account account) {
-        this.currentUser = currentUser;
+    public TransferServices(ATM atm, Account account) {
+        this.currentUser = this.atm.getCurrentUser();
         this.atm = atm;
         this.account = account;
+    }
+
+    //From menu: Account to Transfer to will equal acctTransferTo
+
+    public String acctFrozen (Account account){
+        String frozen = "";
+   // if (account.getAcctNum == Account.Status.OFAC) {
+        if (true){
+            frozen = "THIS ACCOUNT IS FROZEN!  PLEASE TRY AGAIN.";
+        }
+        return frozen;
+        //transferMenu();
+    }
+
+        public String acctClosed (){
+            String closed ="";
+            if (account.getAcctStatus() == Account.Status.CLOSED){
+                closed = "THIS ACCOUNT IS CLOSED!  PLEASE TRY AGAIN.";
+            }
+            return closed;
+            //transferMenu();
+    }
+
+
+    public String transfer (Account sourceAccount, Account TargetAccount) {
+        return "";
     }
 }
 
 
-//
-//    public String acctFrozen (){
-//        if (Account.getAcctStatus() == Status.OPAC {
-//            return "THIS ACCOUNT IS FROZEN!  PLEASE TRY AGAIN.";
-//        }
-//        //transferMenu();
-//    }
+
+
 //
 //
 //

@@ -108,4 +108,8 @@ public class TransactionServices {
         this.transactionDB.addRow(transaction.toStringArray());
     }
 
+    public void clearTransactionsDB(){
+        transactionDB.clear();
+    }
+
 }

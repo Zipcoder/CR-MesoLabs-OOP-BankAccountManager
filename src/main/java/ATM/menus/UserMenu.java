@@ -2,16 +2,13 @@ package ATM.menus;
 
 import ATM.ATM;
 import ATM.Console;
-import ATM.Menu;
-import ATM.services.TransactionServices;
+import ATM.interfaces.Menu;
 import ATM.services.UserServices;
-
-import java.util.ArrayList;
 
 public class UserMenu implements Menu {
 
     private Console console;
-    private String name = "ATM.User ATM.Menu";
+    private String name = "ATM.User ATM.interfaces.Menu";
     private ATM atm;
     private UserServices userServices;
 

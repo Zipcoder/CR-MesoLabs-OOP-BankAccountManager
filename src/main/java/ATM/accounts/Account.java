@@ -1,7 +1,14 @@
 package ATM.accounts;
 
+
+import java.util.Random;
+import ATM.User;
+
+
+
 import ATM.DB;
 import ATM.interfaces.Storeable;
+
 
 abstract public class Account implements Storeable {
 
@@ -12,15 +19,40 @@ abstract public class Account implements Storeable {
         OPEN, CLOSED, OFAC
     }
     private Status acctStatus;
+    Random random = new Random();
+
+
+
 
     public Account(Double balance, Integer ownerID, Integer acctNum, Status acctStatus) {
+
         this.balance = balance;
         this.ownerID = ownerID;
         // TODO: make account number here, via something better than wild-assed guess
-
+        //generateAccountNum();
         this.acctNum = acctNum;
         this.acctStatus = acctStatus;
     }
+
+    public Integer acctNumGenerator () {
+        int acctNum = random.nextInt( 98999 + 1) + 1000;
+        return acctNum;
+    }
+
+
+    //Checks if the account number is already in the database
+//        public Integer checkAcctNumExists (acctNum) {
+//        if (acctNum == accountServices.geta{
+//            acctNumGenerator();
+//        }
+//        else {return acctNum};
+//    }
+
+//    public void generateAccountNum () {
+//        acctNumGenerator();
+//        checkAcctNumExists();
+//    }
+
 
     public Double getBalance(){
         return balance;

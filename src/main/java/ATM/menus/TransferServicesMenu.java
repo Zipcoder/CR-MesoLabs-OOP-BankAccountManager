@@ -14,7 +14,7 @@ public class TransferServicesMenu {
 //        } else if (account instanceof accounts.Investment) {
 //            header += "  Risk: " + String.format("%d", Math.round(100*((accounts.Investment) account).getRisk()))+"/10";
 //        }
-//        String input = ATM.Console.getInput(header, new String[] {"View ATM.Transaction History", "Deposit", "Withdrawal", "Close accounts.Account", "Transfer", "Back to ATM.Main ATM.Menu" });
+//        String input = ATM.Console.getInput(header, new String[] {"View ATM.Transaction History", "Deposit", "Withdrawal", "Close accounts.Account", "Transfer", "Back to ATM.Main ATM.interfaces.Menu" });
 //
 //        Double deposit;
 //        ATM.Transaction transaction;

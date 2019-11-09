@@ -197,7 +197,7 @@ public class ATM {
 //        } else if (account instanceof Investment) {
 //            header += "  Risk: " + String.format("%d", Math.round(100*((Investment) account).getRisk()))+"/10";
 //        }
-//        String input = Console.getInput(header, new String[] {"View ATM.Transaction History", "Deposit", "Withdrawal", "Close accounts.Account", "Transfer", "Back to ATM.Main ATM.Menu" });
+//        String input = Console.getInput(header, new String[] {"View ATM.Transaction History", "Deposit", "Withdrawal", "Close accounts.Account", "Transfer", "Back to ATM.Main ATM.interfaces.Menu" });
 //
 //        Double deposit;
 //        Transaction transaction;

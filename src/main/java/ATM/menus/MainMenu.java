@@ -2,7 +2,7 @@ package ATM.menus;
 
 import ATM.ATM;
 import ATM.Console;
-import ATM.Menu;
+import ATM.interfaces.Menu;
 import ATM.accounts.Account;
 import ATM.services.AccountServices;
 import ATM.services.TransactionServices;

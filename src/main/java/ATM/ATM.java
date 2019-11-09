@@ -32,7 +32,7 @@ public class ATM {
         try {
             this.userDB = new DB(userDBName, 5);
             this.transactionDB = new DB(transactionDBName, 5);
-            this.accountDB = new DB(accountDBName, 5);
+            this.accountDB = new DB(accountDBName, 6);
         } catch (IOException e) {
             e.printStackTrace();
         }

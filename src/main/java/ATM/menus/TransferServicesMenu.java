@@ -2,25 +2,42 @@ package ATM.menus;
 
 import ATM.ATM;
 import ATM.services.TransferServices;
-
+import ATM.User;
+import ATM.Menu;
+import ATM.ATM;
+import ATM.accounts.Account;
 import java.io.Console;
 import java.util.Date;
 
 
-public class TransferServicesMenu {
+public class TransferServicesMenu implements Menu {
 
-    Console console;
+
     ATM atm;
 
-//    public TransferServices(ATM atm, Account account) {
-//        this.atm = atm;
-//
-//    }
-//
-//    public String welcome () {
-//        console.println(String.format("Welcome to transfer services.  Your current account number is %d, with a balance of: %.2f ", acctNum, )
-//    }
+    public TransferServicesMenu (ATM atm, Account account) {
+        this.atm = atm;
 
+    }
+
+    public String welcome () {
+        return String.format("Welcome to transfer services.  Your current account number is %d, with a balance of: %.2f ", account.acctNum, )
+    }
+
+    @Override
+    public void displayMenu() {
+
+    }
+
+    @Override
+    public void handleChoice(int choice) {
+
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
 
 
     //services.TransferServices transferServices = new services.TransferServices(currentUser, userDB, transactionDB, accountDB);

@@ -34,8 +34,6 @@ public class TransferServices {
     }
 
 
-
-
     public String acctFrozen (){
         String frozen = "";
     if (account.getAcctStatus() == Account.Status.OFAC) {
@@ -45,6 +43,16 @@ public class TransferServices {
         //transferMenu();
     }
 }
+
+    public string transfer (acctnum, ) {
+
+
+    }
+
+
+
+
+
 //
 //
 //

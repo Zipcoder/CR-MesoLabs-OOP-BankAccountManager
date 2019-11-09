@@ -40,3 +40,5 @@
 "debit","2","-1727.01","Sat Nov 09 17:54:28 EST 2019","Investment returns"
 "credit","33","2.80","Sat Nov 09 18:00:35 EST 2019","Interest earned"
 "credit","2","694.50","Sat Nov 09 18:00:35 EST 2019","Investment returns"
+"credit","33","2.80","Sat Nov 09 18:10:40 EST 2019","Interest earned"
+"debit","2","-106.16","Sat Nov 09 18:10:40 EST 2019","Investment returns"

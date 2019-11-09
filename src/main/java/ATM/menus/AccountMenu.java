@@ -5,6 +5,7 @@ import ATM.Console;
 import ATM.Exceptions.BalanceRemainingException;
 import ATM.Exceptions.ClosedAccountException;
 import ATM.Exceptions.FrozenAccountException;
+import ATM.Exceptions.InsufficientFundsException;
 import ATM.interfaces.Menu;
 import ATM.User;
 import ATM.Transaction;
@@ -74,17 +75,7 @@ public class AccountMenu implements Menu {
                 attemptWithdrawal(amount);
                 break;
             case 4:
-                try {
-                    if (accountServices.closeAccount(account)) {
-                        Console.getInput("Account closed; press Enter to continue");
-                    }
-                } catch (BalanceRemainingException) {
-                    Console.getInput("Unable to close account - account is not empty; press Enter to continue");
-                } catch (ClosedAccountException) {
-                    Console.getInput("Error - account is already closed; press Enter to continue");
-                } catch (FrozenAccountException) {
-                    Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
-                }
+                attemptCloseAccount();
                 break;
             case 5:
                 new TransferServicesMenu(this.atm, account).displayMenu();
@@ -94,19 +85,43 @@ public class AccountMenu implements Menu {
         }
     }
 
+    private void attemptCloseAccount()  {
+        try {
+            if (accountServices.closeAccount(account)) {
+                Console.getInput("Account closed; press Enter to continue");
+            }
+        } catch (BalanceRemainingException e) {
+            Console.getInput("Unable to close account - account is not empty; press Enter to continue");
+        } catch (ClosedAccountException e) {
+            Console.getInput("Error - account is already closed; press Enter to continue");
+        } catch (FrozenAccountException e) {
+            Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
+        }
+    }
+
     private void attemptWithdrawal(double amount) {
-        if (accountServices.accountWithdraw(account, amount)) {
-            Console.getInput("Withdrawal successful; press Enter to continue");
-        } else {
-            Console.getInput("Insufficient funds; press Enter to continue");
+        try {
+            if (accountServices.accountWithdraw(account, amount)) {
+                Console.getInput("Withdrawal successful; press Enter to continue");
+            }
+        } catch (InsufficientFundsException e) {
+            Console.getInput("Error - insufficient funds; press Enter to continue");
+        } catch (ClosedAccountException e) {
+            Console.getInput("Error - account is closed; press Enter to continue");
+        } catch (FrozenAccountException e) {
+            Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
         }
     }
 
     private void attemptDeposit(double amount) {
-        if (accountServices.depositToAccount(account, amount)) {
-            Console.getInput("Deposit successful; press Enter to continue");
-        } else {
-            Console.getInput("Deposit error; press Enter to continue");
+        try {
+            if (accountServices.accountDeposit(account, amount)) {
+                Console.getInput("Deposit successful; press Enter to continue");
+            }
+        } catch (ClosedAccountException e) {
+            Console.getInput("Error - account is closed; press Enter to continue");
+        } catch (FrozenAccountException e) {
+            Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
         }
     }
 

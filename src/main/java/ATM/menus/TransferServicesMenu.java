@@ -79,11 +79,11 @@ public class TransferServicesMenu implements Menu {
             double amount = Console.getCurrency("Amount to transfer: ");
             try {
                 transferServices.transfer(this.sourceAccount, usrAccts.get(choice - 1), amount);
-            } catch (ClosedAccountException) {
+            } catch (ClosedAccountException e) {
                 Console.println("Error - cannot transfer to/from a closed account. Press Enter to continue");
-            } catch (InsufficientFundsException) {
+            } catch (InsufficientFundsException e) {
                 Console.println("Error - insufficient funds. Press Enter to continue");
-            } catch (FrozenAccountException) {
+            } catch (FrozenAccountException e) {
                 Console.println("Error - cannot transfer to/from a frozen account. Press Enter to continue");
             }
             displayMenu();

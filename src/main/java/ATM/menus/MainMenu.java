@@ -51,7 +51,7 @@ public class MainMenu implements Menu {
         String nextAcctChoice;
         ArrayList<Account> usrAccts = accountServices.getAccountsForUser(atm.getCurrentUser());
         for (int i = 0; i < usrAccts.size(); i++) {
-            nextAcctChoice = String.format("%s #%d ($%,.2f)", usrAccts.get(i).getClass().getName(), usrAccts.get(i).getAcctNum(), usrAccts.get(i).getBalance());
+            nextAcctChoice = String.format("%s #%d ($%,.2f)", usrAccts.get(i).getClass().getSimpleName(), usrAccts.get(i).getAcctNum(), usrAccts.get(i).getBalance());
             choices.add(nextAcctChoice);
         }
         return choices;

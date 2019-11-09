@@ -106,26 +106,6 @@ public class ATM {
         }
     }
 
-    // add new user - called by getUser()
-    public User newUser() {
-
-        String firstName = Console.getInput("Enter Your First Name: ");
-        String lastName = Console.getInput("Enter Your Last Name: ");
-        String password = Console.getInput("Choose Your Password: ");
-
-        Integer cardNumber = User.genCardNum();
-        Console.println("Your Card Number: " + cardNumber + "\n");
-
-        Integer userID = (int) (Math.random() * 1000);
-
-
-        User newUser = new User(firstName, lastName, password, userID, cardNumber);
-        currentUser = newUser;
-        userServices.saveUserToDB(currentUser);
-
-        return newUser;
-    }
-
     // log in user - don't return until you do
     public void getUser() {
         String header = "Welcome to ZipCode National Bank";
@@ -274,8 +254,6 @@ public class ATM {
         getUser();
         applyInterest();
         applyReturns();
-
-        loadDBs();
 
         new MainMenu(this).displayMenu();
 

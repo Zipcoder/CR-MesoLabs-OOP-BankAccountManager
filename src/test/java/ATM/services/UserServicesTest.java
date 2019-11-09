@@ -23,8 +23,8 @@ public class UserServicesTest {
     @Test
     public void getMaxUserNumber() {
 
-            DB userDB = atm.getUserDB();
-            userDB.clear();
+
+            userServices.clearUserDB();
 
             int actual = userServices.getMaxUserNumber();
             int expected = 0;
@@ -65,8 +65,7 @@ public class UserServicesTest {
     @Test
     public void getUserRowByID() {
 
-            DB userDB = atm.getUserDB();
-            userDB.clear();
+            userServices.clearUserDB();
 
             User user1 = new User("Jim","Brown","goolybib", 12, 12343);
             userServices.saveUserToDB(user1);
@@ -101,8 +100,7 @@ public class UserServicesTest {
     @Test
     public void getUserInfoByID() {
 
-            DB userDB = atm.getUserDB();
-            userDB.clear();
+            userServices.clearUserDB();
 
             User user1 = new User("Jim","Brown","goolybib", 12, 12343);
             userServices.saveUserToDB(user1);
@@ -121,9 +119,7 @@ public class UserServicesTest {
     @Test
     public void getUserInfoByCardNum() {
 
-            DB userDB = atm.getUserDB();
-            userDB.clear();
-
+            userServices.clearUserDB();
             User user1 = new User("Jim","Brown","goolybib", 12, 12343);
             userServices.saveUserToDB(user1);
             User user2 = new User("Ji123m","Bro23wn","gool321ybib", 122, 1234313);
@@ -147,8 +143,7 @@ public class UserServicesTest {
     @Test
     public void saveUserToDB() {
 
-            DB userDB = atm.getUserDB();
-            userDB.clear();
+            userServices.clearUserDB();
 
             User user1 = new User("Jim","Brown","goolybib", 12, 12343);
             userServices.saveUserToDB(user1);
@@ -167,7 +162,7 @@ public class UserServicesTest {
 
             Assert.assertEquals(actual,expected);
 
-            int actual2 = userDB.length();
+            int actual2 = userServices.getUserDBLength();
             int expected2 = 3;
 
             Assert.assertEquals(actual,expected);
@@ -175,7 +170,7 @@ public class UserServicesTest {
             User user4 = new User("Ji123m","Bro23wn","gool321ysdasdbib", 12, 1234313);
             userServices.saveUserToDB(user4);
 
-            actual2 = userDB.length();
+            actual2 =userServices.getUserDBLength();
             expected2 = 3;
 
             Assert.assertEquals(actual,expected);

@@ -9,3 +9,7 @@
 "credit","2","3303.34","Tue Oct 29 13:24:46 EDT 2019","Investment returns"
 "credit","33","3.33","Tue Oct 29 13:27:00 EDT 2019","Interest earned"
 "credit","2","1550.97","Tue Oct 29 13:27:00 EDT 2019","Investment returns"
+"credit","33","3.34","Sat Nov 09 11:54:24 EST 2019","Interest earned"
+"debit","2","-1564.53","Sat Nov 09 11:54:24 EST 2019","Investment returns"
+"credit","33","3.34","Sat Nov 09 11:56:09 EST 2019","Interest earned"
+"debit","2","-1340.18","Sat Nov 09 11:56:09 EST 2019","accounts.Investment returns"

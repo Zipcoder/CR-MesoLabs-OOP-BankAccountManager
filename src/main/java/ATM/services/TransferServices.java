@@ -1,6 +1,9 @@
 package ATM.services;
 
 
+import ATM.Exceptions.ClosedAccountException;
+import ATM.Exceptions.FrozenAccountException;
+import ATM.Exceptions.InsufficientFundsException;
 import ATM.User;
 
 import ATM.ATM;
@@ -65,11 +68,11 @@ public class TransferServices {
     public String transfer (Account sourceAccount, Account targetAccount, double amountToDeposit) throws InsufficientFundsException, ClosedAccountException, FrozenAccountException, {
 
         if(amountToDeposit > sourceAccount.balance){
-            throw InsufficientFundsException;}
+            throw new InsufficientFundsException();}
         else if (targetAccount.getAcctStatus() == Account.Status.OFAC) {
-            throw ClosedAccountException;}
+            throw new ClosedAccountException();}
         else if (targetAccount.getAcctStatus() == Account.Status.CLOSED) {
-            throw FrozenAccountExeption;}
+            throw new FrozenAccountException();}
 
             targetAccount.balance = targetAccount.balance + amountToDeposit;
             sourceAccount.balance = sourceAccount.balance - amountToDeposit;

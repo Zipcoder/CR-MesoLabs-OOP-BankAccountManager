@@ -33,16 +33,10 @@ public class AccountServicesTest {
         atm.getTransactionDB().clear();
     }
 
-    @Test
-    public void getAccountDB() {
 
-        DB foundDB = atm.getAccountDB();
-        String fileName = foundDB.getFileName();
-        Assert.assertEquals("testaccountDB.csv", fileName);
-    }
+
     @Test
     public void getMaxAccountNumberTest() {
-        DB accountDB = atm.getAccountDB();
         accountServices.clearAccountDB();
 
         int actual = accountServices.getMaxAccountNumber();
@@ -88,7 +82,6 @@ public class AccountServicesTest {
     }
     @Test
     public void getAccountInfoByID() {
-
         accountServices.clearAccountDB();
 
         Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));
@@ -106,9 +99,6 @@ public class AccountServicesTest {
 
     @Test
     public void getAccountRowByID() {
-
-
-
         Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(120.43,12,333223, 0.01, Account.Status.valueOf("OPEN"));
@@ -139,10 +129,9 @@ public class AccountServicesTest {
 
     @Test
     public void getAccountIDsByUserTest() {
-        DB accountDB = atm.getAccountDB();
         accountServices.clearAccountDB();
         userServices.clearUserDB();
-        DB userDB = atm.getUserDB();
+
 
 
         User user1 = new User("Jim","Brown","goolybib", 98, 12343);
@@ -202,7 +191,6 @@ public class AccountServicesTest {
 
     @Test
     public void getAccountsForUserTest() {
-
         accountServices.clearAccountDB();
         userServices.clearUserDB();
 
@@ -246,7 +234,6 @@ public class AccountServicesTest {
 
     @Test
     public void saveAccountToDBTest() {
-
         accountServices.clearAccountDB();
 
         Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));

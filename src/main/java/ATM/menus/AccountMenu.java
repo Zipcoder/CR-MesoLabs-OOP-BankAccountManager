@@ -109,11 +109,28 @@ public class AccountMenu implements Menu {
                 Console.getInput("Account closed; press Enter to continue");
             }
         } catch (BalanceRemainingException e) {
-            Console.getInput("Unable to close account - account is not empty; press Enter to continue");
+            closedAcctNotice();
         } catch (ClosedAccountException e) {
             Console.getInput("Error - account is already closed; press Enter to continue");
         } catch (FrozenAccountException e) {
             Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
+        }
+    }
+
+    private void closedAcctNotice() {
+        Console.getInput(("Account still contains funds. Do you wish to transfer funds to a different account?"));
+        String closeAccountInput = Console.getInput("\nEnter \"Y/N\" or \"exit\" to go back:");
+        if (closeAccountInput == "N"){
+            //gives user the money
+        }else if(closeAccountInput == "Y"){
+            try {
+                new TransferServicesMenu(atm, account).displayMenu();
+            } catch (ClosedAccountException e) {
+                Console.getInput("Error - account is closed; press Enter to continue");
+            } catch (FrozenAccountException e) {
+                Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
+
+            }
         }
     }
 

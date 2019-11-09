@@ -2,6 +2,7 @@
 *.iml
 data/*
 data/
+data/*
 target/
 .project
 .classpath

@@ -30,10 +30,13 @@ public class AccountMenu implements Menu {
      * @param atm     - ATM instance
      * @param account - the account we're dealing with
      */
-    public AccountMenu(ATM atm, Account account) {
+    public AccountMenu(ATM atm, Account account) throws FrozenAccountException {
         this.atm = atm;
         this.currentUser = this.atm.getCurrentUser();
         this.account = account;
+        if (this.account.getAcctStatus() == Account.Status.OFAC) {
+            throw new FrozenAccountException();
+        }
         this.transactionServices = this.atm.getTransactionServices();
         this.accountServices = this.atm.getAccountServices();
     }

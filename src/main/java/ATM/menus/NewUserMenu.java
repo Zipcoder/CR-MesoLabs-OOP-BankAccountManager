@@ -8,7 +8,6 @@ import ATM.services.UserServices;
 
 public class NewUserMenu {
 
-    private Console console;
     private String name = "ATM.User ATM.Menu";
     private ATM atm;
     private String firstName;

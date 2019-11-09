@@ -32,23 +32,23 @@ abstract public class Account implements Storeable {
     }
 
     public Integer acctNumGenerator () {
-        int acctNum = random.nextInt( 99999 + 1) + 1000;
+        int acctNum = random.nextInt( 98999 + 1) + 1000;
         return acctNum;
     }
 
 
     //Checks if the account number is already in the database
-    //    public Integer checkAcctNumExists (acctNum) {
-//        if (acctNum == CHECK ACCT # AGAIINST USER DB){
-//            acctNumGenerator();
-//        }
-    //    else {return acctNum};
-//    }
+        public Integer checkAcctNumExists (acctNum) {
+        if (acctNum == accountServices.geta{
+            acctNumGenerator();
+        }
+        else {return acctNum};
+    }
 
-//    public void generateAccountNum () {
-//        acctNumGenerator();
-//        checkAcctNumExists();
-//    }
+    public void generateAccountNum () {
+        acctNumGenerator();
+        checkAcctNumExists();
+    }
 
 
     public Double getBalance(){

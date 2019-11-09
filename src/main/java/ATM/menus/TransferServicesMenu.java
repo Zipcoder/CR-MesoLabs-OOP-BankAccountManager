@@ -1,8 +1,22 @@
 package ATM.menus;
 
+import ATM.ATM;
+
+import java.io.Console;
 import java.util.Date;
 
+
 public class TransferServicesMenu {
+
+    Console console;
+    ATM atm;
+
+
+
+    public String welcome () {
+        console.println(String.format("Welcome to transfer services.  Your current account number is %d, with a balance of: %.2f ", acctNum, )
+    }
+
 
 
     //services.TransferServices transferServices = new services.TransferServices(currentUser, userDB, transactionDB, accountDB);

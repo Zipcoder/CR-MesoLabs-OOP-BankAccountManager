@@ -25,7 +25,7 @@ public class TransferServices {
     }
 
     //Constructor
-    public TransferServices(User currentUser, ATM atm, Account account) {
+    public TransferServices(ATM atm, Account account) {
         this.currentUser = currentUser;
         this.atm = atm;
         this.account = account;

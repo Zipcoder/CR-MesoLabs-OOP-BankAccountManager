@@ -1,5 +1,6 @@
 package ATM.services;
 
+import ATM.ATM;
 import ATM.DB;
 import ATM.Transaction;
 import ATM.User;
@@ -7,18 +8,21 @@ import ATM.accounts.Account;
 import ATM.accounts.Checking;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
+import ATM.Console;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class AccountServices {
 
     private DB accountDB;       // 0: accountID 1: ownerID 2: balance 3: type 4: risk/interest/null (type-dependent)
+    private ATM atm;
+    private TransactionServices transactionServices;
 
-
-    public AccountServices(DB accountDB) {
+    public AccountServices(DB accountDB, ATM atm) {
         this.accountDB = accountDB;
+        this.atm = atm;
+        this.transactionServices = atm.getTransactionServices();
     }
 
     public void addAccount(ArrayList<Account> usrAccounts, Double deposit, User currentUser) {
@@ -35,7 +39,7 @@ public class AccountServices {
                 usrAccounts.add(newAccount);
 
                 transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                saveTransactionToDB(transaction);
+                transactionServices.saveTransactionToDB(transaction);
                 break;
             case "2":
                 Double interestRate = .01 * (1 + Math.floor(deposit/1000));
@@ -45,7 +49,7 @@ public class AccountServices {
                 usrAccounts.add(newAccount);
 
                 transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                saveTransactionToDB(transaction);
+                this.transactionServices.saveTransactionToDB(transaction);
                 break;
             case "3":
                 Console.print("On a scale of 1-10, enter your risk tolerance ");
@@ -56,7 +60,7 @@ public class AccountServices {
                 usrAccounts.add(newAccount);
 
                 transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                saveTransactionToDB(transaction);
+                this.transactionServices.saveTransactionToDB(transaction);
                 break;
             case "4":
                 break;
@@ -93,6 +97,17 @@ public class AccountServices {
             return new Investment(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
         }
         return null;
+    }
+
+    //find account row by id
+    public Integer getAccountRowByID (Integer ID) {
+        return this.accountDB.findPartialRow(new String[]{ID.toString()}, new int[]{0});
+    }
+
+    //find account info by id (helper for constructor)
+    public String [] getAccountInfoByID (Integer ID) {
+        int rowNumOfAccount = this.accountDB.findPartialRow(new String[] {ID.toString()}, new int[] {0});
+        return this.accountDB.readRow(rowNumOfAccount);
     }
 
     // AL of accounts for a user

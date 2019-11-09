@@ -1,5 +1,6 @@
 package ATM.services;
 
+import ATM.ATM;
 import ATM.DB;
 import ATM.User;
 
@@ -8,9 +9,11 @@ import java.util.ArrayList;
 public class UserServices {
 
     private DB userDB;
+    private ATM atm;
 
-    public UserServices(DB userDB) {
+    public UserServices(DB userDB, ATM atm) {
         this.userDB = userDB;
+        this.atm = atm;
     }
 
     public int getMaxUserNumber() {

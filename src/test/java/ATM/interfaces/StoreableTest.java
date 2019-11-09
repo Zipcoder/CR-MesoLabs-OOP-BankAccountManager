@@ -1,5 +1,6 @@
 package ATM.interfaces;
 
+import ATM.User;
 import ATM.accounts.Account;
 import ATM.accounts.Checking;
 import ATM.accounts.Investment;

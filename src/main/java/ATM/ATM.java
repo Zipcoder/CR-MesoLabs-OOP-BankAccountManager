@@ -4,6 +4,9 @@ import ATM.accounts.Account;
 import ATM.accounts.Checking;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
+import ATM.services.AccountServices;
+import ATM.services.TransactionServices;
+import ATM.services.UserServices;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -19,6 +22,10 @@ public class ATM {
     private DB transactionDB;   // 0: credit/debit 1: accountID 2: amount (signed) 3: timeStamp 4: description
     private DB accountDB;       // 0: accountID 1: ownerID 2: balance 3: type 4: risk/interest/null (type-dependent)
 
+    private UserServices userServices;
+    private TransactionServices transactionServices;
+    private AccountServices accountServices;
+
     public ATM(String userDBName, String accountDBName, String transactionDBName) {
         this.currentUser = null;
         try {
@@ -28,20 +35,39 @@ public class ATM {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.userServices = new UserServices(userDB, this);
+        this.transactionServices = new TransactionServices(transactionDB, this);
+        this.accountServices = new AccountServices(accountDB, this);
     }
 
     public User getCurrentUser() {
         return this.currentUser;
     }
+
     public DB getUserDB() {
         return this.userDB;
     }
+
     public DB getTransactionDB() {
         return this.transactionDB;
     }
+
     public DB getAccountDB() {
         return this.accountDB;
     }
+
+    public UserServices getUserServices() {
+        return userServices;
+    }
+
+    public TransactionServices getTransactionServices() {
+        return transactionServices;
+    }
+
+    public AccountServices getAccountServices() {
+        return accountServices;
+    }
+
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }

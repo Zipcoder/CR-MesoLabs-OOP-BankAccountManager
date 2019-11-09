@@ -1,5 +1,9 @@
 package ATM.services;
 
+import ATM.ATM;
+import ATM.DB;
+import ATM.Transaction;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

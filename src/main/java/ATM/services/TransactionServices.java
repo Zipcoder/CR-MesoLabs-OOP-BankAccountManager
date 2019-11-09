@@ -1,5 +1,6 @@
 package ATM.services;
 
+import ATM.ATM;
 import ATM.DB;
 import ATM.Transaction;
 import ATM.User;
@@ -11,11 +12,14 @@ import java.util.ArrayList;
 
 public class TransactionServices {
 
-
+    private ATM atm;
     private DB transactionDB;   // 0: credit/debit 1: accountID 2: amount (signed) 3: timeStamp 4: description
+    private AccountServices accountServices;
 
-    public TransactionServices(DB transactionDB) {
+    public TransactionServices(DB transactionDB, ATM atm) {
         this.transactionDB = transactionDB;
+        this.atm = atm;
+        this.accountServices = atm.getAccountServices();
     }
 
     public DB getTransactionDB() {
@@ -25,10 +29,10 @@ public class TransactionServices {
 
 
     public int[] getTransactionRowsByUser (User user) {
-        int[] accountRows =  getAccountRowsByUser(user);
+        int[] accountRows =  this.accountServices.getAccountRowsByUser(user);
         ArrayList<Integer> accountNums = new ArrayList<>();
         for (int row : accountRows) {
-            accountNums.add(Integer.parseInt(getAccountInfoByRow(row)[0]));
+            accountNums.add(Integer.parseInt(this.accountServices.getAccountInfoByRow(row)[0]));
         }
 
         ArrayList<Integer> rows = new ArrayList<>();

@@ -13,6 +13,7 @@ import ATM.accounts.Checking;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
 import ATM.Console;
+import ATM.menus.TransferServicesMenu;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -173,8 +174,18 @@ public class AccountServices {
             transactionServices.saveTransactionToDB(transaction);
             status = true;
         } else {
-            Console.println("Account still contains funds. Withdraw or transfer all funds before closing.");
-            Console.getInput("\nPress Enter");
+            Console.println("Account still contains funds. Do you wish to transfer funds to a different account?");
+            String closeAccountInput = Console.getInput("\nEnter \"Y/N\" or \"exit\" to go back:");
+            if (closeAccountInput == "N"){
+                //gives user the money
+            }else if(closeAccountInput == "Y"){
+                TransferServicesMenu closingAccountDecision = new TransferServicesMenu(atm, account);
+                closingAccountDecision.displayMenu();
+            }
+            else
+                //closeAccountInput = ("Invalid input, please try again.");
+
+
             status = false;
         }
         return status;

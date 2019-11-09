@@ -24,12 +24,16 @@ public class AccountServices {
     private DB accountDB;
     private ATM atm;
     private TransactionServices transactionServices;
+    private UserServices userServices;
     private Account accountType;
 
     public AccountServices(DB accountDB, ATM atm) {
         this.accountDB = accountDB;
         this.atm = atm;
-        this.transactionServices = atm.getTransactionServices();
+    }
+
+    public void linkServices() {
+        this.transactionServices = this.atm.getTransactionServices();
     }
 
     public void addAccount(ArrayList<Account> usrAccounts, Double deposit, User currentUser) {

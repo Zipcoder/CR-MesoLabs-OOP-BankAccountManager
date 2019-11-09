@@ -19,11 +19,14 @@ public class TransactionServices {
     public TransactionServices(DB transactionDB, ATM atm) {
         this.transactionDB = transactionDB;
         this.atm = atm;
-        this.accountServices = atm.getAccountServices();
     }
 
     public DB getTransactionDB() {
         return this.transactionDB;
+    }
+
+    public void linkServices() {
+        this.accountServices = atm.getAccountServices();
     }
 
 

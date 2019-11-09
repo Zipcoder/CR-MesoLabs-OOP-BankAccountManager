@@ -13,6 +13,7 @@ import ATM.services.UserServices;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class ATM {
 
@@ -251,7 +252,13 @@ public class ATM {
         // authenticate a user (or die trying)
         // only returns null if the magic secret exit code is called
 
+        this.transactionServices.linkServices();
+        this.accountServices.linkServices();
+        //this.userServices.linkServices();
+
         getUser();
+
+        interestRateChange();
         applyInterest();
         applyReturns();
 
@@ -267,6 +274,23 @@ public class ATM {
         for (Account account : userAccounts) {
             if (account instanceof Savings) {
                 calcInterest(account);
+            }
+        }
+    }
+
+    public void interestRateChange() {
+        ArrayList<Account> userAccounts = accountServices.getAccountsForUser(this.currentUser);
+        Random random = new Random();
+
+        for (Account account : userAccounts) {
+            if (account instanceof Savings) {
+                if (random.nextInt(5) >= 4) {
+                    double newRate = ((Savings) account).getInterestRate() - .05 + .01 * random.nextInt(11);
+                    ((Savings) account).setInterestRate(newRate);
+                    accountServices.saveAccountToDB(account);
+                    Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",account.getBalance())), new Date(), account.getAcctNum(), String.format("Interest rate changed to 0%.2f",newRate), true);
+                    transactionServices.saveTransactionToDB(transaction);
+                }
             }
         }
     }
@@ -294,7 +318,7 @@ public class ATM {
         account.deposit(earnings);
         accountServices.saveAccountToDB(account);
         Boolean isCredit = (earnings > 0);
-        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",earnings)), new Date(), account.getAcctNum(), "accounts.Investment returns", isCredit);
+        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",earnings)), new Date(), account.getAcctNum(), "Investment returns", isCredit);
         transactionServices.saveTransactionToDB(transaction);
     }
 

@@ -26,10 +26,11 @@ public class AccountMenu implements Menu {
 
     /**
      * Account Menu - the menu to deal with a single account
-     * @param atm - ATM instance
+     *
+     * @param atm     - ATM instance
      * @param account - the account we're dealing with
      */
-    public AccountMenu(ATM atm, Account account){
+    public AccountMenu(ATM atm, Account account) {
         this.atm = atm;
         this.currentUser = this.atm.getCurrentUser();
         this.account = account;
@@ -41,16 +42,16 @@ public class AccountMenu implements Menu {
         Console.clearScreen();
 
         String header = getHeader();
-        int input = Console.getInput(header, new String[] {"View Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Back to Main Menu" });
+        int input = Console.getInput(header, new String[]{"View Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Back to Main Menu"});
         handleChoice(input);
     }
 
     public String getHeader() {
         String header = account.getClass().getSimpleName() + " Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
         if (account instanceof Savings) {
-            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate())+"%";
+            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate()) + "%";
         } else if (account instanceof Investment) {
-            header += "  Risk: " + String.format("%d", Math.round(100*((Investment) account).getRisk()))+"/10";
+            header += "  Risk: " + String.format("%d", Math.round(100 * ((Investment) account).getRisk())) + "/10";
         }
         return header;
     }
@@ -62,7 +63,7 @@ public class AccountMenu implements Menu {
     public void handleChoice(int choice) {
         double amount;
         Transaction transaction;
-            switch (choice) {
+        switch (choice) {
             case 1:
                 Console.outputTransactionsWithHeader("Transaction History", transactionServices.getTransactionsForAccount(account));
                 break;
@@ -85,7 +86,7 @@ public class AccountMenu implements Menu {
         }
     }
 
-    private void attemptCloseAccount()  {
+    private void attemptCloseAccount() {
         try {
             if (accountServices.closeAccount(account)) {
                 Console.getInput("Account closed; press Enter to continue");
@@ -99,13 +100,7 @@ public class AccountMenu implements Menu {
         }
     }
 
-    private void attemptWithdrawal(amount) {
-
-        if (accountServices.accountWithdraw(account, amount) {
-            Console.getInput("Withdrawal successful; press Enter to continue");
-        } else {
-            Console.getInput("Insufficient funds; press Enter to continue");
-
+    private void attemptWithdrawal(double amount) {
         try {
             if (accountServices.accountWithdraw(account, amount)) {
                 Console.getInput("Withdrawal successful; press Enter to continue");
@@ -121,12 +116,6 @@ public class AccountMenu implements Menu {
     }
 
     private void attemptDeposit(double amount) {
-
-        if (accountServices.depositToAccount(account, amount) {
-            Console.getInput("Deposit successful; press Enter to continue");
-        } else {
-            Console.getInput("Deposit error; press Enter to continue");
-
         try {
             if (accountServices.accountDeposit(account, amount)) {
                 Console.getInput("Deposit successful; press Enter to continue");
@@ -137,9 +126,5 @@ public class AccountMenu implements Menu {
             Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
 
         }
-    }
-
-
-}
     }
 }

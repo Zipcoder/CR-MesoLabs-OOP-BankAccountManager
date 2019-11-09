@@ -39,6 +39,7 @@ public class MainMenu implements Menu {
         ArrayList<String> choices = new ArrayList<>();
         choices.add("Transaction History");
         choices.add("Add Account");
+        choices.add("Change Name");
 
         choices = addAccountOptions(choices);
 
@@ -70,7 +71,10 @@ public class MainMenu implements Menu {
         } else if (input == 2) { // create a new account
             addAccountChoice();
             displayMenu();
-        } else if (input == usrAccts.size()+3) { // quit/log out
+        } else if (input == 3) { // change name
+            attemptNameChange();
+            displayMenu();
+        }else if (input == usrAccts.size()+4) { // quit/log out
             // log out user and drop though to service loop
             atm.setCurrentUser(null);
         } else { // deal with an existing account
@@ -82,6 +86,16 @@ public class MainMenu implements Menu {
             displayMenu();
         }
 
+    }
+
+    private void attemptNameChange() {
+        String firstName = Console.getInput("First name: ");
+        String lastName = Console.getInput("Last name: ");
+        if (userServices.changeName(this.atm.getCurrentUser(), firstName, lastName)) {
+            Console.println("Name change successful");
+        } else {
+            Console.getInput("Name change failed. Please try again");
+        }
     }
 
     private void addAccountChoice() {

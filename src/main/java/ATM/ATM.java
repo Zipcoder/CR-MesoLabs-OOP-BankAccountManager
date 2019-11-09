@@ -5,6 +5,7 @@ import ATM.accounts.Checking;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
 import ATM.menus.MainMenu;
+import ATM.menus.NewUserMenu;
 import ATM.services.AccountServices;
 import ATM.services.TransactionServices;
 import ATM.services.UserServices;
@@ -138,7 +139,7 @@ public class ATM {
                 }
                 break;
             case 2:
-                this.newUser();
+                new NewUserMenu(this).displayMenu();
                 break;
         }
     }

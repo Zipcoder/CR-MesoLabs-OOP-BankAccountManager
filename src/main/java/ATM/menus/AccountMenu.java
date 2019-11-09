@@ -122,48 +122,5 @@ public class AccountMenu implements Menu {
         }
     }
 
-    public void addAccount(ArrayList<Account> usrAccounts, Double deposit) {
-        String header = "Choose Account Type:";
-        int input = Console.getInput(header, new String[] {"Checking", "Savings", "Investment", "Back to ATM.Main ATM.Menu" });
-        Account newAccount;
-        Transaction transaction;
-
-
-        switch (input) {
-            case 1:
-                newAccount = new Checking(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), Account.Status.OPEN);
-                accountServices.saveAccountToDB(newAccount);
-                usrAccounts.add(newAccount);
-
-                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                transactionServices.saveTransactionToDB(transaction);
-                break;
-            case 2:
-                Double interestRate = .01 * (1 + Math.floor(deposit/1000));
-                Console.println(String.format("Your interest rate: %.2f", interestRate)+"%%");
-                newAccount = new Savings(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), interestRate, Account.Status.OPEN);
-                accountServices.saveAccountToDB(newAccount);
-                usrAccounts.add(newAccount);
-
-                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                transactionServices.saveTransactionToDB(transaction);
-                break;
-            case 3:
-                Console.print("On a scale of 1-10, enter your risk tolerance ");
-                int riskInput = Console.getInteger(10);
-                Double risk = riskInput * .01;
-                newAccount = new Investment(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), risk, Account.Status.OPEN);
-                accountServices.saveAccountToDB(newAccount);
-                usrAccounts.add(newAccount);
-
-                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                transactionServices.saveTransactionToDB(transaction);
-                break;
-            case 4:
-                break;
-        }
-
-
-    }
 
 }

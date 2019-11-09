@@ -63,8 +63,7 @@ public class MainMenu implements Menu {
             Console.outputTransactionsWithHeader("Transaction History", transactionServices.getTransactionsForUser(atm.getCurrentUser()));
             displayMenu();
         } else if (input == 2) {
-            Double deposit = Console.getCurrency("Initial deposit amount for this account: ");
-            accountServices.addAccount(usrAccts, deposit, atm.getCurrentUser());
+            addAccountChoice();
             displayMenu();
         } else if (input == usrAccts.size()+3) {
             // log out user and drop though to service loop
@@ -74,7 +73,16 @@ public class MainMenu implements Menu {
             displayMenu();
         }
 
+    }
 
+    private void addAccountChoice() {
+        Double deposit = Console.getCurrency("Initial deposit amount for this account: ");
+        String header = "Choose Account Type:";
+        String[] choices = new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" }
+        int acctTypeInput = Console.getInput(header, choices);
+        if (acctTypeInput != 4) {
+            accountServices.addAccount(deposit, choices[acctTypeInput]);
+        }
     }
 
     @Override

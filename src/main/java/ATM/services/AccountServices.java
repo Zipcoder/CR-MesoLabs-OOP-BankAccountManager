@@ -19,6 +19,7 @@ public class AccountServices {
     private DB accountDB;
     private ATM atm;
     private TransactionServices transactionServices;
+    private Account accountType;
 
     public AccountServices(DB accountDB, ATM atm) {
         this.accountDB = accountDB;
@@ -28,14 +29,14 @@ public class AccountServices {
 
     public void addAccount(ArrayList<Account> usrAccounts, Double deposit, User currentUser) {
         String header = "Choose Account Type:";
-        int input = Console.getInput(header, new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" });
+        int input = Console.getInput(header, new String[]{"Checking", "Savings", "Investment", "Back to Main Menu"});
         Account newAccount;
         Transaction transaction;
 
 
         switch (input) {
             case 1:
-                newAccount = new Checking(deposit, currentUser.getUserID(), (int)(Math.random()*1000), Account.Status.valueOf("OPEN"));
+                newAccount = new Checking(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), Account.Status.valueOf("OPEN"));
                 this.saveAccountToDB(newAccount);
                 usrAccounts.add(newAccount);
 
@@ -43,9 +44,9 @@ public class AccountServices {
                 transactionServices.saveTransactionToDB(transaction);
                 break;
             case 2:
-                Double interestRate = .01 * (1 + Math.floor(deposit/1000));
-                Console.println(String.format("Your interest rate: %.2f", interestRate)+"%%");
-                newAccount = new Savings(deposit, currentUser.getUserID(), (int)(Math.random()*1000), interestRate, Account.Status.valueOf("OPEN"));
+                Double interestRate = .01 * (1 + Math.floor(deposit / 1000));
+                Console.println(String.format("Your interest rate: %.2f", interestRate) + "%%");
+                newAccount = new Savings(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), interestRate, Account.Status.valueOf("OPEN"));
                 this.saveAccountToDB(newAccount);
                 usrAccounts.add(newAccount);
 
@@ -56,7 +57,7 @@ public class AccountServices {
                 Console.print("On a scale of 1-10, enter your risk tolerance ");
                 int riskInput = Console.getInteger(10);
                 Double risk = riskInput * .01;
-                newAccount = new Investment(deposit, currentUser.getUserID(), (int)(Math.random()*1000), risk, Account.Status.valueOf("OPEN"));
+                newAccount = new Investment(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), risk, Account.Status.valueOf("OPEN"));
                 this.saveAccountToDB(newAccount);
                 usrAccounts.add(newAccount);
 
@@ -67,6 +68,7 @@ public class AccountServices {
                 break;
         }
     }
+
     public int getMaxAccountNumber() {
         ArrayList<String[]> accountInfo = new ArrayList<>();
         accountInfo = this.accountDB.readAllRows();
@@ -78,18 +80,20 @@ public class AccountServices {
         }
         return maxID;
     }
-    public int[] getAccountRowsByUser (User user) {
-        int [] recordRowNums;
-        recordRowNums = this.accountDB.findPartialRowMultiple(new String[] {user.getUserID().toString()}, new int[] {1});
+
+    public int[] getAccountRowsByUser(User user) {
+        int[] recordRowNums;
+        recordRowNums = this.accountDB.findPartialRowMultiple(new String[]{user.getUserID().toString()}, new int[]{1});
 
         return recordRowNums;
-}
-    public String[] getAccountInfoByRow (int rowNum) {
+    }
+
+    public String[] getAccountInfoByRow(int rowNum) {
         return this.accountDB.readRow(rowNum);
     }
 
     // account instance from info (pre-existing account)
-    public Account getAccountByInfo (String[] info) {
+    public Account getAccountByInfo(String[] info) {
         if (info[3].equals("Checking")) {
             return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Account.Status.valueOf(info[5]));
         } else if (info[3].equals("Savings")) {
@@ -101,13 +105,13 @@ public class AccountServices {
     }
 
     //find account row by id
-    public Integer getAccountRowByID (Integer ID) {
+    public Integer getAccountRowByID(Integer ID) {
         return this.accountDB.findPartialRow(new String[]{ID.toString()}, new int[]{0});
     }
 
     //find account info by id (helper for constructor)
-    public String [] getAccountInfoByID (Integer ID) {
-        int rowNumOfAccount = this.accountDB.findPartialRow(new String[] {ID.toString()}, new int[] {0});
+    public String[] getAccountInfoByID(Integer ID) {
+        int rowNumOfAccount = this.accountDB.findPartialRow(new String[]{ID.toString()}, new int[]{0});
         return this.accountDB.readRow(rowNumOfAccount);
     }
 
@@ -120,6 +124,7 @@ public class AccountServices {
         }
         return accounts;
     }
+
     public void saveAccountToDB(Account account) {
         String[] stringRepOfAccount = account.toStringArray();
         int accountNum = account.getAcctNum();
@@ -129,6 +134,16 @@ public class AccountServices {
         } else { // update a found row
             this.accountDB.replaceRow(rowNum, stringRepOfAccount);
         }
+    }
+    public DB getAccountDB(){
+        return this.accountDB;
+    }
+    public int getAccountDBLength(){
+        return accountDB.length();
+    }
+
+    public void clearAccountDB() {
+        accountDB.clear();
     }
 
     public void deleteAccountFromDB(Account account) {
@@ -142,5 +157,58 @@ public class AccountServices {
             this.accountDB.deleteRow(rowNum);
         }
     }
+
+
+
+
+    public void closeAccount(Account account) {
+                 // TODO: take this code for closeAccount(Account account);
+                 /*  if (account.getBalance() == 0) {
+
+                      accountServices.deleteAccountFromDB(account);
+                      transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "Account Closed", false);
+                      transactionServices.saveTransactionToDB(transaction);
+                  } else {
+                       Console.println("Account still contains funds. Withdraw or transfer all funds before closing.");
+                       Console.getInput("\nPress Enter");
+                    }
+                 break;*/
+
+             }
+
+
+public void depositToAccount (int amount, Account accountType) {
 }
+public void accountWithdraw(){
+
+/*    account.deposit(deposit);
+
+            saveAccountToDB(account);
+
+            transaction =new
+
+            Transaction(deposit, new Date(),account.
+
+            getAcctNum(), "ATM deposit",true);
+
+            saveTransactionToDB(transaction);
+            break;
+            case"3":
+            deposit =Console.getCurrency("Withdrawal amount: ");
+            if(deposit <=account.getBalance())
+
+            {
+            account.deposit(-1 * deposit);
+            saveAccountToDB(account);
+            transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM withdrawal", false);
+            saveTransactionToDB(transaction);
+            } else
+
+            {
+            Console.println("Insufficient funds");
+            Console.getInput("\nPress Enter");
+            }*/
+        }
+}
+
 

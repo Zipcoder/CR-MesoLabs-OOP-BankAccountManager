@@ -24,7 +24,7 @@ public class NewUserMenu implements Menu {
         String lastName = Console.getInput("Enter Your Last Name: ");
         String password = Console.getInput("Choose Your Password: ");
         //pass this to buildANewUser
-        this.atm.setCurrentUser(userServices.createNewUser(firstName,lastName,password));
+        //this.atm.setCurrentUser(userServices.createNewUser(firstName,lastName,password));
     }
 
     public void handleChoice(int choice) {

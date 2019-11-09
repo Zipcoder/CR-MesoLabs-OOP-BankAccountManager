@@ -28,13 +28,13 @@ public class AccountServices {
 
     public void addAccount(ArrayList<Account> usrAccounts, Double deposit, User currentUser) {
         String header = "Choose Account Type:";
-        String input = Console.getInput(header, new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" });
+        int input = Console.getInput(header, new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" });
         Account newAccount;
         Transaction transaction;
 
 
         switch (input) {
-            case "1":
+            case 1:
                 newAccount = new Checking(deposit, currentUser.getUserID(), (int)(Math.random()*1000), Account.Status.valueOf("OPEN"));
                 this.saveAccountToDB(newAccount);
                 usrAccounts.add(newAccount);
@@ -42,7 +42,7 @@ public class AccountServices {
                 transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
                 transactionServices.saveTransactionToDB(transaction);
                 break;
-            case "2":
+            case 2:
                 Double interestRate = .01 * (1 + Math.floor(deposit/1000));
                 Console.println(String.format("Your interest rate: %.2f", interestRate)+"%%");
                 newAccount = new Savings(deposit, currentUser.getUserID(), (int)(Math.random()*1000), interestRate, Account.Status.valueOf("OPEN"));
@@ -52,7 +52,7 @@ public class AccountServices {
                 transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
                 this.transactionServices.saveTransactionToDB(transaction);
                 break;
-            case "3":
+            case 3:
                 Console.print("On a scale of 1-10, enter your risk tolerance ");
                 int riskInput = Console.getInteger(10);
                 Double risk = riskInput * .01;
@@ -63,7 +63,7 @@ public class AccountServices {
                 transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
                 this.transactionServices.saveTransactionToDB(transaction);
                 break;
-            case "4":
+            case 4:
                 break;
         }
     }

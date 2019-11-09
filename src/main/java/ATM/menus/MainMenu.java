@@ -4,53 +4,77 @@ import ATM.ATM;
 import ATM.Console;
 import ATM.Menu;
 import ATM.accounts.Account;
+import ATM.services.AccountServices;
+import ATM.services.TransactionServices;
+import ATM.services.UserServices;
 
 import java.util.ArrayList;
 
 public class MainMenu implements Menu {
 
     private Console console;
-    private String name = "ATM.User ATM.Menu";
+    private String name = "User Menu";
     private ATM atm;
+    private UserServices userServices;
+    private TransactionServices transactionServices;
+    private AccountServices accountServices;
 
+    /**
+     * Main Menu - landing page after logging in; other menus collapse back to here
+     * @param atm - ATM instance
+     */
     public MainMenu(ATM atm){
         this.atm = atm;
+        this.userServices = atm.getUserServices();
+        this.accountServices = atm.getAccountServices();
+        this.transactionServices = atm.getTransactionServices();
     }
 
     public void displayMenu() {
-        String header = "ZCNB ATM.Main ATM.Menu";
+        String header = "ZCNB Main Menu";
         //maybe Younger Bank and Trust (YBT)
         //logo is giant ASCII of Kris' face
 
         ArrayList<String> choices = new ArrayList<>();
-        choices.add("ATM.Transaction History");
+        choices.add("Transaction History");
         choices.add("Add Account");
 
+        choices = addAccountOptions(choices);
+
+        choices.add("Log Out");
+
+        handleChoice(Console.getInput(header, choices.toArray(new String[choices.size()])));
+    }
+
+    public ArrayList<String> addAccountOptions(ArrayList<String> choices) {
+        // auto-generate account choices
         String nextAcctChoice;
-        ArrayList<Account> usrAccts = accountServices.getAccountsForUser(currentUser);
+        ArrayList<Account> usrAccts = accountServices.getAccountsForUser(atm.getCurrentUser());
         for (int i = 0; i < usrAccts.size(); i++) {
             nextAcctChoice = String.format("%s #%d ($%,.2f)", usrAccts.get(i).getClass().getName(), usrAccts.get(i).getAcctNum(), usrAccts.get(i).getBalance());
             choices.add(nextAcctChoice);
         }
-
-        choices.add("Log Out");
-
-        String input = Console.getInput(header, choices.toArray(new String[choices.size()]));
+        return choices;
     }
 
     public void handleChoice(int input) {
-        if (input.equals(Integer.toString(input.size()))) {
-            serviceLoop(); //not ... great, but it'll do for now
-        } else if (input.equals(1)) {
-            Console.outputTransactionsWithHeader("ATM.Transaction History", transactionServices.getTransactionsForUser(this.currentUser));
-        } else if (input.equals(2)) {
+        ArrayList<Account> usrAccts = accountServices.getAccountsForUser(atm.getCurrentUser());
+        if (input == 1) {
+            Console.outputTransactionsWithHeader("Transaction History", transactionServices.getTransactionsForUser(atm.getCurrentUser()));
+            displayMenu();
+        } else if (input == 2) {
             Double deposit = Console.getCurrency("Initial deposit amount for this account: ");
-            accountServices.addAccount(usrAccts, deposit);
+            accountServices.addAccount(usrAccts, deposit, atm.getCurrentUser());
+            displayMenu();
+        } else if (input == usrAccts.size()+3) {
+            // log out user and drop though to service loop
+            atm.setCurrentUser(null);
         } else {
-            AccountMenu.displayMenu(usrAccts.get(Integer.parseInt(input) - 3));
+            new AccountMenu(this.atm, usrAccts.get(input - 3)).displayMenu();
+            displayMenu();
         }
 
-        displayMenu();
+
     }
 
     @Override

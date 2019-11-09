@@ -3,6 +3,7 @@ package ATM.menus;
 import ATM.ATM;
 import ATM.User;
 import ATM.Console;
+import ATM.services.TransactionServices;
 import ATM.services.UserServices;
 
 public class NewUserMenu {
@@ -10,12 +11,16 @@ public class NewUserMenu {
     private Console console;
     private String name = "ATM.User ATM.Menu";
     private ATM atm;
-    String firstName;
-    String lastName;
-    String password;
+    private String firstName;
+    private String lastName;
+    private String password;
+    private UserServices userServices;
+    private TransactionServices transactionServices;
 
     public NewUserMenu(ATM atm){
         this.atm = atm;
+        this.userServices = this.atm.getUserServices();
+        this.transactionServices = this.atm.getTransactionServices();
     }
 
     public void displayMenu() {
@@ -24,7 +29,7 @@ public class NewUserMenu {
         password = Console.getInput("Choose Your Password: ");
         //pass this to buildANewUser
         buildANewUser(firstName,lastName,password);
-        UserMenu();
+//        UserMenu();
     }
 
 //call the constructor
@@ -40,7 +45,7 @@ public class NewUserMenu {
         //for example, a code for acct type, a code for initials, and a random generated code as the suffix
         //also, verify that it doesn't match any other account number in the database
 
-        UserServices.createNewUser(firstName, lastName, password, cardNumber, userID);
+        //userServices.createNewUser(firstName, lastName, password, cardNumber, userID);
     }
 
 }

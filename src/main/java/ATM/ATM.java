@@ -7,11 +7,8 @@ import ATM.accounts.Savings;
 import ATM.services.AccountServices;
 import ATM.services.TransactionServices;
 import ATM.services.UserServices;
-import ATM.User;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -93,7 +90,7 @@ public class ATM {
         int cardNum = Console.getInteger();
 
         // find user in ATM.DB
-        String[] userInfo = this.getUserInfoByCardNum(cardNum);
+        String[] userInfo = userServices.getUserInfoByCardNum(cardNum);
         if (userInfo == null){
             this.authenticate();
         }
@@ -122,7 +119,7 @@ public class ATM {
 
         User newUser = new User(firstName, lastName, password, userID, cardNumber);
         currentUser = newUser;
-        this.saveUserToDB(currentUser);
+        userServices.saveUserToDB(currentUser);
 
         return newUser;
     }
@@ -130,174 +127,174 @@ public class ATM {
     // log in user - don't return until you do
     public void getUser() {
         String header = "Welcome to ZipCode National Bank";
-        String input = Console.getInput(header, new String[] {"Insert Card", "Open an accounts.Account"});
+        int input = Console.getInput(header, new String[] {"Insert Card", "Open an accounts.Account"});
 
         switch (input) {
-            case "1":
+            case 1:
                 this.authenticate();
                 if (this.currentUser == null) {
                     return;
                 }
                 break;
-            case "2":
+            case 2:
                 this.newUser();
                 break;
         }
     }
 
-    // deal with the user's choices
-    public void userMenu() {
-        String header = "ZCNB ATM.Main ATM.Menu";
+//    // deal with the user's choices
+//    public void userMenu() {
+//        String header = "ZCNB ATM.Main ATM.Menu";
+//
+//        ArrayList<String> choices = new ArrayList<>();
+//        choices.add("ATM.Transaction History");
+//        choices.add("Add accounts.Account");
+//
+//        String nextAcctChoice;
+//        ArrayList<Account> usrAccts = accountServices.getAccountsForUser(currentUser);
+//        for (int i = 0; i < usrAccts.size(); i++) {
+//            nextAcctChoice = String.format("%s #%d ($%,.2f)", usrAccts.get(i).getClass().getName(), usrAccts.get(i).getAcctNum(), usrAccts.get(i).getBalance());
+//            choices.add(nextAcctChoice);
+//        }
+//
+//        choices.add("Log Out");
+//
+//        String input = Console.getInput(header, choices.toArray(new String[choices.size()]));
+//
+//        if (input.equals(Integer.toString(choices.size()))) {
+//            serviceLoop(); //not ... great, but it'll do for now
+//        } else if (input.equals("1")) {
+//            Console.outputTransactionsWithHeader("Transaction History", transactionServices.getTransactionsForUser(this.currentUser));
+//        } else if (input.equals("2")) {
+//            Double deposit = Console.getCurrency("Initial deposit amount for this account: ");
+//            addAccount(usrAccts, deposit);
+//        } else {
+//            accountMenu(usrAccts.get(Integer.parseInt(input) - 3));
+//        }
+//
+//        userMenu();
+//    }
+//
+//    public void addAccount(ArrayList<Account> usrAccounts, Double deposit) {
+//        String header = "Choose accounts.Account Type:";
+//        String input = Console.getInput(header, new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" });
+//        Account newAccount;
+//        Transaction transaction;
+//
+//
+//        switch (input) {
+//            case "1":
+//                newAccount = new Checking(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), Account.Status.valueOf("OPEN"));
+//                accountServices.saveAccountToDB(newAccount);
+//                usrAccounts.add(newAccount);
+//
+//                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
+//                transactionServices.saveTransactionToDB(transaction);
+//                break;
+//            case "2":
+//                Double interestRate = .01 * (1 + Math.floor(deposit/1000));
+//                Console.println(String.format("Your interest rate: %.2f", interestRate)+"%%");
+//                newAccount = new Savings(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), interestRate, Account.Status.valueOf("OPEN"));
+//                accountServices.saveAccountToDB(newAccount);
+//                usrAccounts.add(newAccount);
+//
+//                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
+//                transactionServices.saveTransactionToDB(transaction);
+//                break;
+//            case "3":
+//                Console.print("On a scale of 1-10, enter your risk tolerance ");
+//                int riskInput = Console.getInteger(10);
+//                Double risk = riskInput * .01;
+//                newAccount = new Investment(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), risk, Account.Status.valueOf("OPEN"));
+//                accountServices.saveAccountToDB(newAccount);
+//                usrAccounts.add(newAccount);
+//
+//                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
+//                transactionServices.saveTransactionToDB(transaction);
+//                break;
+//            case "4":
+//                break;
+//        }
+//
+//
+//    }
 
-        ArrayList<String> choices = new ArrayList<>();
-        choices.add("ATM.Transaction History");
-        choices.add("Add accounts.Account");
-
-        String nextAcctChoice;
-        ArrayList<Account> usrAccts = getAccountsForUser(currentUser);
-        for (int i = 0; i < usrAccts.size(); i++) {
-            nextAcctChoice = String.format("%s #%d ($%,.2f)", usrAccts.get(i).getClass().getName(), usrAccts.get(i).getAcctNum(), usrAccts.get(i).getBalance());
-            choices.add(nextAcctChoice);
-        }
-
-        choices.add("Log Out");
-
-        String input = Console.getInput(header, choices.toArray(new String[choices.size()]));
-
-        if (input.equals(Integer.toString(choices.size()))) {
-            serviceLoop(); //not ... great, but it'll do for now
-        } else if (input.equals("1")) {
-            Console.outputTransactionsWithHeader("ATM.Transaction History", getTransactionsForUser(this.currentUser));
-        } else if (input.equals("2")) {
-            Double deposit = Console.getCurrency("Initial deposit amount for this account: ");
-            addAccount(usrAccts, deposit);
-        } else {
-            accountMenu(usrAccts.get(Integer.parseInt(input) - 3));
-        }
-
-        userMenu();
-    }
-
-    public void addAccount(ArrayList<Account> usrAccounts, Double deposit) {
-        String header = "Choose accounts.Account Type:";
-        String input = Console.getInput(header, new String[] {"accounts.Checking", "accounts.Savings", "accounts.Investment", "Back to ATM.Main ATM.Menu" });
-        Account newAccount;
-        Transaction transaction;
-
-
-        switch (input) {
-            case "1":
-                newAccount = new Checking(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), Account.Status.valueOf("OPEN"));
-                this.saveAccountToDB(newAccount);
-                usrAccounts.add(newAccount);
-
-                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                saveTransactionToDB(transaction);
-                break;
-            case "2":
-                Double interestRate = .01 * (1 + Math.floor(deposit/1000));
-                Console.println(String.format("Your interest rate: %.2f", interestRate)+"%%");
-                newAccount = new Savings(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), interestRate, Account.Status.valueOf("OPEN"));
-                this.saveAccountToDB(newAccount);
-                usrAccounts.add(newAccount);
-
-                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                saveTransactionToDB(transaction);
-                break;
-            case "3":
-                Console.print("On a scale of 1-10, enter your risk tolerance ");
-                int riskInput = Console.getInteger(10);
-                Double risk = riskInput * .01;
-                newAccount = new Investment(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), risk, Account.Status.valueOf("OPEN"));
-                this.saveAccountToDB(newAccount);
-                usrAccounts.add(newAccount);
-
-                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                saveTransactionToDB(transaction);
-                break;
-            case "4":
-                break;
-        }
-
-
-    }
-
-    public void accountMenu(Account account) {
-        String header = account.getClass().getName() + " accounts.Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
-        if (account instanceof Savings) {
-            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate())+"%%";
-        } else if (account instanceof Investment) {
-            header += "  Risk: " + String.format("%d", Math.round(100*((Investment) account).getRisk()))+"/10";
-        }
-        String input = Console.getInput(header, new String[] {"View ATM.Transaction History", "Deposit", "Withdrawal", "Close accounts.Account", "Transfer", "Back to ATM.Main ATM.Menu" });
-
-        Double deposit;
-        Transaction transaction;
-        switch (input) {
-            case "1":
-                Console.outputTransactionsWithHeader("ATM.Transaction History", getTransactionsForAccount(account));
-                break;
-            case "2":
-                deposit = Console.getCurrency("Deposit amount: ");
-                account.deposit(deposit);
-                saveAccountToDB(account);
-                transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM.ATM deposit", true);
-                saveTransactionToDB(transaction);
-                break;
-            case "3":
-                deposit = Console.getCurrency("Withdrawal amount: ");
-                if (deposit <= account.getBalance()) {
-                    account.deposit(-1 * deposit);
-                    saveAccountToDB(account);
-                    transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM.ATM withdrawal", false);
-                    saveTransactionToDB(transaction);
-                } else {
-                    Console.println("Insufficient funds");
-                    Console.getInput("\nPress Enter");
-                }
-                break;
-            case "4":
-
-                if (account.getBalance() == 0) {
-
-                    deleteAccountFromDB(account);
-                    transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "accounts.Account Closed", false);
-                    saveTransactionToDB(transaction);
-                } else {
-                    Console.println("accounts.Account still contains funds. Withdraw or transfer all funds before closing.");
-                    Console.getInput("\nPress Enter");
-                }
-                break;
-            case "5":
-
-                Console.println("Number of accounts.Account to transfer to");
-                int ActToTransferTo = Console.getInteger();
-                String[] actInfo = getAccountInfoByID(ActToTransferTo);
-                // 0: accountID 1: ownerID 2: balance 3: type 4: risk/interest/null (type-dependent)
-                Account act = getAccountByInfo(actInfo);
-                deposit = Console.getCurrency("Transfer amount");
-
-                if(deposit < account.getBalance()) {
-                    account.deposit(-1 * deposit);
-                    act.deposit(deposit);
-
-                    saveAccountToDB(account);
-                    transaction = new Transaction(-1 * deposit, new Date(), account.getAcctNum(), "ATM.ATM Transfer", false);
-                    saveTransactionToDB(transaction);
-
-                    saveAccountToDB(act);
-                    transaction = new Transaction(deposit, new Date(), act.getAcctNum(), "ATM.ATM Transfer", true);
-                    saveTransactionToDB(transaction);
-                } else {
-                    Console.println("Insufficient funds in account");
-                }
-
-                break;
-            case "6":
-                break;
-        }
-    }
-
+//    public void accountMenu(Account account) {
+//        String header = account.getClass().getName() + " accounts.Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
+//        if (account instanceof Savings) {
+//            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate())+"%%";
+//        } else if (account instanceof Investment) {
+//            header += "  Risk: " + String.format("%d", Math.round(100*((Investment) account).getRisk()))+"/10";
+//        }
+//        String input = Console.getInput(header, new String[] {"View ATM.Transaction History", "Deposit", "Withdrawal", "Close accounts.Account", "Transfer", "Back to ATM.Main ATM.Menu" });
+//
+//        Double deposit;
+//        Transaction transaction;
+//        switch (input) {
+//            case "1":
+//                Console.outputTransactionsWithHeader("Transaction History", transactionServices.getTransactionsForAccount(account));
+//                break;
+//            case "2":
+//                deposit = Console.getCurrency("Deposit amount: ");
+//                account.deposit(deposit);
+//                accountServices.saveAccountToDB(account);
+//                transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM deposit", true);
+//                transactionServices.saveTransactionToDB(transaction);
+//                break;
+//            case "3":
+//                deposit = Console.getCurrency("Withdrawal amount: ");
+//                if (deposit <= account.getBalance()) {
+//                    account.deposit(-1 * deposit);
+//                    accountServices.saveAccountToDB(account);
+//                    transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM withdrawal", false);
+//                    transactionServices.saveTransactionToDB(transaction);
+//                } else {
+//                    Console.println("Insufficient funds");
+//                    Console.getInput("\nPress Enter");
+//                }
+//                break;
+//            case "4":
+//
+//                if (account.getBalance() == 0) {
+//
+//                    accountServices.deleteAccountFromDB(account);
+//                    transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "Account Closed", false);
+//                    transactionServices.saveTransactionToDB(transaction);
+//                } else {
+//                    Console.println("Account still contains funds. Withdraw or transfer all funds before closing.");
+//                    Console.getInput("\nPress Enter");
+//                }
+//                break;
+//            case "5":
+//
+//                Console.println("Number of account to transfer to");
+//                int ActToTransferTo = Console.getInteger();
+//                String[] actInfo = accountServices.getAccountInfoByID(ActToTransferTo);
+//                // 0: accountID 1: ownerID 2: balance 3: type 4: risk/interest/null (type-dependent)
+//                Account act = accountServices.getAccountByInfo(actInfo);
+//                deposit = Console.getCurrency("Transfer amount");
+//
+//                if(deposit < account.getBalance()) {
+//                    account.deposit(-1 * deposit);
+//                    act.deposit(deposit);
+//
+//                    accountServices.saveAccountToDB(account);
+//                    transaction = new Transaction(-1 * deposit, new Date(), account.getAcctNum(), "ATM Transfer", false);
+//                    transactionServices.saveTransactionToDB(transaction);
+//
+//                    accountServices.saveAccountToDB(act);
+//                    transaction = new Transaction(deposit, new Date(), act.getAcctNum(), "ATM Transfer", true);
+//                    transactionServices.saveTransactionToDB(transaction);
+//                } else {
+//                    Console.println("Insufficient funds in account");
+//                }
+//
+//                break;
+//            case "6":
+//                break;
+//        }
+//    }
+//
 
     public void serviceLoop() {
         // authenticate a user (or die trying)
@@ -309,7 +306,7 @@ public class ATM {
 
         loadDBs();
 
-        userMenu();
+        //userMenu();
 
         logOut();
 
@@ -317,7 +314,7 @@ public class ATM {
     }
 
     public void applyInterest() {
-        ArrayList<Account> userAccounts = getAccountsForUser(this.currentUser);
+        ArrayList<Account> userAccounts = accountServices.getAccountsForUser(this.currentUser);
         for (Account account : userAccounts) {
             if (account instanceof Savings) {
                 calcInterest(account);
@@ -328,13 +325,13 @@ public class ATM {
     public void calcInterest(Account account) {
         Double interest = ((Savings) account).getInterestRate() * account.getBalance()/100;
         account.deposit(interest);
-        saveAccountToDB(account);
+        accountServices.saveAccountToDB(account);
         Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",interest)), new Date(), account.getAcctNum(), "Interest earned", true);
-        saveTransactionToDB(transaction);
+        transactionServices.saveTransactionToDB(transaction);
     }
 
     public void applyReturns() {
-        ArrayList<Account> userAccounts = getAccountsForUser(this.currentUser);
+        ArrayList<Account> userAccounts = accountServices.getAccountsForUser(this.currentUser);
         for (Account account : userAccounts) {
             if (account instanceof Investment) {
                 calcReturns(account);
@@ -346,16 +343,16 @@ public class ATM {
         Double multiplier = ((Investment) account).getRisk() * (2 * Math.random() - .8);
         Double earnings =  Math.round((multiplier * account.getBalance()*100d))/100d;
         account.deposit(earnings);
-        saveAccountToDB(account);
+        accountServices.saveAccountToDB(account);
         Boolean isCredit = (earnings > 0);
         Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",earnings)), new Date(), account.getAcctNum(), "accounts.Investment returns", isCredit);
-        saveTransactionToDB(transaction);
+        transactionServices.saveTransactionToDB(transaction);
     }
 
 
     // log out user
     public void logOut() {
-        saveDBs();
+        //saveDBs();
         this.currentUser = null;
     }
 

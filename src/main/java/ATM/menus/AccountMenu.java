@@ -9,26 +9,36 @@ import ATM.accounts.Account;
 import ATM.accounts.Checking;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
+import ATM.services.AccountServices;
+import ATM.services.TransactionServices;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class AccountMenu implements Menu {
 
-    private Console console;
-    private String name = "Account ATM.Menu";
+    private String name = "Account Menu";
     private Account account;
-    private User user;
+    private User currentUser;
     private ATM atm;
+    private TransactionServices transactionServices;
+    private AccountServices accountServices;
 
-    public AccountMenu(ATM atm, User user, Account account){
+    /**
+     * Account Menu - the menu to deal with a single account
+     * @param atm - ATM instance
+     * @param account - the account we're dealing with
+     */
+    public AccountMenu(ATM atm, Account account){
         this.atm = atm;
-        this.user = this.atm.getCurrentUser();
+        this.currentUser = this.atm.getCurrentUser();
         this.account = account;
+        this.transactionServices = this.atm.getTransactionServices();
+        this.accountServices = this.atm.getAccountServices();
     }
 
     public void displayMenu() {
-        console.clearScreen();
+        Console.clearScreen();
 
         String header = account.getClass().getName() + " Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
         if (account instanceof Savings) {
@@ -36,8 +46,8 @@ public class AccountMenu implements Menu {
         } else if (account instanceof Investment) {
             header += "  Risk: " + String.format("%d", Math.round(100*((Investment) account).getRisk()))+"/10";
         }
-        String input = Console.getInput(header, new String[] {"View ATM.Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Back to ATM.Main ATM.Menu" });
-        handleChoice(Integer.parseInt(input));
+        int input = Console.getInput(header, new String[] {"View Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Back to Main Menu" });
+        handleChoice(input);
     }
 
     public String getName() {
@@ -49,21 +59,21 @@ public class AccountMenu implements Menu {
         Transaction transaction;
             switch (choice) {
             case 1:
-                Console.outputTransactionsWithHeader("ATM.Transaction History", transactionServices.getTransactionsForAccount(account));
+                Console.outputTransactionsWithHeader("Transaction History", transactionServices.getTransactionsForAccount(account));
                 break;
             case 2:
                 deposit = Console.getCurrency("Deposit amount: ");
                 account.deposit(deposit);
-                transactionServices.saveAccountToDB(account);
-                transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM.ATM deposit", true);
+                accountServices.saveAccountToDB(account);
+                transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM deposit", true);
                 transactionServices.saveTransactionToDB(transaction);
                 break;
             case 3:
                 deposit = Console.getCurrency("Withdrawal amount: ");
                 if (deposit <= account.getBalance()) {
                     account.deposit(-1 * deposit);
-                    transactionServices.saveAccountToDB(account);
-                    transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM.ATM withdrawal", false);
+                    accountServices.saveAccountToDB(account);
+                    transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM withdrawal", false);
                     transactionServices.saveTransactionToDB(transaction);
                 } else {
                     Console.println("Insufficient funds");
@@ -74,7 +84,7 @@ public class AccountMenu implements Menu {
 
                 if (account.getBalance() == 0) {
 
-                    transactionServices.deleteAccountFromDB(account);
+                    accountServices.deleteAccountFromDB(account);
                     transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "Account Closed", false);
                     transactionServices.saveTransactionToDB(transaction);
                 } else {
@@ -114,42 +124,42 @@ public class AccountMenu implements Menu {
 
     public void addAccount(ArrayList<Account> usrAccounts, Double deposit) {
         String header = "Choose Account Type:";
-        String input = Console.getInput(header, new String[] {"Checking", "Savings", "Investment", "Back to ATM.Main ATM.Menu" });
+        int input = Console.getInput(header, new String[] {"Checking", "Savings", "Investment", "Back to ATM.Main ATM.Menu" });
         Account newAccount;
         Transaction transaction;
 
 
         switch (input) {
-            case "1":
-                newAccount = new Checking(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000));
-                this.saveAccountToDB(newAccount);
+            case 1:
+                newAccount = new Checking(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), Account.Status.OPEN);
+                accountServices.saveAccountToDB(newAccount);
                 usrAccounts.add(newAccount);
 
                 transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                saveTransactionToDB(transaction);
+                transactionServices.saveTransactionToDB(transaction);
                 break;
-            case "2":
+            case 2:
                 Double interestRate = .01 * (1 + Math.floor(deposit/1000));
                 Console.println(String.format("Your interest rate: %.2f", interestRate)+"%%");
-                newAccount = new Savings(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), interestRate);
-                this.saveAccountToDB(newAccount);
+                newAccount = new Savings(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), interestRate, Account.Status.OPEN);
+                accountServices.saveAccountToDB(newAccount);
                 usrAccounts.add(newAccount);
 
                 transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                saveTransactionToDB(transaction);
+                transactionServices.saveTransactionToDB(transaction);
                 break;
-            case "3":
+            case 3:
                 Console.print("On a scale of 1-10, enter your risk tolerance ");
                 int riskInput = Console.getInteger(10);
                 Double risk = riskInput * .01;
-                newAccount = new Investment(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), risk);
-                this.saveAccountToDB(newAccount);
+                newAccount = new Investment(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), risk, Account.Status.OPEN);
+                accountServices.saveAccountToDB(newAccount);
                 usrAccounts.add(newAccount);
 
                 transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                saveTransactionToDB(transaction);
+                transactionServices.saveTransactionToDB(transaction);
                 break;
-            case "4":
+            case 4:
                 break;
         }
 

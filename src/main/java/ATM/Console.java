@@ -43,7 +43,7 @@ public class Console {
     }
 
 
-    public static String getInput(String[] options) {
+    public static int getInput(String[] options) {
 
         Console.clearScreen();
 
@@ -67,11 +67,11 @@ public class Console {
 
         println(output);
 
-        return Integer.toString(Console.getInteger(numOptions));
+        return Console.getInteger(numOptions);
 
     }
 
-    public static String getInput(String header, String[] options) {
+    public static int getInput(String header, String[] options) {
 
         Console.clearScreen();
 
@@ -95,7 +95,7 @@ public class Console {
 
         println(output);
 
-        return Integer.toString(Console.getInteger(numOptions));
+        return Console.getInteger(numOptions);
 
     }
 

@@ -4,8 +4,8 @@ public class Investment extends Account{
 
     private Double risk;
 
-    public Investment(Double balance, Integer ownerID, Integer acctNum, Double risk) {
-        super(balance, ownerID, acctNum);
+    public Investment(Double balance, Integer ownerID, Integer acctNum, Double risk, Status acctStatus) {
+        super(balance, ownerID, acctNum, acctStatus);
         this.risk = risk;
 
     }

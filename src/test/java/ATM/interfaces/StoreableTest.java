@@ -28,7 +28,7 @@ public class StoreableTest {
 
     @Test
     public void toStringArrayAccountChecking() {
-        Account account = new Checking(12.23, 23, 3432);
+        Account account = new Checking(12.23, 23, 3432, Account.Status.valueOf("OPEN"));
 
         String[] actual = account.toStringArray();
         String[] expected = new String[] {
@@ -44,7 +44,7 @@ public class StoreableTest {
 
     @Test
     public void toStringArrayAccountSavings() {
-        Account account = new Savings(12.23, 23, 3432, 0.05);
+        Account account = new Savings(12.23, 23, 3432, 0.05, Account.Status.valueOf("OPEN"));
 
         String[] actual = account.toStringArray();
         String[] expected = new String[] {
@@ -60,7 +60,7 @@ public class StoreableTest {
 
     @Test
     public void toStringArrayAccountInvestment() {
-        Account account = new Investment(12.23, 23, 3432, 0.2);
+        Account account = new Investment(12.23, 23, 3432, 0.2, Account.Status.valueOf("OPEN"));
 
         String[] actual = account.toStringArray();
         String[] expected = new String[] {

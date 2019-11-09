@@ -186,7 +186,7 @@ public class ATM {
 
         switch (input) {
             case "1":
-                newAccount = new Checking(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000));
+                newAccount = new Checking(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), Account.Status.valueOf("OPEN"));
                 this.saveAccountToDB(newAccount);
                 usrAccounts.add(newAccount);
 
@@ -196,7 +196,7 @@ public class ATM {
             case "2":
                 Double interestRate = .01 * (1 + Math.floor(deposit/1000));
                 Console.println(String.format("Your interest rate: %.2f", interestRate)+"%%");
-                newAccount = new Savings(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), interestRate);
+                newAccount = new Savings(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), interestRate, Account.Status.valueOf("OPEN"));
                 this.saveAccountToDB(newAccount);
                 usrAccounts.add(newAccount);
 
@@ -207,7 +207,7 @@ public class ATM {
                 Console.print("On a scale of 1-10, enter your risk tolerance ");
                 int riskInput = Console.getInteger(10);
                 Double risk = riskInput * .01;
-                newAccount = new Investment(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), risk);
+                newAccount = new Investment(deposit, this.currentUser.getUserID(), (int)(Math.random()*1000), risk, Account.Status.valueOf("OPEN"));
                 this.saveAccountToDB(newAccount);
                 usrAccounts.add(newAccount);
 
@@ -408,11 +408,11 @@ public class ATM {
     // account instance from info (pre-existing account)
     public Account getAccountByInfo (String[] info) {
         if (info[3].equals("accounts.Checking")) {
-            return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]));
+            return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Account.Status.valueOf("OPEN"));
         } else if (info[3].equals("accounts.Savings")) {
-            return new Savings(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
+            return new Savings(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]), Account.Status.valueOf("OPEN"));
         } else if (info[3].equals("accounts.Investment")) {
-            return new Investment(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
+            return new Investment(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]), Account.Status.valueOf("OPEN"));
         }
         return null;
     }

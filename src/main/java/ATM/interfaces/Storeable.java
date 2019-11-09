@@ -12,13 +12,13 @@ public interface Storeable {
             String acctType;
             String typeSpecificProperty;
             if (this instanceof Investment) {
-                acctType = "accounts.Investment";
+                acctType = "Investment";
                 typeSpecificProperty = ((Investment) this).getRisk().toString();
             } else if (this instanceof Savings) {
-                acctType = "accounts.Savings";
+                acctType = "Savings";
                 typeSpecificProperty = ((Savings) this).getInterestRate().toString();
             } else {
-                acctType = "accounts.Checking";
+                acctType = "Checking";
                 typeSpecificProperty = "";
             }
 
@@ -27,7 +27,8 @@ public interface Storeable {
                     ((Account) this).ownerID.toString(),
                     ((Account) this).balance.toString(),
                     acctType,
-                    typeSpecificProperty
+                    typeSpecificProperty,
+                    String.valueOf(((Account) this).getAcctStatus())
             };
 
             return result;

@@ -12,7 +12,7 @@ public class AccountTest {
     @Test
     public void getBalance() {
         // Given
-        Account account = new Checking(0.0, 3,3);
+        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"));
         Double expected = 0.0;
 
 
@@ -24,7 +24,7 @@ public class AccountTest {
     @Test
     public void deposit_test() {
         // Given
-        Account account = new Checking(0.0, 3,3);
+        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"));
         Double expected = 40.0;
 
         //When
@@ -39,7 +39,7 @@ public class AccountTest {
     @Test
     public void withdraw_test() {
         // Given
-        Account account = new Checking(80.0, 3,3);
+        Account account = new Checking(80.0, 3,3, Account.Status.valueOf("OPEN"));
         Double expected = 40.0;
 
         //When
@@ -58,7 +58,7 @@ public class AccountTest {
     @Test
     public void getOwnerID() {
         // Given
-        Account account = new Checking(0.0, 3,3);
+        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"));
         Integer expected = 3;
 
 
@@ -70,7 +70,7 @@ public class AccountTest {
     @Test
     public void getAcctNum() {
         // Given
-        Account account = new Checking(0.0, 3,3);
+        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"));
         Integer expected = 3;
 
 
@@ -84,7 +84,7 @@ public class AccountTest {
     @Test
     public void setRisk() {
         // Given
-        Investment account = new Investment(80000.0, 3,3, 0.09);
+        Investment account = new Investment(80000.0, 3,3, 0.09, Account.Status.valueOf("OPEN"));
         Double expected = 0.9;
 
         account.setRisk(0.9);

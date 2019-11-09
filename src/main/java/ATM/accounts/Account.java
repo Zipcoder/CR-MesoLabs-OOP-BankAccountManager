@@ -8,17 +8,18 @@ abstract public class Account implements Storeable {
     public Double balance;
     public Integer ownerID;
     public Integer acctNum;
-    enum Status {
+    public enum Status {
         OPEN, CLOSED, OFAC
     }
     private Status acctStatus;
 
-    public Account(Double balance, Integer ownerID, Integer acctNum) {
+    public Account(Double balance, Integer ownerID, Integer acctNum, Status acctStatus) {
         this.balance = balance;
         this.ownerID = ownerID;
         // TODO: make account number here, via something better than wild-assed guess
 
         this.acctNum = acctNum;
+        this.acctStatus = acctStatus;
     }
 
     public Double getBalance(){

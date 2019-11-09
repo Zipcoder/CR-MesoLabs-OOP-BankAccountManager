@@ -2,6 +2,9 @@ package ATM.menus;
 
 import ATM.ATM;
 import ATM.Console;
+import ATM.Exceptions.BalanceRemainingException;
+import ATM.Exceptions.ClosedAccountException;
+import ATM.Exceptions.FrozenAccountException;
 import ATM.interfaces.Menu;
 import ATM.User;
 import ATM.Transaction;
@@ -71,11 +74,16 @@ public class AccountMenu implements Menu {
                 attemptWithdrawal(amount);
                 break;
             case 4:
-                if (accountServices.closeAccount(account)) {
-                    Console.getInput("Account closed; press Enter to continue");
-                } else {
-                    //TODO: deal with different kinds of errors and allow user to transfer funds
-                    Console.getInput("Error closing account; press Enter to continue");
+                try {
+                    if (accountServices.closeAccount(account)) {
+                        Console.getInput("Account closed; press Enter to continue");
+                    }
+                } catch (BalanceRemainingException) {
+                    Console.getInput("Unable to close account - account is not empty; press Enter to continue");
+                } catch (ClosedAccountException) {
+                    Console.getInput("Error - account is already closed; press Enter to continue");
+                } catch (FrozenAccountException) {
+                    Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
                 }
                 break;
             case 5:
@@ -87,7 +95,7 @@ public class AccountMenu implements Menu {
     }
 
     private void attemptWithdrawal(double amount) {
-        if (accountServices.accountWithdraw(account, amount);) {
+        if (accountServices.accountWithdraw(account, amount)) {
             Console.getInput("Withdrawal successful; press Enter to continue");
         } else {
             Console.getInput("Insufficient funds; press Enter to continue");
@@ -95,7 +103,7 @@ public class AccountMenu implements Menu {
     }
 
     private void attemptDeposit(double amount) {
-        if (accountServices.depositToAccount(account, amount);) {
+        if (accountServices.depositToAccount(account, amount)) {
             Console.getInput("Deposit successful; press Enter to continue");
         } else {
             Console.getInput("Deposit error; press Enter to continue");

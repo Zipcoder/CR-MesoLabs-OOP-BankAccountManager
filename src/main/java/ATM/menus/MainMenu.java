@@ -91,11 +91,11 @@ public class MainMenu implements Menu {
     private void attemptNameChange() {
         String firstName = Console.getInput("First name: ");
         String lastName = Console.getInput("Last name: ");
-        if (userServices.changeName(this.atm.getCurrentUser(), firstName, lastName)) {
-            Console.println("Name change successful");
-        } else {
-            Console.getInput("Name change failed. Please try again");
-        }
+//        if (userServices.changeName(this.atm.getCurrentUser(), firstName, lastName)) {
+//            Console.println("Name change successful");
+//        } else {
+//            Console.getInput("Name change failed. Please try again");
+//        }
     }
 
     private void addAccountChoice() {

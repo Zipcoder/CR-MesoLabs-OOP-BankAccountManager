@@ -2,6 +2,9 @@ package ATM.services;
 
 import ATM.ATM;
 import ATM.DB;
+import ATM.Exceptions.BalanceRemainingException;
+import ATM.Exceptions.FrozenAccountException;
+import ATM.Exceptions.InsufficientFundsException;
 import ATM.Transaction;
 import ATM.User;
 import ATM.accounts.Account;
@@ -161,7 +164,7 @@ public class AccountServices {
     }
 
 
-    public Boolean closeAccount(Account account) throws BalanceRemainingException, FrozenAccountException, InsufficientFundsException{
+    public Boolean closeAccount(Account account) throws BalanceRemainingException, FrozenAccountException, InsufficientFundsException {
         boolean status = true;
         if (account.getBalance() == 0) {
             deleteAccountFromDB(account);
@@ -177,14 +180,16 @@ public class AccountServices {
     }
 
 
-    public void accountDeposit(Account account, double amount) throws BalanceRemainingException, FrozenAccountException{
+    public Boolean accountDeposit(Account account, double amount) throws BalanceRemainingException, FrozenAccountException {
         saveAccountToDB(account);
         Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM deposit", true);
         transactionServices.saveTransactionToDB(transaction);
         saveAccountToDB(account);
+        return false;
     }
 
-    public void accountWithdraw(Account account, double amount) throws BalanceRemainingException, FrozenAccountException, InsufficientFundsException{
+
+    public Boolean accountWithdraw(Account account, double amount) throws BalanceRemainingException, FrozenAccountException, InsufficientFundsException {
         amount = Console.getCurrency("Withdrawal amount: ");
         if (amount <= account.getBalance()) {
             account.deposit(-1 * amount);
@@ -195,6 +200,7 @@ public class AccountServices {
             Console.println("Insufficient funds");
             Console.getInput("\nPress Enter");
         }
+        return false;
 
 /*    account.deposit(deposit);
 

@@ -3,52 +3,69 @@ import java.util.Date;
 
 public class TransferServices {
 
-    private User currentUser;
 
 //    private DB userDB;          // 0: ID 1: Last Name 2: First Name 3: cardNum 4: PW
 //    private DB transactionDB;   // 0: credit/debit 1: accountID 2: amount (signed) 3: timeStamp 4: description
 //    private DB accountDB;       // 0: accountID 1: ownerID 2: balance 3: type 4: risk/interest/null (type-dependent)
+
+    //Instance Fields
+    Account account;
+    private User currentUser;
     private String acctStatus;
     private ATM atm;
 
+    enum Status {
+        OPEN, CLOSED, OFAC
+    }
 
-
-    public TransferServices(User currentUser) {
+    //Constructor
+    public TransferServices(User currentUser, ATM atm, Account account) {
         this.currentUser = currentUser;
+        this.atm = atm;
+        this.account = account;
     }
-
-
-
-
-    public Double getBalance(){
-        return balance;
-    }
-
-    public Integer getOwnerID() {
-        return this.ownerID;
-    }
-
-    public Integer getAcctNum() {
-        return this.acctNum;
-    }
-
-
-    public void deposit(Double amount){
-        this.balance += amount;
-        String bal = String.format("%.2f",this.balance);
-        this.balance = Double.parseDouble(bal);
-    }
-
-    public void withdraw(Double amount){
-        if (this.balance > amount) {
-            this.balance -= amount;
-        }
-    }
-    public Boolean equals(Account account) {
-        return DB.serialize(this.toStringArray()).equals(DB.serialize(account.toStringArray()));
-    }
-
 }
+
+
+//
+//    public String acctFrozen (){
+//        if (Account.getAcctStatus() == Status.OPAC {
+//            return "THIS ACCOUNT IS FROZEN!  PLEASE TRY AGAIN.";
+//        }
+//        //transferMenu();
+//    }
+//
+//
+//
+//    public String getAccntInfo(){
+//        return atm.getAccountInfoByID();
+//    }
+//
+//    public Integer getOwnerID() {
+//        return this.atm.ownerID;
+//    }
+//
+//    public Integer getAcctNum() {
+//        return this.acct.acctNum;
+//    }
+//
+//
+//    public void deposit(Double amount){
+//        this.balance += amount;
+//        String bal = String.format("%.2f",this.balance);
+//        this.balance = Double.parseDouble(bal);
+//    }
+//
+//    public void withdraw(Double amount){
+//        if (this.balance > amount) {
+//            this.balance -= amount;
+//        }
+//    }
+//    public Boolean equals(Account account) {
+//        return DB.serialize(this.toStringArray()).equals(DB.serialize(account.toStringArray()));
+//    }
+//
+//}
 
 
 

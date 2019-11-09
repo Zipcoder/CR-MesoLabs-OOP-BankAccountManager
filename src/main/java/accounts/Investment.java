@@ -1,10 +1,10 @@
-import java.util.Random;
+package accounts;
 
-public class Investment extends Account implements Storeable {
+import interfaces.Storeable;
 
+public class Investment extends Account{
 
-
-    Double risk;
+    private Double risk;
 
     public Investment(Double balance, Integer ownerID, Integer acctNum, Double risk) {
         super(balance, ownerID, acctNum);

@@ -1,7 +1,11 @@
+package interfaces;
+
+import accounts.Account;
+import accounts.Checking;
+import accounts.Investment;
+import accounts.Savings;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class StoreableTest {
 
@@ -30,7 +34,7 @@ public class StoreableTest {
                 "3432",
                 "23",
                 "12.23",
-                "Checking",
+                "accounts.Checking",
                 ""
         };
 
@@ -46,7 +50,7 @@ public class StoreableTest {
                 "3432",
                 "23",
                 "12.23",
-                "Savings",
+                "accounts.Savings",
                 "0.05"
         };
 
@@ -62,7 +66,7 @@ public class StoreableTest {
                 "3432",
                 "23",
                 "12.23",
-                "Investment",
+                "accounts.Investment",
                 "0.2"
         };
 

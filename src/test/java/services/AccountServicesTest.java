@@ -1,3 +1,9 @@
+package services;
+
+import accounts.Account;
+import accounts.Checking;
+import accounts.Investment;
+import accounts.Savings;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,7 +17,7 @@ public class AccountServicesTest {
 
     @Before
     public void setUp() throws Exception {
-        atm = new ATM ("testuserDB.csv", "testaccountDB.csv", "testtransactionDB.csv");
+        atm = new ATM("testuserDB.csv", "testaccountDB.csv", "testtransactionDB.csv");
     }
 
     @After

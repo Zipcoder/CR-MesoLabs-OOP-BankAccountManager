@@ -1,3 +1,5 @@
+package services;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,11 +10,11 @@ import java.util.Date;
 
 public class TransactionServicesTest {
 
-    private  ATM atm;
+    private ATM atm;
 
     @Before
     public void setUp() throws Exception {
-        atm = new ATM ("testuserDB.csv", "testaccountDB.csv", "testtransactionDB.csv");
+        atm = new ATM("testuserDB.csv", "testaccountDB.csv", "testtransactionDB.csv");
     }
 
     @After

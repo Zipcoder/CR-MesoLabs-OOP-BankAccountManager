@@ -1,4 +1,8 @@
-import org.junit.Assert;
+package accounts;
+
+import accounts.Account;
+import accounts.Checking;
+import accounts.Investment;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

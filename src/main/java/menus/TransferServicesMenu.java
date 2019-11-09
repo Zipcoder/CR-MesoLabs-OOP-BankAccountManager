@@ -1,18 +1,20 @@
+package menus;
+
 import java.util.Date;
 
 public class TransferServicesMenu {
 
 
-    //TransferServices transferServices = new TransferServices(currentUser, userDB, transactionDB, accountDB);
+    //services.TransferServices transferServices = new services.TransferServices(currentUser, userDB, transactionDB, accountDB);
 //
-//    public void accountMenu(Account account) {
-//        String header = account.getClass().getName() + " Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
-//        if (account instanceof Savings) {
-//            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate())+"%%";
-//        } else if (account instanceof Investment) {
-//            header += "  Risk: " + String.format("%d", Math.round(100*((Investment) account).getRisk()))+"/10";
+//    public void accountMenu(accounts.Account account) {
+//        String header = account.getClass().getName() + " accounts.Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
+//        if (account instanceof accounts.Savings) {
+//            header += "  Interest Rate: " + String.format("%.2f", ((accounts.Savings) account).getInterestRate())+"%%";
+//        } else if (account instanceof accounts.Investment) {
+//            header += "  Risk: " + String.format("%d", Math.round(100*((accounts.Investment) account).getRisk()))+"/10";
 //        }
-//        String input = Console.getInput(header, new String[] {"View Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Back to Main Menu" });
+//        String input = Console.getInput(header, new String[] {"View Transaction History", "Deposit", "Withdrawal", "Close accounts.Account", "Transfer", "Back to Main Menu" });
 //
 //        Double deposit;
 //        Transaction transaction;
@@ -44,20 +46,20 @@ public class TransferServicesMenu {
 //                if (account.getBalance() == 0) {
 //
 //                    deleteAccountFromDB(account);
-//                    transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "Account Closed", false);
+//                    transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "accounts.Account Closed", false);
 //                    saveTransactionToDB(transaction);
 //                } else {
-//                    Console.println("Account still contains funds. Withdraw or transfer all funds before closing.");
+//                    Console.println("accounts.Account still contains funds. Withdraw or transfer all funds before closing.");
 //                    Console.getInput("\nPress Enter");
 //                }
 //                break;
 //            case "5":
 //
-//                Console.println("Number of Account to transfer to");
+//                Console.println("Number of accounts.Account to transfer to");
 //                int ActToTransferTo = Console.getInteger();
 //                String[] actInfo = getAccountInfoByID(ActToTransferTo);
 //                // 0: accountID 1: ownerID 2: balance 3: type 4: risk/interest/null (type-dependent)
-//                Account act = getAccountByInfo(actInfo);
+//                accounts.Account act = getAccountByInfo(actInfo);
 //                deposit = Console.getCurrency("Transfer amount");
 //
 //                if(deposit < account.getBalance()) {

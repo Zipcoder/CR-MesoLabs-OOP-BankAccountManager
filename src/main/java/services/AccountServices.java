@@ -1,3 +1,6 @@
+package services;
+
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,8 +14,8 @@ public class AccountServices {
     }
 
     public void addAccount(ArrayList<Account> usrAccounts, Double deposit, User currentUser) {
-        String header = "Choose Account Type:";
-        String input = Console.getInput(header, new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" });
+        String header = "Choose accounts.Account Type:";
+        String input = Console.getInput(header, new String[] {"accounts.Checking", "accounts.Savings", "accounts.Investment", "Back to Main Menu" });
         Account newAccount;
         Transaction transaction;
 
@@ -74,11 +77,11 @@ public class AccountServices {
 
     // account instance from info (pre-existing account)
     public Account getAccountByInfo (String[] info) {
-        if (info[3].equals("Checking")) {
+        if (info[3].equals("accounts.Checking")) {
             return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]));
-        } else if (info[3].equals("Savings")) {
+        } else if (info[3].equals("accounts.Savings")) {
             return new Savings(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
-        } else if (info[3].equals("Investment")) {
+        } else if (info[3].equals("accounts.Investment")) {
             return new Investment(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
         }
         return null;

@@ -1,3 +1,5 @@
+import interfaces.Storeable;
+
 import java.util.Date;
 
 public class Transaction implements Storeable {

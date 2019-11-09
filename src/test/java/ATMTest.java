@@ -1,3 +1,7 @@
+import accounts.Account;
+import accounts.Checking;
+import accounts.Investment;
+import accounts.Savings;
 import junitparams.JUnitParamsRunner;
 import org.junit.After;
 import org.junit.Assert;
@@ -5,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Arrays;

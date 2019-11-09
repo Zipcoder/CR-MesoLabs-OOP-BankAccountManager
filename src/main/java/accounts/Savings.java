@@ -1,6 +1,8 @@
-public class Savings extends Account{
+package accounts;
 
-    public Double interestRate;
+public class Savings extends Account {
+
+    private Double interestRate;
 
     public Savings(Double balance, Integer ownerID, Integer acctNum, Double interestRate) {
         super(balance, ownerID, acctNum);

@@ -1,3 +1,8 @@
+import accounts.Account;
+import accounts.Checking;
+import accounts.Investment;
+import accounts.Savings;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,9 +50,9 @@ public class ATM {
     public void loadDBs() {
 //        // find accounts, create instances
 //        ArrayList<String[]> accountsInfo = getAccountInfoByUser(this.currentUser);
-//        ArrayList<Account> accounts = new ArrayList<>();
+//        ArrayList<accounts.Account> accounts = new ArrayList<>();
 //        for (String[] acctInfo : accountsInfo) {
-//            accounts.add(new Account(...));
+//            accounts.add(new accounts.Account(...));
 //        }
 //        //
     }
@@ -96,7 +101,7 @@ public class ATM {
     // log in user - don't return until you do
     public void getUser() {
         String header = "Welcome to ZipCode National Bank";
-        String input = Console.getInput(header, new String[] {"Insert Card", "Open an Account"});
+        String input = Console.getInput(header, new String[] {"Insert Card", "Open an accounts.Account"});
 
         switch (input) {
             case "1":
@@ -117,7 +122,7 @@ public class ATM {
 
         ArrayList<String> choices = new ArrayList<>();
         choices.add("Transaction History");
-        choices.add("Add Account");
+        choices.add("Add accounts.Account");
 
         String nextAcctChoice;
         ArrayList<Account> usrAccts = getAccountsForUser(currentUser);
@@ -145,8 +150,8 @@ public class ATM {
     }
 
     public void addAccount(ArrayList<Account> usrAccounts, Double deposit) {
-        String header = "Choose Account Type:";
-        String input = Console.getInput(header, new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" });
+        String header = "Choose accounts.Account Type:";
+        String input = Console.getInput(header, new String[] {"accounts.Checking", "accounts.Savings", "accounts.Investment", "Back to Main Menu" });
         Account newAccount;
         Transaction transaction;
 
@@ -189,13 +194,13 @@ public class ATM {
     }
 
     public void accountMenu(Account account) {
-        String header = account.getClass().getName() + " Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
+        String header = account.getClass().getName() + " accounts.Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
         if (account instanceof Savings) {
             header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate())+"%%";
         } else if (account instanceof Investment) {
             header += "  Risk: " + String.format("%d", Math.round(100*((Investment) account).getRisk()))+"/10";
         }
-        String input = Console.getInput(header, new String[] {"View Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Back to Main Menu" });
+        String input = Console.getInput(header, new String[] {"View Transaction History", "Deposit", "Withdrawal", "Close accounts.Account", "Transfer", "Back to Main Menu" });
 
         Double deposit;
         Transaction transaction;
@@ -227,16 +232,16 @@ public class ATM {
                 if (account.getBalance() == 0) {
 
                     deleteAccountFromDB(account);
-                    transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "Account Closed", false);
+                    transaction = new Transaction(0.0, new Date(), account.getAcctNum(), "accounts.Account Closed", false);
                     saveTransactionToDB(transaction);
                 } else {
-                    Console.println("Account still contains funds. Withdraw or transfer all funds before closing.");
+                    Console.println("accounts.Account still contains funds. Withdraw or transfer all funds before closing.");
                     Console.getInput("\nPress Enter");
                 }
                 break;
             case "5":
 
-                Console.println("Number of Account to transfer to");
+                Console.println("Number of accounts.Account to transfer to");
                 int ActToTransferTo = Console.getInteger();
                 String[] actInfo = getAccountInfoByID(ActToTransferTo);
                 // 0: accountID 1: ownerID 2: balance 3: type 4: risk/interest/null (type-dependent)
@@ -314,7 +319,7 @@ public class ATM {
         account.deposit(earnings);
         saveAccountToDB(account);
         Boolean isCredit = (earnings > 0);
-        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",earnings)), new Date(), account.getAcctNum(), "Investment returns", isCredit);
+        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",earnings)), new Date(), account.getAcctNum(), "accounts.Investment returns", isCredit);
         saveTransactionToDB(transaction);
     }
 
@@ -333,7 +338,7 @@ public class ATM {
 //        }
 //        // write the accounts
 //        int row;
-//        for (Account account : this.currentUser.accounts) {
+//        for (accounts.Account account : this.currentUser.accounts) {
 //            // find account row, replace it
 //            row =
 //            this.accountDB.replaceRow(accountDB.findPartialRow(), account.toString());
@@ -374,11 +379,11 @@ public class ATM {
 
     // account instance from info (pre-existing account)
     public Account getAccountByInfo (String[] info) {
-        if (info[3].equals("Checking")) {
+        if (info[3].equals("accounts.Checking")) {
             return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]));
-        } else if (info[3].equals("Savings")) {
+        } else if (info[3].equals("accounts.Savings")) {
             return new Savings(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
-        } else if (info[3].equals("Investment")) {
+        } else if (info[3].equals("accounts.Investment")) {
             return new Investment(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
         }
         return null;

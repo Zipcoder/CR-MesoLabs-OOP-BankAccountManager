@@ -1,3 +1,9 @@
+package interfaces;
+
+import accounts.Account;
+import accounts.Investment;
+import accounts.Savings;
+
 public interface Storeable {
 
     default String[] toStringArray() {
@@ -6,13 +12,13 @@ public interface Storeable {
             String acctType;
             String typeSpecificProperty;
             if (this instanceof Investment) {
-                acctType = "Investment";
-                typeSpecificProperty = ((Investment) this).risk.toString();
+                acctType = "accounts.Investment";
+                typeSpecificProperty = ((Investment) this).getRisk().toString();
             } else if (this instanceof Savings) {
-                acctType = "Savings";
-                typeSpecificProperty = ((Savings) this).interestRate.toString();
+                acctType = "accounts.Savings";
+                typeSpecificProperty = ((Savings) this).getInterestRate().toString();
             } else {
-                acctType = "Checking";
+                acctType = "accounts.Checking";
                 typeSpecificProperty = "";
             }
 

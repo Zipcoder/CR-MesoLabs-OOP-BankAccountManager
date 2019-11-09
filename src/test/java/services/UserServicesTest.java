@@ -1,3 +1,5 @@
+package services;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -13,11 +15,11 @@ import static org.junit.Assert.*;
 
 public class UserServicesTest {
 
-    private  ATM atm;
+    private ATM atm;
 
     @Before
     public void setUp() throws Exception {
-        atm = new ATM ("testuserDB.csv", "testaccountDB.csv", "testtransactionDB.csv");
+        atm = new ATM("testuserDB.csv", "testaccountDB.csv", "testtransactionDB.csv");
     }
 
     @Test

@@ -1,3 +1,5 @@
+package services;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -53,11 +55,11 @@ public class TransferServices {
 
 
 //
-//             Console.println("Number of Account to transfer to");
+//             Console.println("Number of accounts.Account to transfer to");
 //    int ActToTransferTo = Console.getInteger();
 //    String[] actInfo = atm.getAccountInfoByID(ActToTransferTo);
 //    // 0: accountID 1: ownerID 2: balance 3: type 4: risk/interest/null (type-dependent)
-//    Account act = getAccountByInfo(actInfo);
+//    accounts.Account act = getAccountByInfo(actInfo);
 //    deposit = Console.getCurrency("Transfer amount");
 //
 //                if(deposit < account.getBalance()) {
@@ -104,21 +106,21 @@ public class TransferServices {
 //    }
 
 //    // account instance from info (pre-existing account)
-//    public Account getAccountByInfo (String[] info) {
-//        if (info[3].equals("Checking")) {
-//            return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]));
-//        } else if (info[3].equals("Savings")) {
-//            return new Savings(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
-//        } else if (info[3].equals("Investment")) {
-//            return new Investment(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
+//    public accounts.Account getAccountByInfo (String[] info) {
+//        if (info[3].equals("accounts.Checking")) {
+//            return new accounts.Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]));
+//        } else if (info[3].equals("accounts.Savings")) {
+//            return new accounts.Savings(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
+//        } else if (info[3].equals("accounts.Investment")) {
+//            return new accounts.Investment(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]));
 //        }
 //        return null;
 //    }
 
     // AL of accounts for a user
-//    public ArrayList<Account> getAccountsForUser(User user) {
+//    public ArrayList<accounts.Account> getAccountsForUser(User user) {
 //        int[] rows = getAccountRowsByUser(user);
-//        ArrayList<Account> accounts = new ArrayList<>();
+//        ArrayList<accounts.Account> accounts = new ArrayList<>();
 //        for (int row : rows) {
 //            accounts.add(getAccountByInfo(getAccountInfoByRow(row)));
 //        }

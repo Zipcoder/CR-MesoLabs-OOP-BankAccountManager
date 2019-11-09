@@ -1,3 +1,5 @@
+import interfaces.Storeable;
+
 import java.util.ArrayList;
 
 public class User implements Storeable {

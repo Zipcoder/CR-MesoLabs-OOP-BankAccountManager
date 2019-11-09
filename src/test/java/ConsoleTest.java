@@ -21,7 +21,7 @@ public class ConsoleTest {
     @Test
     public void menuOptionsTest() {
         String[] options = new String[] {"Live", "Die", "Repeat"};
-        String header = "Account Creation Menu";
+        String header = "accounts.Account Creation Menu";
         options = new String[] {"Live", "Die", "Repeat", "Bump", "Set", "Spike", "Towel"};
         //Console.getInput(options);
         //Console.getInput(header, options);

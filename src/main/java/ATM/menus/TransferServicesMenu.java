@@ -1,6 +1,7 @@
 package ATM.menus;
 
 import ATM.ATM;
+import ATM.services.TransferServices;
 
 import java.io.Console;
 import java.util.Date;
@@ -11,11 +12,14 @@ public class TransferServicesMenu {
     Console console;
     ATM atm;
 
-
-
-    public String welcome () {
-        console.println(String.format("Welcome to transfer services.  Your current account number is %d, with a balance of: %.2f ", acctNum, )
-    }
+//    public TransferServices(ATM atm, Account account) {
+//        this.atm = atm;
+//
+//    }
+//
+//    public String welcome () {
+//        console.println(String.format("Welcome to transfer services.  Your current account number is %d, with a balance of: %.2f ", acctNum, )
+//    }
 
 
 

@@ -1,7 +1,10 @@
+package ATM.accounts;
+
 
 import java.util.Random;
+import ATM.User;
 
-package ATM.accounts;
+
 
 import ATM.DB;
 import ATM.interfaces.Storeable;
@@ -38,17 +41,17 @@ abstract public class Account implements Storeable {
 
 
     //Checks if the account number is already in the database
-        public Integer checkAcctNumExists (acctNum) {
-        if (acctNum == accountServices.geta{
-            acctNumGenerator();
-        }
-        else {return acctNum};
-    }
+//        public Integer checkAcctNumExists (acctNum) {
+//        if (acctNum == accountServices.geta{
+//            acctNumGenerator();
+//        }
+//        else {return acctNum};
+//    }
 
-    public void generateAccountNum () {
-        acctNumGenerator();
-        checkAcctNumExists();
-    }
+//    public void generateAccountNum () {
+//        acctNumGenerator();
+//        checkAcctNumExists();
+//    }
 
 
     public Double getBalance(){

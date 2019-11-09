@@ -1,6 +1,9 @@
 package ATM.services;
 
 
+import ATM.Exceptions.ClosedAccountException;
+import ATM.Exceptions.FrozenAccountException;
+import ATM.Exceptions.InsufficientFundsException;
 import ATM.User;
 
 import ATM.ATM;
@@ -33,27 +36,48 @@ public class TransferServices {
 
     //From menu: Account to Transfer to will equal acctTransferTo
 
-    public String acctFrozen (Account account){
-        String frozen = "";
-   // if (account.getAcctNum == Account.Status.OFAC) {
-        if (true){
-            frozen = "THIS ACCOUNT IS FROZEN!  PLEASE TRY AGAIN.";
+
+
+    //
+//    public String acctFrozen (Integer acctTransferTo ) { //Account account)
+//        String frozen = "";
+//        if (account.getAcctStatus() == Account.Status.OFAC) {
+//            if (true) {
+//                frozen = "THIS ACCOUNT IS FROZEN!  PLEASE TRY AGAIN.";
+//            }
+//
+//        }
+//        return frozen;
+//        //transferMenu();
+//    }
+//
+//        public String acctClosed (){
+//            String closed ="";
+//            if (account.getAcctStatus() == Account.Status.CLOSED){
+//                closed = "THIS ACCOUNT IS CLOSED!  PLEASE TRY AGAIN.";
+//            }
+//            return closed;
+//            //transferMenu();
+//    }
+
+    public void checkTransferAmount () {
+
         }
-        return frozen;
-        //transferMenu();
-    }
-
-        public String acctClosed (){
-            String closed ="";
-            if (account.getAcctStatus() == Account.Status.CLOSED){
-                closed = "THIS ACCOUNT IS CLOSED!  PLEASE TRY AGAIN.";
-            }
-            return closed;
-            //transferMenu();
-    }
 
 
-    public String transfer (Account sourceAccount, Account TargetAccount) {
+    public String transfer (Account sourceAccount, Account targetAccount, double amountToDeposit) throws InsufficientFundsException, ClosedAccountException, FrozenAccountException, {
+
+        if(amountToDeposit > sourceAccount.balance){
+            throw new InsufficientFundsException();}
+        else if (targetAccount.getAcctStatus() == Account.Status.OFAC) {
+            throw new ClosedAccountException();}
+        else if (targetAccount.getAcctStatus() == Account.Status.CLOSED) {
+            throw new FrozenAccountException();}
+
+            targetAccount.balance = targetAccount.balance + amountToDeposit;
+            sourceAccount.balance = sourceAccount.balance - amountToDeposit;
+
+
         return "";
     }
 }

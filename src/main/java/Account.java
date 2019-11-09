@@ -1,4 +1,4 @@
-
+import java.util.Random;
 
 abstract public class Account implements Storeable {
 
@@ -9,14 +9,36 @@ abstract public class Account implements Storeable {
         OPEN, CLOSED, OFAC
     }
     private Status acctStatus;
+    Random random = new Random();
 
+    //Constructor
     public Account(Double balance, Integer ownerID, Integer acctNum) {
         this.balance = balance;
         this.ownerID = ownerID;
         // TODO: make account number here, via something better than wild-assed guess
-
+        //generateAccountNum();
         this.acctNum = acctNum;
     }
+
+    public Integer acctNumGenerator () {
+        int acctNum = random.nextInt(99999+1);
+        return acctNum;
+    }
+
+
+    //Checks if the account number is already in the database
+    //    public Integer checkAcctNumExists (acctNum) {
+//        if (acctNum == CHECK ACCT # AGAIINST USER DB){
+//            acctNumGenerator();
+//        }
+    //    else {return acctNum};
+//    }
+
+//    public void generateAccountNum () {
+//        acctNumGenerator();
+//        checkAcctNumExists();
+//    }
+
 
     public Double getBalance(){
         return balance;

@@ -59,16 +59,16 @@ public class MainMenu implements Menu {
 
     public void handleChoice(int input) {
         ArrayList<Account> usrAccts = accountServices.getAccountsForUser(atm.getCurrentUser());
-        if (input == 1) {
+        if (input == 1) { // View overall transaction history
             Console.outputTransactionsWithHeader("Transaction History", transactionServices.getTransactionsForUser(atm.getCurrentUser()));
             displayMenu();
-        } else if (input == 2) {
+        } else if (input == 2) { // create a new account
             addAccountChoice();
             displayMenu();
-        } else if (input == usrAccts.size()+3) {
+        } else if (input == usrAccts.size()+3) { // quit/log out
             // log out user and drop though to service loop
             atm.setCurrentUser(null);
-        } else {
+        } else { // deal with an existing account
             new AccountMenu(this.atm, usrAccts.get(input - 3)).displayMenu();
             displayMenu();
         }
@@ -78,15 +78,15 @@ public class MainMenu implements Menu {
     private void addAccountChoice() {
         Double deposit = Console.getCurrency("Initial deposit amount for this account: ");
         String header = "Choose Account Type:";
-        String[] choices = new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" }
+        String[] choices = new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" };
         int acctTypeInput = Console.getInput(header, choices);
         if (acctTypeInput != 4) {
-            accountServices.addAccount(deposit, choices[acctTypeInput]);
+            //accountServices.addAccount(deposit, choices[acctTypeInput]);
         }
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 }

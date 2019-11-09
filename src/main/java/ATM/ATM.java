@@ -4,6 +4,7 @@ import ATM.accounts.Account;
 import ATM.accounts.Checking;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
+import ATM.menus.MainMenu;
 import ATM.services.AccountServices;
 import ATM.services.TransactionServices;
 import ATM.services.UserServices;
@@ -127,7 +128,7 @@ public class ATM {
     // log in user - don't return until you do
     public void getUser() {
         String header = "Welcome to ZipCode National Bank";
-        int input = Console.getInput(header, new String[] {"Insert Card", "Open an accounts.Account"});
+        int input = Console.getInput(header, new String[] {"Insert Card", "Open an Account"});
 
         switch (input) {
             case 1:
@@ -142,38 +143,7 @@ public class ATM {
         }
     }
 
-//    // deal with the user's choices
-//    public void userMenu() {
-//        String header = "ZCNB ATM.Main ATM.Menu";
-//
-//        ArrayList<String> choices = new ArrayList<>();
-//        choices.add("ATM.Transaction History");
-//        choices.add("Add accounts.Account");
-//
-//        String nextAcctChoice;
-//        ArrayList<Account> usrAccts = accountServices.getAccountsForUser(currentUser);
-//        for (int i = 0; i < usrAccts.size(); i++) {
-//            nextAcctChoice = String.format("%s #%d ($%,.2f)", usrAccts.get(i).getClass().getName(), usrAccts.get(i).getAcctNum(), usrAccts.get(i).getBalance());
-//            choices.add(nextAcctChoice);
-//        }
-//
-//        choices.add("Log Out");
-//
-//        String input = Console.getInput(header, choices.toArray(new String[choices.size()]));
-//
-//        if (input.equals(Integer.toString(choices.size()))) {
-//            serviceLoop(); //not ... great, but it'll do for now
-//        } else if (input.equals("1")) {
-//            Console.outputTransactionsWithHeader("Transaction History", transactionServices.getTransactionsForUser(this.currentUser));
-//        } else if (input.equals("2")) {
-//            Double deposit = Console.getCurrency("Initial deposit amount for this account: ");
-//            addAccount(usrAccts, deposit);
-//        } else {
-//            accountMenu(usrAccts.get(Integer.parseInt(input) - 3));
-//        }
-//
-//        userMenu();
-//    }
+
 //
 //    public void addAccount(ArrayList<Account> usrAccounts, Double deposit) {
 //        String header = "Choose accounts.Account Type:";
@@ -306,7 +276,7 @@ public class ATM {
 
         loadDBs();
 
-        //userMenu();
+        new MainMenu(this).displayMenu();
 
         logOut();
 

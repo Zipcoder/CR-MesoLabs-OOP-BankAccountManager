@@ -62,7 +62,7 @@ public class TransferServices {
         }
 
 
-    public String transfer (Account sourceAccount, Account targetAccount, Double amountToDeposit) throws InsufficientFundsException, ClosedAccountException, FrozenAccountException, {
+    public String transfer (Account sourceAccount, Account targetAccount, double amountToDeposit) throws InsufficientFundsException, ClosedAccountException, FrozenAccountException, {
 
         if(amountToDeposit > sourceAccount.balance){
             throw InsufficientFundsException;}
@@ -71,8 +71,8 @@ public class TransferServices {
         else if (targetAccount.getAcctStatus() == Account.Status.CLOSED) {
             throw FrozenAccountExeption;}
 
-        targetAccountBalance = targetAccountBalance + amountTodeposit;
-            sourceAccountBalance = sourceAccountBalance - amountToDeposit;
+            targetAccount.balance = targetAccount.balance + amountToDeposit;
+            sourceAccount.balance = sourceAccount.balance - amountToDeposit;
 
 
         return "";

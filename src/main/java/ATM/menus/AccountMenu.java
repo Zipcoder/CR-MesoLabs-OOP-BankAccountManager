@@ -53,6 +53,10 @@ public class AccountMenu implements Menu {
         } else if (account instanceof Investment) {
             header += "  Risk: " + String.format("%d", Math.round(100 * ((Investment) account).getRisk())) + "/10";
         }
+        Account.Status status = account.getAcctStatus();
+        if (status == Account.Status.CLOSED || status == Account.Status.OFAC) {
+            header += String.format("  (%s)", status.toString());
+        }
         return header;
     }
 
@@ -75,14 +79,24 @@ public class AccountMenu implements Menu {
                 amount = Console.getCurrency("Withdrawal amount: ");
                 attemptWithdrawal(amount);
                 break;
-            case 4:
+            case 4: // close account
                 attemptCloseAccount();
                 break;
-            case 5:
-                new TransferServicesMenu(this.atm, account).displayMenu();
+            case 5: //  transfer money
+                attemptTransfer();
                 break;
             case 6:
                 break;
+        }
+    }
+
+    private void attemptTransfer() {
+        try {
+            new TransferServicesMenu(this.atm, account).displayMenu();
+        } catch (ClosedAccountException e) {
+            Console.getInput("Error - this account is closed. Press Enter to continue");
+        } catch (FrozenAccountException e) {
+            Console.getInput("Error - this account is frozen by OFAC. Press Enter to continue");
         }
     }
 

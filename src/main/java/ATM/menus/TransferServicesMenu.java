@@ -1,6 +1,9 @@
 package ATM.menus;
 
 import ATM.ATM;
+import ATM.Exceptions.ClosedAccountException;
+import ATM.Exceptions.FrozenAccountException;
+import ATM.Exceptions.InsufficientFundsException;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
 import ATM.services.AccountServices;
@@ -73,9 +76,16 @@ public class TransferServicesMenu implements Menu {
         if (choice == usrAccts.size() + 3) { // exit transfer menu
             // drop though to account menu
         } else { // deal with an existing account
-            //new AccountMenu(this.atm, usrAccts.get(choice - 3)).displayMenu();
             double amount = Console.getCurrency("Amount to transfer: ");
-            //transferServices.transfer(this.sourceAccount, usrAccts.get(choice - 1), amount);
+            try {
+                transferServices.transfer(this.sourceAccount, usrAccts.get(choice - 1), amount);
+            } catch (ClosedAccountException e) {
+                Console.println("Error - cannot transfer to/from a closed account. Press Enter to continue");
+            } catch (InsufficientFundsException e) {
+                Console.println("Error - insufficient funds. Press Enter to continue");
+            } catch (FrozenAccountException e) {
+                Console.println("Error - cannot transfer to/from a frozen account. Press Enter to continue");
+            }
             displayMenu();
         }
     }

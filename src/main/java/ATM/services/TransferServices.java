@@ -8,7 +8,6 @@ import ATM.User;
 
 import ATM.ATM;
 import ATM.accounts.Account;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,7 +64,7 @@ public class TransferServices {
         }
 
 
-    public String transfer (Account sourceAccount, Account targetAccount, double amountToDeposit) throws InsufficientFundsException, ClosedAccountException, FrozenAccountException, {
+    public String transfer (Account sourceAccount, Account targetAccount, double amountToDeposit) throws InsufficientFundsException, ClosedAccountException, FrozenAccountException {
 
         if(amountToDeposit > sourceAccount.balance){
             throw new InsufficientFundsException();}

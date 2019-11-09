@@ -3,6 +3,7 @@ package ATM.services;
 import ATM.ATM;
 import ATM.DB;
 import ATM.Exceptions.BalanceRemainingException;
+import ATM.Exceptions.ClosedAccountException;
 import ATM.Exceptions.FrozenAccountException;
 import ATM.Exceptions.InsufficientFundsException;
 import ATM.Transaction;
@@ -164,7 +165,7 @@ public class AccountServices {
     }
 
 
-    public Boolean closeAccount(Account account) throws BalanceRemainingException, FrozenAccountException, InsufficientFundsException {
+    public Boolean closeAccount(Account account) throws BalanceRemainingException, FrozenAccountException, ClosedAccountException{
         boolean status = true;
         if (account.getBalance() == 0) {
             deleteAccountFromDB(account);
@@ -180,7 +181,7 @@ public class AccountServices {
     }
 
 
-    public Boolean accountDeposit(Account account, double amount) throws BalanceRemainingException, FrozenAccountException {
+    public Boolean accountDeposit(Account account, double amount) throws ClosedAccountException, FrozenAccountException {
         saveAccountToDB(account);
         Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM deposit", true);
         transactionServices.saveTransactionToDB(transaction);
@@ -189,7 +190,7 @@ public class AccountServices {
     }
 
 
-    public Boolean accountWithdraw(Account account, double amount) throws BalanceRemainingException, FrozenAccountException, InsufficientFundsException {
+    public Boolean accountWithdraw(Account account, double amount) throws FrozenAccountException, InsufficientFundsException, ClosedAccountException {
         amount = Console.getCurrency("Withdrawal amount: ");
         if (amount <= account.getBalance()) {
             account.deposit(-1 * amount);

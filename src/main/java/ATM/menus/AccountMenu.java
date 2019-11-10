@@ -95,7 +95,7 @@ public class AccountMenu implements Menu {
 
     private void attemptTransfer() {
         try {
-            new TransferServicesMenu(this.atm, account).displayMenu();
+            new TransferServicesMenu(this.atm, account, accountServices.getAccountsForUser(currentUser)).displayMenu();
         } catch (ClosedAccountException e) {
             Console.getInput("Error - this account is closed. Press Enter to continue");
         } catch (FrozenAccountException e) {
@@ -124,7 +124,7 @@ public class AccountMenu implements Menu {
             //gives user the money
         }else if(closeAccountInput == "Y"){
             try {
-                new TransferServicesMenu(atm, account).displayMenu();
+                new TransferServicesMenu(atm, account, accountServices.getAccountsForUser(currentUser)).displayMenu();
             } catch (ClosedAccountException e) {
                 Console.getInput("Error - account is closed; press Enter to continue");
             } catch (FrozenAccountException e) {

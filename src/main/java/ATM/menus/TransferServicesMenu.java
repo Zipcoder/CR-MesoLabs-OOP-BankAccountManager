@@ -13,6 +13,7 @@ import ATM.interfaces.Menu;
 import ATM.accounts.Account;
 import ATM.Console;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class TransferServicesMenu implements Menu {
@@ -22,9 +23,10 @@ public class TransferServicesMenu implements Menu {
     private Account sourceAccount;
     private AccountServices accountServices;
     private TransferServices transferServices;
+    private ArrayList<Account> userAccounts;
     private User currentUser;
 
-    public TransferServicesMenu(ATM atm, Account sourceAccount) throws ClosedAccountException, FrozenAccountException {
+    public TransferServicesMenu(ATM atm, Account sourceAccount, ArrayList<Account> userAccounts) throws ClosedAccountException, FrozenAccountException {
         this.atm = atm;
         this.sourceAccount = sourceAccount;
         if (this.sourceAccount.getAcctStatus() == Account.Status.CLOSED) {
@@ -35,6 +37,7 @@ public class TransferServicesMenu implements Menu {
         this.accountServices = this.atm.getAccountServices();
         this.transferServices = new TransferServices(this.atm, sourceAccount);
         this.currentUser = this.atm.getCurrentUser();
+        this.userAccounts = userAccounts;
     }
 
     public void displayMenu() {
@@ -69,13 +72,14 @@ public class TransferServicesMenu implements Menu {
     }
 
     public ArrayList<Account> getDestinationAccounts() {
-        ArrayList<Account> userAccounts = new ArrayList<>();
-        for (Account account : this.accountServices.getAccountsForUser(this.currentUser)) {
+        ArrayList<Account> userAccountsTrimmed = new ArrayList<Account>();
+
+        for (Account account : this.userAccounts) {
             if (account.getAcctNum() != this.sourceAccount.getAcctNum()) {
-                userAccounts.add(account);
+                userAccountsTrimmed.add(account);
             }
         }
-        return userAccounts;
+        return userAccountsTrimmed;
     }
 
     public void handleChoice(int choice) {

@@ -12,9 +12,9 @@ import ATM.interfaces.Storeable;
 
 abstract public class Account implements Storeable {
 
-    public Double balance;
-    public Integer ownerID;
-    public Integer acctNum;
+    private Double balance;
+    private Integer ownerID;
+    private Integer acctNum;
     public enum Status {
         OPEN, CLOSED, OFAC
     }
@@ -70,6 +70,10 @@ abstract public class Account implements Storeable {
         return acctStatus;
     }
 
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
     public void setAcctStatus(Status acctStatus) {
         this.acctStatus = acctStatus;
     }
@@ -81,7 +85,7 @@ abstract public class Account implements Storeable {
     }
 
     public void withdraw(Double amount){
-        if (this.balance > amount) {
+        if (this.balance >= amount) {
             this.balance -= amount;
         }
     }

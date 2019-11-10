@@ -1,7 +1,6 @@
 package ATM.services;
 
 import ATM.ATM;
-import ATM.DB;
 import ATM.Exceptions.BalanceRemainingException;
 import ATM.Exceptions.ClosedAccountException;
 import ATM.Exceptions.FrozenAccountException;
@@ -50,7 +49,7 @@ public class AccountServicesTest {
 
         Assert.assertEquals(actual, expected);
 
-        Account account1 = new Checking(1532.34, 23, 2123, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 2123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
 
         actual = accountServices.getMaxAccountNumber();
@@ -68,13 +67,13 @@ public class AccountServicesTest {
 
         Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account4);
         Account account5 = new Savings(120.43, 98, 333223, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account5);
         Account account6 = new Investment(234023.23, 42, 9948, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account6);
-        Account account7 = new Checking(1532.34, 23, 515, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account7 = new Checking(1532.34, 23, 515, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account7);
         Account account8 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account8);
@@ -91,7 +90,7 @@ public class AccountServicesTest {
     public void getAccountInfoByID() {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(120.43, 12, 333223, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account2);
@@ -106,7 +105,7 @@ public class AccountServicesTest {
 
     @Test
     public void getAccountRowByID() {
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(120.43, 12, 333223, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account2);
@@ -148,19 +147,19 @@ public class AccountServicesTest {
         userServices.saveUserToDB(user3);
 
 
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(120.43, 12, 33, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account2);
         Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account4);
         Account account5 = new Savings(120.43, 98, 333223, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account5);
         Account account6 = new Investment(234023.23, 42, 9948, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account6);
-        Account account7 = new Checking(1532.34, 23, 515, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account7 = new Checking(1532.34, 23, 515, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account7);
         Account account8 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account8);
@@ -207,19 +206,19 @@ public class AccountServicesTest {
         User user3 = new User("Jane", "Himne", "gasdsdool321ybib", 33, 313);
         userServices.saveUserToDB(user3);
 
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(120.43, 12, 33, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account2);
         Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account4);
         Account account5 = new Savings(120.43, 98, 333223, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account5);
         Account account6 = new Investment(234023.23, 42, 9948, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account6);
-        Account account7 = new Checking(1532.34, 23, 515, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account7 = new Checking(1532.34, 23, 515, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account7);
         Account account8 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account8);
@@ -242,13 +241,13 @@ public class AccountServicesTest {
     public void saveAccountToDBTest() {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account2);
         Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account4);
 
 
@@ -289,11 +288,66 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account1 = new Savings(1532.34, 23, 1232123, .01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account1);
-        accountServices.accountWithdraw(account1, 1600);
+        accountServices.attemptAccountWithdrawal(account1, 1600);
+    }
 
+    @Test(expected = InsufficientFundsException.class)
+    public void insufficientFundWithdrawTest2() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
 
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Investment(1532.34, 23, 1232123, .02, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.attemptAccountWithdrawal(account1, 1600);
+    }
+
+    @Test(expected = InsufficientFundsException.class)
+    public void insufficientFundWithdrawTest3() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.ON);
+        accountServices.saveAccountToDB(account1);
+        accountServices.attemptAccountWithdrawal(account1, 1600);
+    }
+
+    @Test
+    public void insufficientFundWithdrawTest4() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1500.00, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
+        accountServices.saveAccountToDB(account1);
+        accountServices.attemptAccountWithdrawal(account1, 1600);
+        Assert.assertEquals(-100.0, account1.getBalance(), .01);
+    }
+
+    @Test
+    public void overdraftAutoTransferTest() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        atm.setCurrentUser(user1);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1500.00, 98, 1232123, Account.Status.OPEN, Checking.Overdraft.AUTO);
+        Account account2 = new Checking(2500.00, 98, 1232124, Account.Status.OPEN, Checking.Overdraft.OFF);
+
+        accountServices.saveAccountToDB(account1);
+        accountServices.saveAccountToDB(account2);
+
+        accountServices.attemptAccountWithdrawal(account1, 1600);
+        Assert.assertEquals(0.0, account1.getBalance(), .01);
+        String[] account2Info = accountServices.getAccountInfoByID(1232124);
+        Assert.assertEquals(2400.0, Double.parseDouble(account2Info[2]), .01);
     }
 
 
@@ -304,9 +358,9 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OFAC"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OFAC"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
-        accountServices.accountWithdraw(account1, 1500);
+        accountServices.attemptAccountWithdrawal(account1, 1500);
 
     }
 
@@ -318,9 +372,9 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("CLOSED"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("CLOSED"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
-        accountServices.accountWithdraw(account1, 1500);
+        accountServices.attemptAccountWithdrawal(account1, 1500);
     }
 
     @Test
@@ -329,9 +383,9 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
-        accountServices.accountWithdraw(account1, 32.34);
+        accountServices.attemptAccountWithdrawal(account1, 32.34);
         Account retrieved = accountServices.getAccountByInfo(accountServices.getAccountInfoByID(1232123));
         double actual = retrieved.getBalance();
         double expected = 1500.00;
@@ -347,7 +401,7 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("CLOSED"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("CLOSED"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         accountServices.accountDeposit(account1, 50.00);
         double actual = account1.getBalance();
@@ -361,7 +415,7 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         accountServices.accountDeposit(account1, 50.00);
         double actual = account1.getBalance();
@@ -375,7 +429,7 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.FALSE);
+        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         accountServices.closeAccount(account1);
         Account.Status actual = account1.getAcctStatus();
@@ -389,7 +443,7 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(10.00, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(10.00, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         accountServices.closeAccount(account1);
     }
@@ -400,7 +454,7 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.OFAC, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.OFAC, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         accountServices.closeAccount(account1);
     }
@@ -411,7 +465,7 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.CLOSED, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.CLOSED, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         accountServices.closeAccount(account1);
     }
@@ -420,13 +474,13 @@ public class AccountServicesTest {
     public void getAccountDBLengthTest() {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
         Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.OPEN);
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account4);
         int actual = accountServices.getAccountDBLength();
         int expected = 4;

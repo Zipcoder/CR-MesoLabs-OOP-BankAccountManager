@@ -5,8 +5,8 @@ public class Checking extends Account {
     private Overdraft overdraft;
 
     public enum Overdraft {
-        TRUE,
-        FALSE,
+        ON,
+        OFF,
         AUTO
     }
 

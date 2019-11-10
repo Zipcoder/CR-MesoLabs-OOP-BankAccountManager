@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class CheckingTest {
 
     private ATM atm;
@@ -23,15 +21,15 @@ public class CheckingTest {
 
     @Test
     public void getOverdraft() {
-        account = new Checking(12.00, 44, 123, Account.Status.OPEN, Checking.Overdraft.TRUE);
-        Assert.assertEquals(Checking.Overdraft.TRUE, account.getOverdraft());
+        account = new Checking(12.00, 44, 123, Account.Status.OPEN, Checking.Overdraft.ON);
+        Assert.assertEquals(Checking.Overdraft.ON, account.getOverdraft());
     }
 
     @Test
     public void setOverdraft() {
-        account = new Checking(12.00, 44, 123, Account.Status.OPEN, Checking.Overdraft.TRUE);
-        Assert.assertEquals(Checking.Overdraft.TRUE, account.getOverdraft());
-        account.setOverdraft(Checking.Overdraft.FALSE);
-        Assert.assertEquals(Checking.Overdraft.FALSE, account.getOverdraft());
+        account = new Checking(12.00, 44, 123, Account.Status.OPEN, Checking.Overdraft.ON);
+        Assert.assertEquals(Checking.Overdraft.ON, account.getOverdraft());
+        account.setOverdraft(Checking.Overdraft.OFF);
+        Assert.assertEquals(Checking.Overdraft.OFF, account.getOverdraft());
     }
 }

@@ -24,9 +24,9 @@ public interface Storeable {
             }
 
             String[] result = new String[] {
-                    ((Account) this).acctNum.toString(),
-                    ((Account) this).ownerID.toString(),
-                    ((Account) this).balance.toString(),
+                    ((Account) this).getAcctNum().toString(),
+                    ((Account) this).getOwnerID().toString(),
+                    ((Account) this).getBalance().toString(),
                     acctType,
                     typeSpecificProperty,
                     String.valueOf(((Account) this).getAcctStatus())

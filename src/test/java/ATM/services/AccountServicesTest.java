@@ -2,6 +2,7 @@ package ATM.services;
 
 import ATM.ATM;
 import ATM.DB;
+import ATM.Exceptions.BalanceRemainingException;
 import ATM.Exceptions.ClosedAccountException;
 import ATM.Exceptions.FrozenAccountException;
 import ATM.Exceptions.InsufficientFundsException;
@@ -28,6 +29,7 @@ public class AccountServicesTest {
         atm = new ATM("testuserDB.csv", "testaccountDB.csv", "testtransactionDB.csv");
         accountServices = atm.getAccountServices();
         userServices = atm.getUserServices();
+        accountServices.linkServices();
     }
 
     @After
@@ -38,7 +40,6 @@ public class AccountServicesTest {
     }
 
 
-
     @Test
     public void getMaxAccountNumberTest() {
         accountServices.clearAccountDB();
@@ -46,68 +47,69 @@ public class AccountServicesTest {
         int actual = accountServices.getMaxAccountNumber();
         int expected = 0;
 
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(actual, expected);
 
-        Account account1 = new Checking(1532.34,23,2123, Account.Status.valueOf("OPEN"));
+        Account account1 = new Checking(1532.34, 23, 2123, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account1);
 
         actual = accountServices.getMaxAccountNumber();
         expected = 2123;
 
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(actual, expected);
 
-        Account account2 = new Savings(120.43,12,33, 0.01, Account.Status.valueOf("OPEN"));
+        Account account2 = new Savings(120.43, 12, 33, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account2);
 
         actual = accountServices.getMaxAccountNumber();
         expected = 2123;
 
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(actual, expected);
 
-        Account account3 = new Investment(234023.23,42,48, 0.06, Account.Status.valueOf("OPEN"));
+        Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(1532.34,42,5423, Account.Status.valueOf("OPEN"));
+        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account4);
-        Account account5 = new Savings(120.43,98,333223, 0.01, Account.Status.valueOf("OPEN"));
+        Account account5 = new Savings(120.43, 98, 333223, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account5);
-        Account account6 = new Investment(234023.23,42,9948, 0.06, Account.Status.valueOf("OPEN"));
+        Account account6 = new Investment(234023.23, 42, 9948, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account6);
-        Account account7 = new Checking(1532.34,23,515, Account.Status.valueOf("OPEN"));
+        Account account7 = new Checking(1532.34, 23, 515, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account7);
-        Account account8 = new Savings(120.43,12,749, 0.01, Account.Status.valueOf("OPEN"));
+        Account account8 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account8);
-        Account account9 = new Investment(234023.23,42,904, 0.06, Account.Status.valueOf("OPEN"));
+        Account account9 = new Investment(234023.23, 42, 904, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account9);
 
         actual = accountServices.getMaxAccountNumber();
         expected = 333223;
 
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(actual, expected);
     }
+
     @Test
     public void getAccountInfoByID() {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Savings(120.43,12,333223, 0.01, Account.Status.valueOf("OPEN"));
+        Account account2 = new Savings(120.43, 12, 333223, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account2);
-        Account account3 = new Investment(234023.23,42,9948, 0.06, Account.Status.valueOf("OPEN"));
+        Account account3 = new Investment(234023.23, 42, 9948, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account3);
 
         String[] actual = accountServices.getAccountInfoByID(333223);
         String[] expected = account2.toStringArray();
 
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(actual, expected);
     }
 
     @Test
     public void getAccountRowByID() {
-        Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Savings(120.43,12,333223, 0.01, Account.Status.valueOf("OPEN"));
+        Account account2 = new Savings(120.43, 12, 333223, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account2);
-        Account account3 = new Investment(234023.23,42,9948, 0.06, Account.Status.valueOf("OPEN"));
+        Account account3 = new Investment(234023.23, 42, 9948, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account3);
 
         int actual = accountServices.getAccountRowByID(333223);
@@ -137,59 +139,58 @@ public class AccountServicesTest {
         userServices.clearUserDB();
 
 
-
-        User user1 = new User("Jim","Brown","goolybib", 98, 12343);
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        User user2 = new User("Ji123m","Bro23wn","gool321ybib", 42, 1234313);
+        User user2 = new User("Ji123m", "Bro23wn", "gool321ybib", 42, 1234313);
         userServices.saveUserToDB(user2);
-        User user3 = new User("Jane","Himne","gasdsdool321ybib", 33, 313);
+        User user3 = new User("Jane", "Himne", "gasdsdool321ybib", 33, 313);
         userServices.saveUserToDB(user3);
 
 
-        Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Savings(120.43,12,33, 0.01, Account.Status.valueOf("OPEN"));
+        Account account2 = new Savings(120.43, 12, 33, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account2);
-        Account account3 = new Investment(234023.23,42,48, 0.06, Account.Status.valueOf("OPEN"));
+        Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(1532.34,42,5423, Account.Status.valueOf("OPEN"));
+        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account4);
-        Account account5 = new Savings(120.43,98,333223, 0.01, Account.Status.valueOf("OPEN"));
+        Account account5 = new Savings(120.43, 98, 333223, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account5);
-        Account account6 = new Investment(234023.23,42,9948, 0.06, Account.Status.valueOf("OPEN"));
+        Account account6 = new Investment(234023.23, 42, 9948, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account6);
-        Account account7 = new Checking(1532.34,23,515, Account.Status.valueOf("OPEN"));
+        Account account7 = new Checking(1532.34, 23, 515, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account7);
-        Account account8 = new Savings(120.43,12,749, 0.01, Account.Status.valueOf("OPEN"));
+        Account account8 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account8);
-        Account account9 = new Investment(234023.23,42,904, 0.06, Account.Status.valueOf("OPEN"));
+        Account account9 = new Investment(234023.23, 42, 904, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account9);
 
         int[] rows = accountServices.getAccountRowsByUser(user1);
-        String [] accountInfo;
+        String[] accountInfo;
         int[] accts = {333223};
         for (int i = 0; i < rows.length; i++) {
-            accountInfo =  accountServices.getAccountInfoByRow(rows[i]);
-            Assert.assertEquals("user1", (int)user1.getUserID(), (int) Integer.parseInt(accountInfo[1]));
-            Assert.assertEquals("user1", (int)accts[i], (int) Integer.parseInt(accountInfo[0]));
+            accountInfo = accountServices.getAccountInfoByRow(rows[i]);
+            Assert.assertEquals("user1", (int) user1.getUserID(), (int) Integer.parseInt(accountInfo[1]));
+            Assert.assertEquals("user1", (int) accts[i], (int) Integer.parseInt(accountInfo[0]));
         }
 
         int[] rows2 = accountServices.getAccountRowsByUser(user2);
-        String [] accountInfo2;
-        int[] accts2 = {48,5423,9948,904};
+        String[] accountInfo2;
+        int[] accts2 = {48, 5423, 9948, 904};
         for (int i = 0; i < rows2.length; i++) {
-            accountInfo2 =  accountServices.getAccountInfoByRow(rows2[i]);
-            Assert.assertEquals("user2", (int)user2.getUserID(), (int) Integer.parseInt(accountInfo2[1]));
-            Assert.assertEquals("user2", (int)accts2[i], (int) Integer.parseInt(accountInfo2[0]));
+            accountInfo2 = accountServices.getAccountInfoByRow(rows2[i]);
+            Assert.assertEquals("user2", (int) user2.getUserID(), (int) Integer.parseInt(accountInfo2[1]));
+            Assert.assertEquals("user2", (int) accts2[i], (int) Integer.parseInt(accountInfo2[0]));
         }
 
         int[] rows3 = accountServices.getAccountRowsByUser(user3);
-        String [] accountInfo3;
+        String[] accountInfo3;
         int[] accts3 = {};
         for (int i = 0; i < rows3.length; i++) {
-            accountInfo3 =  accountServices.getAccountInfoByRow(rows3[i]);
-            Assert.assertEquals("user3", (int)user3.getUserID(), (int) Integer.parseInt(accountInfo3[1]));
-            Assert.assertEquals("user3", (int)accts3[i], (int) Integer.parseInt(accountInfo3[0]));
+            accountInfo3 = accountServices.getAccountInfoByRow(rows3[i]);
+            Assert.assertEquals("user3", (int) user3.getUserID(), (int) Integer.parseInt(accountInfo3[1]));
+            Assert.assertEquals("user3", (int) accts3[i], (int) Integer.parseInt(accountInfo3[0]));
         }
     }
 
@@ -198,98 +199,98 @@ public class AccountServicesTest {
         accountServices.clearAccountDB();
         userServices.clearUserDB();
 
-        User user1 = new User("Jim","Brown","goolybib", 98, 12343);
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        User user2 = new User("Ji123m","Bro23wn","gool321ybib", 42, 1234313);
+        User user2 = new User("Ji123m", "Bro23wn", "gool321ybib", 42, 1234313);
         userServices.saveUserToDB(user2);
-        User user3 = new User("Jane","Himne","gasdsdool321ybib", 33, 313);
+        User user3 = new User("Jane", "Himne", "gasdsdool321ybib", 33, 313);
         userServices.saveUserToDB(user3);
 
-        Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Savings(120.43,12,33, 0.01, Account.Status.valueOf("OPEN"));
+        Account account2 = new Savings(120.43, 12, 33, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account2);
-        Account account3 = new Investment(234023.23,42,48, 0.06, Account.Status.valueOf("OPEN"));
+        Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(1532.34,42,5423, Account.Status.valueOf("OPEN"));
+        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account4);
-        Account account5 = new Savings(120.43,98,333223, 0.01, Account.Status.valueOf("OPEN"));
+        Account account5 = new Savings(120.43, 98, 333223, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account5);
-        Account account6 = new Investment(234023.23,42,9948, 0.06, Account.Status.valueOf("OPEN"));
+        Account account6 = new Investment(234023.23, 42, 9948, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account6);
-        Account account7 = new Checking(1532.34,23,515, Account.Status.valueOf("OPEN"));
+        Account account7 = new Checking(1532.34, 23, 515, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account7);
-        Account account8 = new Savings(120.43,12,749, 0.01, Account.Status.valueOf("OPEN"));
+        Account account8 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account8);
-        Account account9 = new Investment(234023.23,42,904, 0.06, Account.Status.valueOf("OPEN"));
+        Account account9 = new Investment(234023.23, 42, 904, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account9);
 
         ArrayList<Account> actual = accountServices.getAccountsForUser(user1);
 
         Assert.assertEquals("user1", (int) 1, (int) actual.size());
-        Assert.assertTrue("user1.1", Arrays.equals(account5.toStringArray(),actual.get(0).toStringArray()));
+        Assert.assertTrue("user1.1", Arrays.equals(account5.toStringArray(), actual.get(0).toStringArray()));
 
         actual = accountServices.getAccountsForUser(user2);
 
         Assert.assertEquals("user2", (int) 4, (int) actual.size());
-        Assert.assertTrue("user2.1", Arrays.equals(account6.toStringArray(),actual.get(2).toStringArray()));
-        Assert.assertTrue("user2.3", Arrays.equals(account3.toStringArray(),actual.get(0).toStringArray()));
+        Assert.assertTrue("user2.1", Arrays.equals(account6.toStringArray(), actual.get(2).toStringArray()));
+        Assert.assertTrue("user2.3", Arrays.equals(account3.toStringArray(), actual.get(0).toStringArray()));
     }
 
     @Test
     public void saveAccountToDBTest() {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Savings(120.43,12,749, 0.01, Account.Status.valueOf("OPEN"));
+        Account account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account2);
-        Account account3 = new Investment(234023.23,42,48, 0.06, Account.Status.valueOf("OPEN"));
+        Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(1532.34,42,5423, Account.Status.valueOf("OPEN"));
+        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account4);
 
 
         String[] actual = accountServices.getAccountInfoByID(48);
         String[] expected = account3.toStringArray();
 
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(actual, expected);
 
         actual = accountServices.getAccountInfoByID(1232123);
         expected = account1.toStringArray();
 
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(actual, expected);
 
         int actual2 = accountServices.getAccountDBLength();
         int expected2 = 4;
 
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(actual, expected);
 
-        Account account10 = new Savings(9990.43,12,749, 0.01, Account.Status.valueOf("OPEN"));
+        Account account10 = new Savings(9990.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account10);
 
         actual2 = accountServices.getAccountDBLength();
         expected2 = 4;
 
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(actual, expected);
 
         actual = accountServices.getAccountInfoByID(749);
         expected = account10.toStringArray();
 
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(actual, expected);
 
     }
 
     @Test(expected = InsufficientFundsException.class)
     public void insufficientFundWithdrawTest() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
 
-            accountServices.clearAccountDB();
-            userServices.clearUserDB();
-            User user1 = new User("Jim","Brown","goolybib", 98, 12343);
-            userServices.saveUserToDB(user1);
-            Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));
-            accountServices.saveAccountToDB(account1);
-            accountServices.accountWithdraw(account1, 1600);
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.accountWithdraw(account1, 1600);
 
 
     }
@@ -325,36 +326,62 @@ public class AccountServicesTest {
     public void accountWithdrawTest() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
         accountServices.clearAccountDB();
         userServices.clearUserDB();
-        User user1 = new User("Jim","Brown","goolybib", 98, 12343);
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account1);
         accountServices.accountWithdraw(account1, 32.34);
         double actual = account1.getBalance();
         double expected = 1500.00;
-        Assert.assertEquals(actual, expected);
+        Assert.assertEquals(actual, expected, 0);
 
     }
+
     @Test(expected = ClosedAccountException.class)
-    public void accountDepositTest() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
-            accountServices.clearAccountDB();
-            userServices.clearUserDB();
-            User user1 = new User("Jim","Brown","goolybib", 98, 12343);
-            userServices.saveUserToDB(user1);
-            Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("CLOSED"));
-            accountServices.saveAccountToDB(account1);
-            accountServices.accountDeposit(account1, 50.00);
-            double actual = account1.getBalance();
-            double expected = 1582.34;
-            Assert.assertEquals(actual, expected);
+    public void closedAccountDepositTest() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("CLOSED"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.accountDeposit(account1, 50.00);
+        double actual = account1.getBalance();
+        double expected = 1582.34;
+        Assert.assertEquals(actual, expected);
+    }
+
+    @Test
+    public void accountDepositTest() throws FrozenAccountException, ClosedAccountException{
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.accountDeposit(account1, 50.00);
+        double actual = account1.getBalance();
+        double expected = 1582.34;
+        Assert.assertEquals(expected, actual,0);
 
     }
-    @Test
-    public void closeAccountTest(){
 
-    }
     @Test
-    public void getAccountDBLengthTest(){
+    public void closeAccountTest() throws BalanceRemainingException, FrozenAccountException, ClosedAccountException {
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.closeAccount(account1);
+        Account.Status actual = account1.getAcctStatus();
+        Account.Status expected = Account.Status.CLOSED;
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getAccountDBLengthTest() {
 
     }
 

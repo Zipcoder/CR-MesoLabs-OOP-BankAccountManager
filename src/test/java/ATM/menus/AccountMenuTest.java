@@ -41,7 +41,7 @@ public class AccountMenuTest {
         Account account = new Savings(123.45, 123, 9675, .03, Account.Status.OPEN);
         AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
         String actual = acctMenu.getHeader();
-        String expected = "Savings Account #9675  Balance: $123.45  Interest Rate: 0.03%";
+        String expected = "Savings Account #9675  Balance: $123.45  Interest Rate: 0.03%%";
         Assert.assertEquals(expected, actual);
     }
 

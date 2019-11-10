@@ -1,21 +1,12 @@
 package ATM;
 
-import ATM.accounts.Account;
-import ATM.accounts.Checking;
-import ATM.accounts.Investment;
-import ATM.accounts.Savings;
 import ATM.menus.MainMenu;
-import ATM.menus.NewUserMenu;
 import ATM.menus.UserMenu;
 import ATM.services.AccountServices;
 import ATM.services.TransactionServices;
-import ATM.services.TransferServices;
 import ATM.services.UserServices;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
 
 public class ATM {
 
@@ -76,7 +67,7 @@ public class ATM {
         this.currentUser = currentUser;
     }
 
-
+    // no test - requires input
     public void serviceLoop() {
         this.transactionServices.linkServices();
         this.accountServices.linkServices();
@@ -84,83 +75,12 @@ public class ATM {
 
         new UserMenu(this).displayMenu();
 
-        interestRateChange();
-        applyInterest();
-        applyReturns();
-
         new MainMenu(this).displayMenu();
 
         logOut();
 
         serviceLoop();
     }
-
-    public void applyInterest() {
-        ArrayList<Account> userAccounts = accountServices.getAccountsForUser(this.currentUser);
-        for (Account account : userAccounts) {
-            if (account instanceof Savings) {
-                calcInterest(account);
-            }
-        }
-    }
-
-    public void interestRateChange() {
-        ArrayList<Account> userAccounts = accountServices.getAccountsForUser(this.currentUser);
-        Random random = new Random();
-
-        for (Account account : userAccounts) {
-            if (account instanceof Savings) {
-                if (random.nextInt(5) >= 4) {
-                    double newRate = getNewRate(random, (Savings) account);
-                    setNewInterestRate(account, newRate);
-                }
-            }
-        }
-    }
-
-    private double getNewRate(Random random, Savings account) {
-        double newRate = account.getInterestRate() - .05 + .01 * random.nextInt(11);
-        if (newRate <= 0.0) {
-            newRate = 0.01;
-        }
-        return newRate;
-    }
-
-    private void setNewInterestRate(Account account, double newRate) {
-        ((Savings) account).setInterestRate(newRate);
-        accountServices.saveAccountToDB(account);
-        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",account.getBalance())), new Date(), account.getAcctNum(), String.format("Interest rate changed to 0%.2f",newRate), true);
-        transactionServices.saveTransactionToDB(transaction);
-    }
-
-
-    public void calcInterest(Account account) {
-        Double interest = ((Savings) account).getInterestRate() * account.getBalance()/100;
-        account.deposit(interest);
-        accountServices.saveAccountToDB(account);
-        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",interest)), new Date(), account.getAcctNum(), "Interest earned", true);
-        transactionServices.saveTransactionToDB(transaction);
-    }
-
-    public void applyReturns() {
-        ArrayList<Account> userAccounts = accountServices.getAccountsForUser(this.currentUser);
-        for (Account account : userAccounts) {
-            if (account instanceof Investment) {
-                calcReturns(account);
-            }
-        }
-    }
-
-    public void calcReturns(Account account) {
-        Double multiplier = ((Investment) account).getRisk() * (2 * Math.random() - .8);
-        Double earnings =  Math.round((multiplier * account.getBalance()*100d))/100d;
-        account.deposit(earnings);
-        accountServices.saveAccountToDB(account);
-        Boolean isCredit = (earnings > 0);
-        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",earnings)), new Date(), account.getAcctNum(), "Investment returns", isCredit);
-        transactionServices.saveTransactionToDB(transaction);
-    }
-
 
     // log out user
     public void logOut() {

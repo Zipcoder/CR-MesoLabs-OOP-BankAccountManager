@@ -17,6 +17,7 @@ import ATM.menus.TransferServicesMenu;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class AccountServices {
 
@@ -231,6 +232,72 @@ public class AccountServices {
             }
 
         }
+    }
+
+    public void applyInterest() {
+        ArrayList<Account> userAccounts = getAccountsForUser(this.atm.getCurrentUser());
+        for (Account account : userAccounts) {
+            if (account instanceof Savings) {
+                calcInterest(account);
+            }
+        }
+    }
+
+    public void interestRateChange() {
+        ArrayList<Account> userAccounts = getAccountsForUser(this.atm.getCurrentUser());
+        Random random = new Random();
+
+        for (Account account : userAccounts) {
+            if (account instanceof Savings) {
+                if (random.nextInt(5) >= 4) {
+                    double newRate = getNewRate(random, (Savings) account);
+                    setNewInterestRate(account, newRate);
+                }
+            }
+        }
+    }
+
+    public double getNewRate(Random random, Savings account) {
+        double newRate = account.getInterestRate() - .05 + .01 * random.nextInt(11);
+        if (newRate <= 0.0) {
+            newRate = 0.01;
+        }
+        return newRate;
+    }
+
+    public void setNewInterestRate(Account account, double newRate) {
+        ((Savings) account).setInterestRate(newRate);
+        saveAccountToDB(account);
+        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",account.getBalance())), new Date(), account.getAcctNum(), String.format("Interest rate changed to 0%.2f",newRate), true);
+        transactionServices.saveTransactionToDB(transaction);
+    }
+
+
+    public void calcInterest(Account account) {
+        Double interest = ((Savings) account).getInterestRate() * account.getBalance()/100;
+        account.deposit(interest);
+        saveAccountToDB(account);
+        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",interest)), new Date(), account.getAcctNum(), "Interest earned", true);
+        transactionServices.saveTransactionToDB(transaction);
+    }
+
+    public void applyReturns() {
+        ArrayList<Account> userAccounts = getAccountsForUser(this.atm.getCurrentUser());
+        for (Account account : userAccounts) {
+            if (account instanceof Investment) {
+                calcReturns(account);
+            }
+        }
+    }
+
+    public void calcReturns(Account account) {
+        Double multiplier = ((Investment) account).getRisk() * (2 * Math.random() - .8);
+        Double earnings =  Math.round((multiplier * account.getBalance()*100d))/100d;
+        account.deposit(earnings);
+        saveAccountToDB(account);
+        Boolean isCredit = (earnings > 0);
+        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",earnings)), new Date(), account.getAcctNum(), "Investment returns", isCredit);
+        transactionServices.saveTransactionToDB(transaction);
     }
 }
 

@@ -36,9 +36,9 @@ public class TransferServicesTest {
     public void accountTransferExceptionTest1() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(500.00,23,1232123, Account.Status.OPEN);
+        Account account1 = new Checking(500.00,23,1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Checking(2000.00,23,1232123, Account.Status.CLOSED);
+        Account account2 = new Checking(2000.00,23,1232123, Account.Status.CLOSED, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
 
         TransferServices transferServices = new TransferServices(atm, account1);
@@ -49,9 +49,9 @@ public class TransferServicesTest {
     public void accountTransferExceptionTest2() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(1532.34,23,1232123, Account.Status.OPEN);
+        Account account1 = new Checking(1532.34,23,1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Checking(1532.34,23,1232123, Account.Status.OFAC);
+        Account account2 = new Checking(1532.34,23,1232123, Account.Status.OFAC, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
 
         TransferServices transferServices = new TransferServices(atm, account1);
@@ -62,9 +62,9 @@ public class TransferServicesTest {
     public void accountTransferExceptionTest3() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(1532.34,23,1232123, Account.Status.OPEN);
+        Account account1 = new Checking(1532.34,23,1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Checking(1532.34,23,1232123, Account.Status.CLOSED);
+        Account account2 = new Checking(1532.34,23,1232123, Account.Status.CLOSED, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
 
         TransferServices transferServices = new TransferServices(atm, account1);
@@ -75,9 +75,9 @@ public class TransferServicesTest {
     public void accountTransferTest1() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(500.00,23,1232123, Account.Status.OPEN);
+        Account account1 = new Checking(500.00,23,1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Checking(2000.00,23,1232123, Account.Status.OPEN);
+        Account account2 = new Checking(2000.00,23,1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
 
         TransferServices transferServices = new TransferServices(atm, account1);
@@ -91,9 +91,9 @@ public class TransferServicesTest {
     public void accountTransferTest2() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(500.00,23,1232123, Account.Status.OPEN);
+        Account account1 = new Checking(500.00,23,1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Checking(2000.00,23,1232123, Account.Status.OPEN);
+        Account account2 = new Checking(2000.00,23,1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
 
         TransferServices transferServices = new TransferServices(atm, account1);
@@ -107,9 +107,9 @@ public class TransferServicesTest {
     public void accountTransferTest3() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(500.00,23,1232123, Account.Status.OPEN);
+        Account account1 = new Checking(500.00,23,1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Checking(2000.00,23,1232124, Account.Status.OPEN);
+        Account account2 = new Checking(2000.00,23,1232124, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
 
         Assert.assertEquals(0,transactionServices.getTransactionRowsByAccount(account1).length);
@@ -129,9 +129,9 @@ public class TransferServicesTest {
     public void accountTransferTest4() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(500.00,23,1232123, Account.Status.OPEN);
+        Account account1 = new Checking(500.00,23,1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Checking(2000.00,23,1232124, Account.Status.OPEN);
+        Account account2 = new Checking(2000.00,23,1232124, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
 
         TransferServices transferServices = new TransferServices(atm, account1);

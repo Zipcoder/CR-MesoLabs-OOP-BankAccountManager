@@ -22,7 +22,7 @@ public class AccountMenuTest {
 
     @Test
     public void getName() throws FrozenAccountException {
-        Account account = new Checking(123.45, 123, 9675, Account.Status.OPEN);
+        Account account = new Checking(123.45, 123, 9675, Account.Status.OPEN, Checking.Overdraft.FALSE);
         AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
         Assert.assertEquals("Account Menu", acctMenu.getName());
 
@@ -30,7 +30,7 @@ public class AccountMenuTest {
 
     @Test
     public void getHeaderTest() throws FrozenAccountException{
-        Account account = new Checking(123.45, 123, 9675, Account.Status.OPEN);
+        Account account = new Checking(123.45, 123, 9675, Account.Status.OPEN, Checking.Overdraft.FALSE);
         AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
         String actual = acctMenu.getHeader();
         String expected = "Checking Account #9675  Balance: $123.45";

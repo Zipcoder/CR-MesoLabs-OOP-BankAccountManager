@@ -80,7 +80,7 @@ public class AccountServices {
     public void createCheckingAccount(double deposit, User currentUser) {
         Account newAccount;
         Transaction transaction;
-        newAccount = new Checking(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), Account.Status.OPEN);
+        newAccount = new Checking(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), Account.Status.OPEN, Checking.Overdraft.FALSE);
         this.saveAccountToDB(newAccount);
 
         transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
@@ -113,7 +113,7 @@ public class AccountServices {
     // account instance from info (pre-existing account)
     public Account getAccountByInfo(String[] info) {
         if (info[3].equals("Checking")) {
-            return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Account.Status.valueOf(info[5]));
+            return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Account.Status.valueOf(info[5]), Checking.Overdraft.FALSE);
         } else if (info[3].equals("Savings")) {
             return new Savings(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]), Account.Status.valueOf(info[5]));
         } else if (info[3].equals("Investment")) {

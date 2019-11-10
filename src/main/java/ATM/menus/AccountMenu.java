@@ -160,7 +160,7 @@ public class AccountMenu implements Menu {
         boolean closeAccountInput = Console.getInputYN("Account still contains funds. Do you wish to transfer funds to a different account? ");
         try {
             if (!closeAccountInput){//gives user the money
-                accountServices.accountWithdraw(account, account.getBalance());
+                accountServices.attemptAccountWithdrawal(account, account.getBalance());
                 accountServices.closeAccount(account);
                 Console.getInput("Funds withdrawn and account closed; press Enter to continue");
             } else { //transfers money
@@ -182,7 +182,7 @@ public class AccountMenu implements Menu {
     // needs input - no test (underlying method is tested)
     private void attemptWithdrawal(double amount) {
         try {
-            if (accountServices.accountWithdraw(account, amount)) {
+            if (accountServices.attemptAccountWithdrawal(account, amount)) {
                 Console.getInput("Withdrawal successful; press Enter to continue");
             }
         } catch (InsufficientFundsException e) {

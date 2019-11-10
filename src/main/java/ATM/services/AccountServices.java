@@ -200,7 +200,7 @@ public class AccountServices {
             throw new FrozenAccountException();
         }
         saveAccountToDB(account);
-        account.balance += amount;
+        account.setBalance(account.getBalance() + amount);
         Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM deposit", true);
         transactionServices.saveTransactionToDB(transaction);
         saveAccountToDB(account);
@@ -209,21 +209,56 @@ public class AccountServices {
     }
 
 
-    public Boolean accountWithdraw(Account account, double amount) throws FrozenAccountException, InsufficientFundsException, ClosedAccountException {
+    public Boolean attemptAccountWithdrawal(Account account, double amount) throws FrozenAccountException, InsufficientFundsException, ClosedAccountException {
         if (account.getAcctStatus() == Account.Status.CLOSED) {
             throw new ClosedAccountException();
         } else if (account.getAcctStatus() == Account.Status.OFAC) {
             throw new FrozenAccountException();
         } else if (account.getBalance() < amount) {
-            throw new InsufficientFundsException();
+            if (!(account instanceof Checking)) { // savings or investment
+                throw new InsufficientFundsException();
+            } else if (((Checking) account).getOverdraft().equals(Checking.Overdraft.ON)) { // overdraft on
+                throw new InsufficientFundsException();
+            } else if (((Checking) account).getOverdraft().equals(Checking.Overdraft.AUTO)) { // autotransfer on
+                return attemptAutoTransfer(account, amount);
+            }
         }
+        performWithdrawal(account, amount);
+        return true;
+    }
+
+    public Boolean attemptAutoTransfer(Account account, double amount) throws InsufficientFundsException {
+        User user = this.atm.getCurrentUser();
+        ArrayList<Account> userAccounts = getAccountsForUser(user);
+        double amountNeeded = amount - account.getBalance();
+
+        for (Account acct : userAccounts) { // find an account that we can transfer from
+            if (!acct.getAcctNum().equals(account.getAcctNum())
+                    && acct.getAcctStatus().equals(Account.Status.OPEN)
+                    && acct.getBalance() > amountNeeded) {
+                performAutoTransfer(account, amountNeeded, acct);
+                return true;
+            }
+        }
+        throw new InsufficientFundsException();
+    }
+
+    public void performAutoTransfer(Account account, double amountNeeded, Account acct) {
+        account.withdraw(account.getBalance()); // remove money from first account
+        transactionServices.saveTransactionToDB(new Transaction(-1 * account.getBalance(),new Date(), account.getAcctNum(), "ATM withdrawal", false));
+        saveAccountToDB(account);
+        acct.withdraw(amountNeeded); // remove the rest from the other account
+        transactionServices.saveTransactionToDB(new Transaction(-1 * amountNeeded,new Date(), acct.getAcctNum(), "ATM overdraft debit", false));
+        saveAccountToDB(acct);
+    }
+
+    public void performWithdrawal(Account account, double amount) {
         account.deposit(-1 * amount);
         saveAccountToDB(account);
-        account.balance += amount;
-        Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM deposit", true);
+        //account.setBalance(account.getBalance() + amount);
+        Transaction transaction = new Transaction(-1 * amount, new Date(), account.getAcctNum(), "ATM deposit", false);
         transactionServices.saveTransactionToDB(transaction);
         saveAccountToDB(account);
-        return true;
     }
 
 

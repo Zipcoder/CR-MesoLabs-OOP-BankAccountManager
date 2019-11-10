@@ -290,7 +290,7 @@ public class AccountServicesTest {
         userServices.saveUserToDB(user1);
         Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
-        accountServices.accountWithdraw(account1, 1600);
+        accountServices.attemptAccountWithdrawal(account1, 1600);
 
 
     }
@@ -305,7 +305,7 @@ public class AccountServicesTest {
         userServices.saveUserToDB(user1);
         Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OFAC"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
-        accountServices.accountWithdraw(account1, 1500);
+        accountServices.attemptAccountWithdrawal(account1, 1500);
 
     }
 
@@ -319,7 +319,7 @@ public class AccountServicesTest {
         userServices.saveUserToDB(user1);
         Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("CLOSED"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
-        accountServices.accountWithdraw(account1, 1500);
+        accountServices.attemptAccountWithdrawal(account1, 1500);
     }
 
     @Test
@@ -330,7 +330,7 @@ public class AccountServicesTest {
         userServices.saveUserToDB(user1);
         Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
-        accountServices.accountWithdraw(account1, 32.34);
+        accountServices.attemptAccountWithdrawal(account1, 32.34);
         Account retrieved = accountServices.getAccountByInfo(accountServices.getAccountInfoByID(1232123));
         double actual = retrieved.getBalance();
         double expected = 1500.00;

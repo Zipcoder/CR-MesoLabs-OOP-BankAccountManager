@@ -91,7 +91,7 @@ public class TransactionServicesTest {
         User user3 = new User("Jane", "Himne", "gasdsdool321ybib", 41, 313);
         userServices.saveUserToDB(user3);
 
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(10000.00, 12, 749, 0.01, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
@@ -129,7 +129,7 @@ public class TransactionServicesTest {
         User user3 = new User("Jane", "Himne", "gasdsdool321ybib", 41, 313);
         userServices.saveUserToDB(user3);
 
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(10000.00, 12, 749, 0.01, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
@@ -166,7 +166,7 @@ public class TransactionServicesTest {
             User user3 = new User("Jane", "Himne", "gasdsdool321ybib", 41, 313);
             userServices.saveUserToDB(user3);
 
-            Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
+            Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.OFF);
             accountServices.saveAccountToDB(account1);
             Account account2 = new Savings(10000.00, 12, 749, 0.01, Account.Status.OPEN);
             accountServices.saveAccountToDB(account2);

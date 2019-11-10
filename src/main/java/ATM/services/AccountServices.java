@@ -237,7 +237,7 @@ public class AccountServices {
     public void applyInterest() {
         ArrayList<Account> userAccounts = getAccountsForUser(this.atm.getCurrentUser());
         for (Account account : userAccounts) {
-            if (account instanceof Savings) {
+            if (account instanceof Savings && account.getAcctStatus().equals(Account.Status.OPEN)) {
                 calcInterest(account);
             }
         }
@@ -248,7 +248,7 @@ public class AccountServices {
         Random random = new Random();
 
         for (Account account : userAccounts) {
-            if (account instanceof Savings) {
+            if (account instanceof Savings && account.getAcctStatus().equals(Account.Status.OPEN)) {
                 if (random.nextInt(5) >= 4) {
                     double newRate = getNewRate(random, (Savings) account);
                     setNewInterestRate(account, newRate);
@@ -284,7 +284,7 @@ public class AccountServices {
     public void applyReturns() {
         ArrayList<Account> userAccounts = getAccountsForUser(this.atm.getCurrentUser());
         for (Account account : userAccounts) {
-            if (account instanceof Investment) {
+            if (account instanceof Investment && account.getAcctStatus().equals(Account.Status.OPEN)) {
                 calcReturns(account);
             }
         }

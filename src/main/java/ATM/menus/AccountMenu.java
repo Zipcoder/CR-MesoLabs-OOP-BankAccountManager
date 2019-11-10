@@ -125,17 +125,22 @@ public class AccountMenu implements Menu {
     private void closedAcctNotice() {
         Console.getInput(("Account still contains funds. Do you wish to transfer funds to a different account?"));
         String closeAccountInput = Console.getInput("\nEnter \"Y/N\" or \"exit\" to go back:");
-        if (closeAccountInput == "N"){
-            //gives user the money
-        }else if(closeAccountInput == "Y"){
-            try {
+        try {
+            if (closeAccountInput.equals("n")){
+                //gives user the money
+                accountServices.accountWithdraw(account, account.getBalance());
+                accountServices.closeAccount(account);
+            } else if(closeAccountInput.equals("y")) {
                 new TransferServicesMenu(atm, account, accountServices.getAccountsForUser(currentUser)).displayMenu();
-            } catch (ClosedAccountException e) {
-                Console.getInput("Error - account is closed; press Enter to continue");
-            } catch (FrozenAccountException e) {
-                Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
-
             }
+        } catch (ClosedAccountException e) {
+            Console.getInput("Error - account is closed; press Enter to continue");
+        } catch (FrozenAccountException e) {
+            Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
+        } catch (BalanceRemainingException e) {
+            Console.getInput("Error - account has fund remaining; press Enter to continue");
+        } catch (InsufficientFundsException e) { // shouldn't happen
+            Console.getInput("Error - insufficient funds; press Enter to continue");
         }
     }
 

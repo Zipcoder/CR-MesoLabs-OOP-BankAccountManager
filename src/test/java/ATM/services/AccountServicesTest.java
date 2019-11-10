@@ -288,11 +288,66 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
+        Account account1 = new Savings(1532.34, 23, 1232123, .01, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account1);
         accountServices.attemptAccountWithdrawal(account1, 1600);
+    }
 
+    @Test(expected = InsufficientFundsException.class)
+    public void insufficientFundWithdrawTest2() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
 
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Investment(1532.34, 23, 1232123, .02, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.attemptAccountWithdrawal(account1, 1600);
+    }
+
+    @Test(expected = InsufficientFundsException.class)
+    public void insufficientFundWithdrawTest3() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.ON);
+        accountServices.saveAccountToDB(account1);
+        accountServices.attemptAccountWithdrawal(account1, 1600);
+    }
+
+    @Test
+    public void insufficientFundWithdrawTest4() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1500.00, 23, 1232123, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
+        accountServices.saveAccountToDB(account1);
+        accountServices.attemptAccountWithdrawal(account1, 1600);
+        Assert.assertEquals(-100.0, account1.getBalance(), .01);
+    }
+
+    @Test
+    public void overdraftAutoTransferTest() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        atm.setCurrentUser(user1);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1500.00, 98, 1232123, Account.Status.OPEN, Checking.Overdraft.AUTO);
+        Account account2 = new Checking(2500.00, 98, 1232124, Account.Status.OPEN, Checking.Overdraft.OFF);
+
+        accountServices.saveAccountToDB(account1);
+        accountServices.saveAccountToDB(account2);
+
+        accountServices.attemptAccountWithdrawal(account1, 1600);
+        Assert.assertEquals(0.0, account1.getBalance(), .01);
+        String[] account2Info = accountServices.getAccountInfoByID(1232124);
+        Assert.assertEquals(2400.0, Double.parseDouble(account2Info[2]), .01);
     }
 
 

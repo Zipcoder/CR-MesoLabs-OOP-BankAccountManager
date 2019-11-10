@@ -85,7 +85,7 @@ abstract public class Account implements Storeable {
     }
 
     public void withdraw(Double amount){
-        if (this.balance > amount) {
+        if (this.balance >= amount) {
             this.balance -= amount;
         }
     }

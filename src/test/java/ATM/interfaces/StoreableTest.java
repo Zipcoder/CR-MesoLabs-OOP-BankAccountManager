@@ -36,7 +36,7 @@ public class StoreableTest {
                 "23",
                 "12.23",
                 "Checking",
-                "",
+                "OFF",
                 "CLOSED"
         };
 

@@ -113,7 +113,7 @@ public class AccountMenu implements Menu {
 
     private void overDraftChoice() {
         String header = String.format("Current overdraft status : %s", ((Checking)account).getOverdraft());
-        int input = Console.getInput(header,new String[] {"ON: disallow overdrafts)", "OFF: allow overdrafts", "Attempt auto-transfer"});
+        int input = Console.getInput(header,new String[] {"ON: disallow overdrafts", "OFF: allow overdrafts", "Attempt auto-transfer"});
         switch (input) {
             case 1:
                 ((Checking)account).setOverdraft(Checking.Overdraft.ON);

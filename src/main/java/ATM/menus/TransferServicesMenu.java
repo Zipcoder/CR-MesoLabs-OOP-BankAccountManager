@@ -76,7 +76,7 @@ public class TransferServicesMenu implements Menu {
         ArrayList<Account> userAccountsTrimmed = new ArrayList<Account>();
 
         for (Account account : this.userAccounts) {
-            if (account.getAcctNum() != this.sourceAccount.getAcctNum()) {
+            if (!account.getAcctNum().equals(this.sourceAccount.getAcctNum())) {
                 userAccountsTrimmed.add(account);
             }
         }
@@ -93,11 +93,11 @@ public class TransferServicesMenu implements Menu {
             try {
                 transferServices.executeTransfer(this.sourceAccount, usrAccts.get(choice - 1), amount);
             } catch (ClosedAccountException e) {
-                Console.println("Error - cannot transfer to/from a closed account. Press Enter to continue");
+                Console.getInput("Error - cannot transfer to/from a closed account. Press Enter to continue");
             } catch (InsufficientFundsException e) {
-                Console.println("Error - insufficient funds. Press Enter to continue");
+                Console.getInput("Error - insufficient funds. Press Enter to continue");
             } catch (FrozenAccountException e) {
-                Console.println("Error - cannot transfer to/from a frozen account. Press Enter to continue");
+                Console.getInput("Error - cannot transfer to/from a frozen account. Press Enter to continue");
             }
 
         }

@@ -195,30 +195,29 @@ public class AccountServices {
     }
 
 
-    public Boolean accountDeposit(Account account,double amount)throws
-        ClosedAccountException,FrozenAccountException{
-        if(account.getAcctStatus()==Account.Status.CLOSED){
-        throw new ClosedAccountException();
-        }else if(account.getAcctStatus()==Account.Status.OFAC){
-        throw new FrozenAccountException();
-        }else{
+    public Boolean accountDeposit(Account account,double amount) throws ClosedAccountException,FrozenAccountException {
+        if (account.getAcctStatus()==Account.Status.CLOSED){
+            throw new ClosedAccountException();
+        } else if(account.getAcctStatus()==Account.Status.OFAC){
+            throw new FrozenAccountException();
+        }
         saveAccountToDB(account);
         account.balance+=amount;
         Transaction transaction=new Transaction(amount,new Date(),account.getAcctNum(),"ATM deposit",true);
         transactionServices.saveTransactionToDB(transaction);
         saveAccountToDB(account);
         return true;
-        }
-        }
+
+    }
 
 
-public Boolean accountWithdraw(Account account,double amount)throws
-        FrozenAccountException,InsufficientFundsException,ClosedAccountException {
-    if (account.getAcctStatus() == Account.Status.CLOSED) {
-        throw new ClosedAccountException();
-    } else if (account.getAcctStatus() == Account.Status.OFAC) {
-        throw new FrozenAccountException();
-    } else {
+    public Boolean accountWithdraw(Account account,double amount) throws FrozenAccountException,InsufficientFundsException,ClosedAccountException {
+        if (account.getAcctStatus() == Account.Status.CLOSED) {
+            throw new ClosedAccountException();
+        } else if (account.getAcctStatus() == Account.Status.OFAC) {
+            throw new FrozenAccountException();
+        }
+
         if (amount <= account.getBalance()) {
             account.deposit(-1 * amount);
             saveAccountToDB(account);
@@ -228,8 +227,8 @@ public Boolean accountWithdraw(Account account,double amount)throws
         } else {
             throw new InsufficientFundsException();
         }
+
     }
-}
 
 
 

@@ -42,6 +42,22 @@ public class Console {
         return input;
     }
 
+    public static boolean getInputYN(String prompt) {
+        Console.print(prompt);
+        Scanner scanner = new Scanner(System.in);
+
+        String input = scanner.nextLine().toLowerCase(); //get input from user
+
+        if (input.equals("y")) {
+            return true;
+        } else if (input.equals("n")) {
+            return false;
+        } else {
+            return getInputYN(prompt);
+        }
+
+    }
+
 
     public static int getInput(String[] options) {
 

@@ -38,14 +38,9 @@ public class TransferServices {
     }
 
 
-    public boolean transfer (Account sourceAccount, Account targetAccount, double amountToDeposit) throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+    public boolean executeTransfer(Account sourceAccount, Account targetAccount, double amountToDeposit) throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
 
-        if(amountToDeposit > sourceAccount.balance){
-            throw new InsufficientFundsException();}
-        else if (targetAccount.getAcctStatus() == Account.Status.OFAC) {
-            throw new ClosedAccountException();}
-        else if (targetAccount.getAcctStatus() == Account.Status.CLOSED) {
-            throw new FrozenAccountException();}
+        checkTransferExceptions(sourceAccount, targetAccount, amountToDeposit);
 
         targetAccount.balance = targetAccount.balance + amountToDeposit;
         sourceAccount.balance = sourceAccount.balance - amountToDeposit;
@@ -54,7 +49,20 @@ public class TransferServices {
 
         transactionServices.saveTransactionToDB(new Transaction(amountToDeposit * -1, new Date(), sourceAccount.getAcctNum(),String.format("Transfer to account %d", targetAccount.getAcctNum()), false ));
         transactionServices.saveTransactionToDB(new Transaction(amountToDeposit, new Date(), targetAccount.getAcctNum(),String.format("Transfer from account %d", sourceAccount.getAcctNum()), true ));
+
         return true;
+    }
+
+    public void checkTransferExceptions(Account sourceAccount, Account targetAccount, double amountToDeposit) throws InsufficientFundsException, ClosedAccountException, FrozenAccountException {
+        if (amountToDeposit > sourceAccount.balance) {
+            throw new InsufficientFundsException();
+        }
+        else if (targetAccount.getAcctStatus() == Account.Status.OFAC) {
+            throw new FrozenAccountException();
+        }
+        else if (targetAccount.getAcctStatus() == Account.Status.CLOSED) {
+            throw new ClosedAccountException();
+        }
     }
 }
 

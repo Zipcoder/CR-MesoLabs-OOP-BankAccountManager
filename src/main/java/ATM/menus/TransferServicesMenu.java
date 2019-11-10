@@ -10,11 +10,9 @@ import ATM.services.AccountServices;
 import ATM.services.TransferServices;
 import ATM.User;
 import ATM.interfaces.Menu;
-import ATM.ATM;
 import ATM.accounts.Account;
 import ATM.Console;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class TransferServicesMenu implements Menu {
@@ -87,7 +85,7 @@ public class TransferServicesMenu implements Menu {
         } else { // deal with an existing account
             double amount = Console.getCurrency("Amount to transfer: ");
             try {
-                transferServices.transfer(this.sourceAccount, usrAccts.get(choice - 1), amount);
+                transferServices.executeTransfer(this.sourceAccount, usrAccts.get(choice - 1), amount);
             } catch (ClosedAccountException e) {
                 Console.println("Error - cannot transfer to/from a closed account. Press Enter to continue");
             } catch (InsufficientFundsException e) {

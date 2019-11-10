@@ -38,37 +38,52 @@ public class AccountServices {
 
     public void addAccount(double deposit, String acctType, User currentUser) {
 
-        Account newAccount;
-        Transaction transaction;
-
         switch (acctType) {
             case "Checking":
-                newAccount = new Checking(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), Account.Status.OPEN);
-                this.saveAccountToDB(newAccount);
-
-                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                transactionServices.saveTransactionToDB(transaction);
+                createCheckingAccount(deposit, currentUser);
                 break;
             case "Savings":
-                Double interestRate = .01 * (1 + Math.floor(deposit / 1000));
-                Console.println(String.format("Your interest rate: %.2f", interestRate) + "%%");
-                newAccount = new Savings(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), interestRate, Account.Status.OPEN);
-                this.saveAccountToDB(newAccount);
-
-                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                this.transactionServices.saveTransactionToDB(transaction);
+                createSavingsAccount(deposit, currentUser);
                 break;
             case "Investment":
                 Console.print("On a scale of 1-10, enter your risk tolerance ");
                 int riskInput = Console.getInteger(10);
-                Double risk = riskInput * .01;
-                newAccount = new Investment(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), risk, Account.Status.OPEN);
-                this.saveAccountToDB(newAccount);
-
-                transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
-                this.transactionServices.saveTransactionToDB(transaction);
+                createInvestmentAccount(deposit, currentUser, riskInput);
                 break;
         }
+    }
+
+    public void createInvestmentAccount(double deposit, User currentUser, int riskInput) {
+        Account newAccount;
+        Transaction transaction;
+        Double risk = riskInput * .01;
+        newAccount = new Investment(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), risk, Account.Status.OPEN);
+        this.saveAccountToDB(newAccount);
+
+        transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
+        this.transactionServices.saveTransactionToDB(transaction);
+    }
+
+    public void createSavingsAccount(double deposit, User currentUser) {
+        Account newAccount;
+        Transaction transaction;
+        Double interestRate = .01 * (1 + Math.floor(deposit / 1000));
+        Console.println(String.format("Your interest rate: %.2f", interestRate) + "%%");
+        newAccount = new Savings(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), interestRate, Account.Status.OPEN);
+        this.saveAccountToDB(newAccount);
+
+        transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
+        this.transactionServices.saveTransactionToDB(transaction);
+    }
+
+    public void createCheckingAccount(double deposit, User currentUser) {
+        Account newAccount;
+        Transaction transaction;
+        newAccount = new Checking(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), Account.Status.OPEN);
+        this.saveAccountToDB(newAccount);
+
+        transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
+        transactionServices.saveTransactionToDB(transaction);
     }
 
     public int getMaxAccountNumber() {

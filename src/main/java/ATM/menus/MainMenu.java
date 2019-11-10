@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class MainMenu implements Menu {
 
     private Console console;
-    private String name = "User Menu";
+    private String name = "Main Menu";
     private ATM atm;
     private UserServices userServices;
     private TransactionServices transactionServices;
@@ -31,6 +31,7 @@ public class MainMenu implements Menu {
         this.transactionServices = atm.getTransactionServices();
     }
 
+    // needs input - no test
     public void displayMenu() {
         String header = "ZCNB Main Menu";
         //maybe Younger Bank and Trust (YBT)
@@ -63,6 +64,7 @@ public class MainMenu implements Menu {
         return choices;
     }
 
+    // needs input - no test
     public void handleChoice(int input) {
         ArrayList<Account> usrAccts = accountServices.getAccountsForUser(atm.getCurrentUser());
         if (input == 1) { // View overall transaction history
@@ -79,15 +81,15 @@ public class MainMenu implements Menu {
             atm.setCurrentUser(null);
         } else { // deal with an existing account
             try {
-                new AccountMenu(this.atm, usrAccts.get(input - 3)).displayMenu();
+                new AccountMenu(this.atm, usrAccts.get(input - 4)).displayMenu();
             } catch (FrozenAccountException e) {
                 Console.getInput("Error - this account is frozen by OFAC. Press Enter to continue");
             }
             displayMenu();
         }
-
     }
 
+    // needs input - no test
     private void attemptNameChange() {
         String firstName = Console.getInput("First name: ");
         String lastName = Console.getInput("Last name: ");
@@ -98,13 +100,14 @@ public class MainMenu implements Menu {
 //        }
     }
 
+    // needs input - no test
     private void addAccountChoice() {
         Double deposit = Console.getCurrency("Initial deposit amount for this account: ");
         String header = "Choose Account Type:";
         String[] choices = new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" };
         int acctTypeInput = Console.getInput(header, choices);
         if (acctTypeInput != 4) {
-            //accountServices.addAccount(deposit, choices[acctTypeInput]);
+            accountServices.addAccount(deposit, choices[acctTypeInput-1], this.atm.getCurrentUser());
         }
     }
 

@@ -82,7 +82,21 @@ public class ATMTest {
     }
 
     @Test
-    public void authenticate() {
+    public void logOutTest() {
+        User foundUser = atm.getCurrentUser();
+        Assert.assertEquals(foundUser, null);
+
+        User user = new User("Jim","Brown","goolybib", 12, 12343);
+        atm.setCurrentUser(user);
+
+        foundUser = atm.getCurrentUser();
+        Assert.assertEquals(user, foundUser);
+
+        atm.logOut();
+
+        foundUser = atm.getCurrentUser();
+        Assert.assertEquals(null, foundUser);
+
     }
 
 

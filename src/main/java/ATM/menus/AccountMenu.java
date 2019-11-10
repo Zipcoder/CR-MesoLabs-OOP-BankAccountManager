@@ -41,6 +41,7 @@ public class AccountMenu implements Menu {
         this.accountServices = this.atm.getAccountServices();
     }
 
+    // needs input - no test
     public void displayMenu() {
         Console.clearScreen();
 
@@ -52,7 +53,7 @@ public class AccountMenu implements Menu {
     public String getHeader() {
         String header = account.getClass().getSimpleName() + " Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
         if (account instanceof Savings) {
-            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate()) + "%";
+            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate()) + "%%";
         } else if (account instanceof Investment) {
             header += "  Risk: " + String.format("%d", Math.round(100 * ((Investment) account).getRisk())) + "/10";
         }
@@ -67,6 +68,7 @@ public class AccountMenu implements Menu {
         return this.name;
     }
 
+    // needs input - no test
     public void handleChoice(int choice) {
         double amount;
         Transaction transaction;
@@ -93,9 +95,10 @@ public class AccountMenu implements Menu {
         }
     }
 
+    // needs input - no test (underlying method is tested)
     private void attemptTransfer() {
         try {
-            new TransferServicesMenu(this.atm, account).displayMenu();
+            new TransferServicesMenu(this.atm, account, accountServices.getAccountsForUser(currentUser)).displayMenu();
         } catch (ClosedAccountException e) {
             Console.getInput("Error - this account is closed. Press Enter to continue");
         } catch (FrozenAccountException e) {
@@ -103,6 +106,7 @@ public class AccountMenu implements Menu {
         }
     }
 
+    // needs input - no test (underlying method is tested)
     private void attemptCloseAccount() {
         try {
             if (accountServices.closeAccount(account)) {
@@ -117,23 +121,30 @@ public class AccountMenu implements Menu {
         }
     }
 
+    // needs input - no test (underlying method is tested)
     private void closedAcctNotice() {
         Console.getInput(("Account still contains funds. Do you wish to transfer funds to a different account?"));
         String closeAccountInput = Console.getInput("\nEnter \"Y/N\" or \"exit\" to go back:");
-        if (closeAccountInput == "N"){
-            //gives user the money
-        }else if(closeAccountInput == "Y"){
-            try {
-                new TransferServicesMenu(atm, account).displayMenu();
-            } catch (ClosedAccountException e) {
-                Console.getInput("Error - account is closed; press Enter to continue");
-            } catch (FrozenAccountException e) {
-                Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
-
+        try {
+            if (closeAccountInput.equals("n")){
+                //gives user the money
+                accountServices.accountWithdraw(account, account.getBalance());
+                accountServices.closeAccount(account);
+            } else if(closeAccountInput.equals("y")) {
+                new TransferServicesMenu(atm, account, accountServices.getAccountsForUser(currentUser)).displayMenu();
             }
+        } catch (ClosedAccountException e) {
+            Console.getInput("Error - account is closed; press Enter to continue");
+        } catch (FrozenAccountException e) {
+            Console.getInput("Error - account is frozen by OFAC; press Enter to continue");
+        } catch (BalanceRemainingException e) {
+            Console.getInput("Error - account has fund remaining; press Enter to continue");
+        } catch (InsufficientFundsException e) { // shouldn't happen
+            Console.getInput("Error - insufficient funds; press Enter to continue");
         }
     }
 
+    // needs input - no test (underlying method is tested)
     private void attemptWithdrawal(double amount) {
         try {
             if (accountServices.accountWithdraw(account, amount)) {
@@ -149,6 +160,7 @@ public class AccountMenu implements Menu {
         }
     }
 
+    // needs input - no test (underlying method is tested)
     private void attemptDeposit(double amount) {
         try {
             if (accountServices.accountDeposit(account, amount)) {

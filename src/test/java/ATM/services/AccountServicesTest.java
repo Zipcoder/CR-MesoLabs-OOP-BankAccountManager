@@ -331,9 +331,12 @@ public class AccountServicesTest {
         Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"));
         accountServices.saveAccountToDB(account1);
         accountServices.accountWithdraw(account1, 32.34);
-        double actual = account1.getBalance();
+        Account retrieved = accountServices.getAccountByInfo(accountServices.getAccountInfoByID(1232123));
+        double actual = retrieved.getBalance();
         double expected = 1500.00;
-        Assert.assertEquals(actual, expected, 0);
+
+        Assert.assertEquals(actual, expected, .01);
+
 
     }
 

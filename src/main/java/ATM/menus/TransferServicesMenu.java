@@ -10,11 +10,10 @@ import ATM.services.AccountServices;
 import ATM.services.TransferServices;
 import ATM.User;
 import ATM.interfaces.Menu;
-import ATM.ATM;
 import ATM.accounts.Account;
 import ATM.Console;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 
 
 public class TransferServicesMenu implements Menu {
@@ -24,9 +23,10 @@ public class TransferServicesMenu implements Menu {
     private Account sourceAccount;
     private AccountServices accountServices;
     private TransferServices transferServices;
+    private ArrayList<Account> userAccounts;
     private User currentUser;
 
-    public TransferServicesMenu(ATM atm, Account sourceAccount) throws ClosedAccountException, FrozenAccountException {
+    public TransferServicesMenu(ATM atm, Account sourceAccount, ArrayList<Account> userAccounts) throws ClosedAccountException, FrozenAccountException {
         this.atm = atm;
         this.sourceAccount = sourceAccount;
         if (this.sourceAccount.getAcctStatus() == Account.Status.CLOSED) {
@@ -37,8 +37,10 @@ public class TransferServicesMenu implements Menu {
         this.accountServices = this.atm.getAccountServices();
         this.transferServices = new TransferServices(this.atm, sourceAccount);
         this.currentUser = this.atm.getCurrentUser();
+        this.userAccounts = userAccounts;
     }
 
+    // needs input - no test
     public void displayMenu() {
         String header = getHeader();
 
@@ -52,7 +54,7 @@ public class TransferServicesMenu implements Menu {
     public String getHeader() {
         String header = "Transfer from: " + sourceAccount.getClass().getSimpleName() + " Account #" + sourceAccount.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", sourceAccount.getBalance());
         if (sourceAccount instanceof Savings) {
-            header += "  Interest Rate: " + String.format("%.2f", ((Savings) sourceAccount).getInterestRate()) + "%";
+            header += "  Interest Rate: " + String.format("%.2f", ((Savings) sourceAccount).getInterestRate()) + "%%";
         } else if (sourceAccount instanceof Investment) {
             header += "  Risk: " + String.format("%d", Math.round(100 * ((Investment) sourceAccount).getRisk())) + "/10";
         }
@@ -71,19 +73,25 @@ public class TransferServicesMenu implements Menu {
     }
 
     public ArrayList<Account> getDestinationAccounts() {
-        ArrayList<Account> userAccounts = this.accountServices.getAccountsForUser(this.currentUser);
-        userAccounts.remove(this.sourceAccount);
-        return userAccounts;
+        ArrayList<Account> userAccountsTrimmed = new ArrayList<Account>();
+
+        for (Account account : this.userAccounts) {
+            if (account.getAcctNum() != this.sourceAccount.getAcctNum()) {
+                userAccountsTrimmed.add(account);
+            }
+        }
+        return userAccountsTrimmed;
     }
 
+    // needs input - no test (underlying method is tested)
     public void handleChoice(int choice) {
         ArrayList<Account> usrAccts = getDestinationAccounts();
-        if (choice == usrAccts.size() + 3) { // exit transfer menu
+        if (choice == usrAccts.size() - 2) { // exit transfer menu
             // drop though to account menu
         } else { // deal with an existing account
             double amount = Console.getCurrency("Amount to transfer: ");
             try {
-                transferServices.transfer(this.sourceAccount, usrAccts.get(choice - 1), amount);
+                transferServices.executeTransfer(this.sourceAccount, usrAccts.get(choice - 1), amount);
             } catch (ClosedAccountException e) {
                 Console.println("Error - cannot transfer to/from a closed account. Press Enter to continue");
             } catch (InsufficientFundsException e) {
@@ -91,7 +99,7 @@ public class TransferServicesMenu implements Menu {
             } catch (FrozenAccountException e) {
                 Console.println("Error - cannot transfer to/from a frozen account. Press Enter to continue");
             }
-            displayMenu();
+
         }
     }
 

@@ -1,6 +1,7 @@
 package ATM.menus;
 
 import ATM.ATM;
+import ATM.Exceptions.ClosedAccountException;
 import ATM.Exceptions.FrozenAccountException;
 import ATM.accounts.Account;
 import ATM.accounts.Checking;
@@ -41,7 +42,7 @@ public class AccountMenuTest {
         Account account = new Savings(123.45, 123, 9675, .03, Account.Status.OPEN);
         AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
         String actual = acctMenu.getHeader();
-        String expected = "Savings Account #9675  Balance: $123.45  Interest Rate: 0.03%";
+        String expected = "Savings Account #9675  Balance: $123.45  Interest Rate: 0.03%%";
         Assert.assertEquals(expected, actual);
     }
 
@@ -53,4 +54,23 @@ public class AccountMenuTest {
         String expected = "Investment Account #9675  Balance: $123.45  Risk: 8/10";
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void getHeaderTest4() throws FrozenAccountException{
+        Account account = new Investment(123.45, 123, 9675, .08, Account.Status.CLOSED);
+        AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
+        String actual = acctMenu.getHeader();
+        String expected = "Investment Account #9675  Balance: $123.45  Risk: 8/10  (CLOSED)";
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test(expected = FrozenAccountException.class)
+    public void getHeaderTest5() throws FrozenAccountException{
+        Account account = new Investment(123.45, 123, 9675, .08, Account.Status.OFAC);
+        AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
+        String actual = acctMenu.getHeader();
+        String expected = "Investment Account #9675  Balance: $123.45  Risk: 8/10  (OFAC)";
+        Assert.assertEquals(expected, actual);
+    }
+
 }

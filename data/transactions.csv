@@ -271,3 +271,7 @@
 "debit","892","-0.00","Sun Nov 10 14:17:56 EST 2019","ATM deposit"
 "debit","892","50.00","Sun Nov 10 14:18:07 EST 2019","ATM withdrawal"
 "debit","350","50.00","Sun Nov 10 14:18:07 EST 2019","ATM overdraft debit"
+"credit","33","13.48","Sun Nov 10 15:53:31 EST 2019","Interest earned"
+"credit","2","4064.02","Sun Nov 10 15:53:31 EST 2019","Investment returns"
+"credit","33","13.51","Sun Nov 10 15:54:51 EST 2019","Interest earned"
+"debit","2","-4074.31","Sun Nov 10 15:54:51 EST 2019","Investment returns"

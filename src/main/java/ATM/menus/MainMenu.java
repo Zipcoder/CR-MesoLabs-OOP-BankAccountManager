@@ -33,7 +33,7 @@ public class MainMenu implements Menu {
 
     // needs input - no test
     public void displayMenu() {
-        String header = "ZCNB Main Menu";
+        String header = String.format("ZCNB Main Menu (Card Number: %d)",this.atm.getCurrentUser().getUserID());
         //maybe Younger Bank and Trust (YBT)
         //logo is giant ASCII of Kris' face
 

@@ -351,6 +351,50 @@ public class AccountServicesTest {
     }
 
 
+    @Test(expected = InsufficientFundsException.class)
+    public void overdraftAutoTransferTest2() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        atm.setCurrentUser(user1);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1500.00, 98, 1232123, Account.Status.OPEN, Checking.Overdraft.AUTO);
+        Account account2 = new Checking(100.00, 98, 1232124, Account.Status.OPEN, Checking.Overdraft.OFF);
+
+        accountServices.saveAccountToDB(account1);
+        accountServices.saveAccountToDB(account2);
+
+        accountServices.attemptAccountWithdrawal(account1, 1700);
+        Assert.assertEquals(0.0, account1.getBalance(), .01);
+        String[] account2Info = accountServices.getAccountInfoByID(1232124);
+        Assert.assertEquals(2400.0, Double.parseDouble(account2Info[2]), .01);
+    }
+
+    @Test
+    public void overdraftAutoTransferTest3() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        atm.setCurrentUser(user1);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1500.00, 98, 1232123, Account.Status.OPEN, Checking.Overdraft.AUTO);
+        Account account2 = new Checking(100.00, 98, 1232124, Account.Status.OPEN, Checking.Overdraft.OFF);
+        Account account3 = new Savings(1000.00, 98, 1232125, .02, Account.Status.OPEN);
+
+        accountServices.saveAccountToDB(account1);
+        accountServices.saveAccountToDB(account2);
+        accountServices.saveAccountToDB(account3);
+
+        accountServices.attemptAccountWithdrawal(account1, 1700);
+        Assert.assertEquals(0.0, account1.getBalance(), .01);
+        String[] account2Info = accountServices.getAccountInfoByID(1232124);
+        Assert.assertEquals(100.0, Double.parseDouble(account2Info[2]), .01);
+        String[] account3Info = accountServices.getAccountInfoByID(1232125);
+        Assert.assertEquals(800.0, Double.parseDouble(account3Info[2]), .01);
+    }
+
     @Test(expected = FrozenAccountException.class)
     public void withdrawFrozenAcctException() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
 

@@ -52,7 +52,7 @@ public class AccountMenu implements Menu {
     public String getHeader() {
         String header = account.getClass().getSimpleName() + " Account #" + account.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", account.getBalance());
         if (account instanceof Savings) {
-            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate()) + "%";
+            header += "  Interest Rate: " + String.format("%.2f", ((Savings) account).getInterestRate()) + "%%";
         } else if (account instanceof Investment) {
             header += "  Risk: " + String.format("%d", Math.round(100 * ((Investment) account).getRisk())) + "/10";
         }

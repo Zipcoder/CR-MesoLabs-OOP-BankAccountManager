@@ -30,8 +30,8 @@ public class TransferServices {
 
     //Constructor
     public TransferServices(ATM atm, Account account) {
-        this.currentUser = this.atm.getCurrentUser();
         this.atm = atm;
+        this.currentUser = this.atm.getCurrentUser();
         this.account = account;
         this.transactionServices = this.atm.getTransactionServices();
         this.accountServices = this.atm.getAccountServices();

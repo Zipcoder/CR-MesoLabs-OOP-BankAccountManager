@@ -79,7 +79,7 @@ public class MainMenu implements Menu {
             atm.setCurrentUser(null);
         } else { // deal with an existing account
             try {
-                new AccountMenu(this.atm, usrAccts.get(input - 3)).displayMenu();
+                new AccountMenu(this.atm, usrAccts.get(input - 4)).displayMenu();
             } catch (FrozenAccountException e) {
                 Console.getInput("Error - this account is frozen by OFAC. Press Enter to continue");
             }
@@ -104,7 +104,7 @@ public class MainMenu implements Menu {
         String[] choices = new String[] {"Checking", "Savings", "Investment", "Back to Main Menu" };
         int acctTypeInput = Console.getInput(header, choices);
         if (acctTypeInput != 4) {
-            //accountServices.addAccount(deposit, choices[acctTypeInput]);
+            accountServices.addAccount(deposit, choices[acctTypeInput-1], this.atm.getCurrentUser());
         }
     }
 

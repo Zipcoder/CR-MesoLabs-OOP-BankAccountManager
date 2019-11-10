@@ -11,7 +11,6 @@ public class User implements Storeable {
     private String password;
     private Integer userID;
     private Integer cardNumber;
-    private ArrayList<Transaction> pendingTransactions;
 
     public User(String firstName, String lastName, String password, Integer userID, Integer cardNumber) {
         this.firstName = firstName;
@@ -35,10 +34,6 @@ public class User implements Storeable {
         return Integer.parseInt(numString);
     }
 
-    public ArrayList<Transaction> getUserHistory() {
-
-        return pendingTransactions;
-    }
 
     public String getPassword() {
         return password;
@@ -48,9 +43,6 @@ public class User implements Storeable {
         return userID;
     }
 
-    public ArrayList<Transaction> getPendingTransactions() {
-        return pendingTransactions;
-    }
 
     @Override
     public String[] toStringArray() {

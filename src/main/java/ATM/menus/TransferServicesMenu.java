@@ -52,7 +52,7 @@ public class TransferServicesMenu implements Menu {
     public String getHeader() {
         String header = "Transfer from: " + sourceAccount.getClass().getSimpleName() + " Account #" + sourceAccount.getAcctNum().toString() + "  Balance: $" + String.format("%,.2f", sourceAccount.getBalance());
         if (sourceAccount instanceof Savings) {
-            header += "  Interest Rate: " + String.format("%.2f", ((Savings) sourceAccount).getInterestRate()) + "%";
+            header += "  Interest Rate: " + String.format("%.2f", ((Savings) sourceAccount).getInterestRate()) + "%%";
         } else if (sourceAccount instanceof Investment) {
             header += "  Risk: " + String.format("%d", Math.round(100 * ((Investment) sourceAccount).getRisk())) + "/10";
         }
@@ -71,14 +71,18 @@ public class TransferServicesMenu implements Menu {
     }
 
     public ArrayList<Account> getDestinationAccounts() {
-        ArrayList<Account> userAccounts = this.accountServices.getAccountsForUser(this.currentUser);
-        userAccounts.remove(this.sourceAccount);
+        ArrayList<Account> userAccounts = new ArrayList<>();
+        for (Account account : this.accountServices.getAccountsForUser(this.currentUser)) {
+            if (account.getAcctNum() != this.sourceAccount.getAcctNum()) {
+                userAccounts.add(account);
+            }
+        }
         return userAccounts;
     }
 
     public void handleChoice(int choice) {
         ArrayList<Account> usrAccts = getDestinationAccounts();
-        if (choice == usrAccts.size() + 3) { // exit transfer menu
+        if (choice == usrAccts.size() - 2) { // exit transfer menu
             // drop though to account menu
         } else { // deal with an existing account
             double amount = Console.getCurrency("Amount to transfer: ");
@@ -91,7 +95,7 @@ public class TransferServicesMenu implements Menu {
             } catch (FrozenAccountException e) {
                 Console.println("Error - cannot transfer to/from a frozen account. Press Enter to continue");
             }
-            displayMenu();
+
         }
     }
 

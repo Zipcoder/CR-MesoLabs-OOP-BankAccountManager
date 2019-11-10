@@ -34,15 +34,9 @@ public class User implements Storeable {
         return Integer.parseInt(numString);
     }
 
-
-    public String getPassword() {
-        return password;
-    }
-
     public Integer getUserID() {
         return userID;
     }
-
 
     @Override
     public String[] toStringArray() {

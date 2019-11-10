@@ -16,11 +16,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import static org.junit.Assert.*;
 
 public class TransferServicesMenuTest {
 
@@ -46,7 +43,7 @@ public class TransferServicesMenuTest {
     @Test
     public void getHeaderTest() throws ClosedAccountException, FrozenAccountException {
         User user = new User("Jim","Dandy","1234",23,123);
-        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(600.00,23,15, .01, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
@@ -62,7 +59,7 @@ public class TransferServicesMenuTest {
     @Test
     public void getHeaderTest2() throws ClosedAccountException, FrozenAccountException {
         User user = new User("Jim","Dandy","1234",23,123);
-        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(600.00,23,15, .01, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
@@ -78,7 +75,7 @@ public class TransferServicesMenuTest {
     @Test
     public void getHeaderTest3() throws ClosedAccountException, FrozenAccountException {
         User user = new User("Jim","Dandy","1234",23,123);
-        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Investment(600.00,23,15, .04, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
@@ -94,7 +91,7 @@ public class TransferServicesMenuTest {
     @Test (expected = ClosedAccountException.class)
     public void constructorCrashTest() throws ClosedAccountException, FrozenAccountException {
         User user = new User("Jim","Dandy","1234",23,123);
-        Account account1 = new Checking(500.00,23,12, Account.Status.CLOSED, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(500.00,23,12, Account.Status.CLOSED, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(600.00,23,15, .01, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
@@ -105,7 +102,7 @@ public class TransferServicesMenuTest {
     @Test (expected = FrozenAccountException.class)
     public void constructorCrashTest2() throws ClosedAccountException, FrozenAccountException {
         User user = new User("Jim","Dandy","1234",23,123);
-        Account account1 = new Checking(500.00,23,12, Account.Status.CLOSED, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(500.00,23,12, Account.Status.CLOSED, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
         Account account2 = new Savings(600.00,23,15, .01, Account.Status.OFAC);
         accountServices.saveAccountToDB(account2);
@@ -116,15 +113,15 @@ public class TransferServicesMenuTest {
     @Test
     public void accountTransferTest1() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
         User user = new User("Jim","Dandy","1234",23,123);
-        Account account1 = new Checking(500.00,23,12, Account.Status.CLOSED, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(500.00,23,12, Account.Status.CLOSED, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Checking(600.00,23,15, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account2 = new Checking(600.00,23,15, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account2);
         Account account3 = new Savings(700.00,23,16, .10, Account.Status.OPEN);
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(800.00,23,19, Account.Status.OFAC, Checking.Overdraft.FALSE);
+        Account account4 = new Checking(800.00,23,19, Account.Status.OFAC, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account4);
-        Account account5 = new Checking(900.00,23,22, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account5 = new Checking(900.00,23,22, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account5);
 
         menu = new TransferServicesMenu(atm, account2, accountServices.getAccountsForUser(user));
@@ -143,15 +140,15 @@ public class TransferServicesMenuTest {
     @Test
     public void getDestinationAccountsTest() throws ClosedAccountException, FrozenAccountException {
         User user = new User("Jim","Dandy","1234",23,123);
-        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Checking(600.00,23,15, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account2 = new Checking(600.00,23,15, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account2);
         Account account3 = new Savings(700.00,23,16, .10, Account.Status.OPEN);
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(800.00,23,19, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account4 = new Checking(800.00,23,19, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account4);
-        Account account5 = new Checking(900.00,23,22, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account5 = new Checking(900.00,23,22, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account5);
 
         menu = new TransferServicesMenu(atm, account2, accountServices.getAccountsForUser(user));
@@ -166,7 +163,7 @@ public class TransferServicesMenuTest {
     @Test
     public void getNameTest() throws ClosedAccountException, FrozenAccountException {
         User user = new User("Jim","Dandy","1234",23,123);
-        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
 
         menu = new TransferServicesMenu(atm, account1, accountServices.getAccountsForUser(user));

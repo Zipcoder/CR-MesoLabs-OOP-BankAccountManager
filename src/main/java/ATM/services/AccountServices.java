@@ -13,7 +13,6 @@ import ATM.accounts.Checking;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
 import ATM.Console;
-import ATM.menus.TransferServicesMenu;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,7 +79,7 @@ public class AccountServices {
     public void createCheckingAccount(double deposit, User currentUser) {
         Account newAccount;
         Transaction transaction;
-        newAccount = new Checking(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), Account.Status.OPEN, Checking.Overdraft.FALSE);
+        newAccount = new Checking(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), Account.Status.OPEN, Checking.Overdraft.OFF);
         this.saveAccountToDB(newAccount);
 
         transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);

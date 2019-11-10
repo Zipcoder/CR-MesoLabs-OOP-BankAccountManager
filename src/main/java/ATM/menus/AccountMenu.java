@@ -6,6 +6,7 @@ import ATM.Exceptions.BalanceRemainingException;
 import ATM.Exceptions.ClosedAccountException;
 import ATM.Exceptions.FrozenAccountException;
 import ATM.Exceptions.InsufficientFundsException;
+import ATM.accounts.Checking;
 import ATM.interfaces.Menu;
 import ATM.User;
 import ATM.Transaction;
@@ -14,6 +15,8 @@ import ATM.accounts.Investment;
 import ATM.accounts.Savings;
 import ATM.services.AccountServices;
 import ATM.services.TransactionServices;
+
+import java.util.Date;
 
 public class AccountMenu implements Menu {
 
@@ -46,7 +49,12 @@ public class AccountMenu implements Menu {
         Console.clearScreen();
 
         String header = getHeader();
-        int input = Console.getInput(header, new String[]{"View Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Back to Main Menu"});
+        int input;
+        if (account instanceof Checking) {
+            input = Console.getInput(header, new String[]{"View Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Change Overdraft Status", "Back to Main Menu"});
+        } else {
+            input = Console.getInput(header, new String[]{"View Transaction History", "Deposit", "Withdrawal", "Close Account", "Transfer", "Back to Main Menu"});
+        }
         handleChoice(input);
     }
 
@@ -90,9 +98,35 @@ public class AccountMenu implements Menu {
             case 5: //  transfer money
                 attemptTransfer();
                 break;
-            case 6:
+            case 6: // overdraft toggle or quit
+                if (account instanceof Checking) {
+                    overDraftChoice();
+                    try {
+                        new AccountMenu(atm, account);
+                    } catch (FrozenAccountException e) {}
+                }
+                break;
+            default:
                 break;
         }
+    }
+
+    private void overDraftChoice() {
+        String header = String.format("Current overdraft status : %s", ((Checking)account).getOverdraft());
+        int input = Console.getInput(header,new String[] {"ON: disallow overdrafts)", "OFF: allow overdrafts", "Attempt auto-transfer"});
+        switch (input) {
+            case 1:
+                ((Checking)account).setOverdraft(Checking.Overdraft.ON);
+                break;
+            case 2:
+                ((Checking)account).setOverdraft(Checking.Overdraft.OFF);
+                break;
+            case 3:
+                ((Checking)account).setOverdraft(Checking.Overdraft.AUTO);
+                break;
+        }
+        accountServices.saveAccountToDB(account);
+        transactionServices.saveTransactionToDB(new Transaction(0.00, new Date(), account.getAcctNum(), String.format("Overdraft status changed to %s",((Checking)account).getOverdraft()),true));
     }
 
     // needs input - no test (underlying method is tested)

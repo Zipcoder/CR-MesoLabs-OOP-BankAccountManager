@@ -28,7 +28,7 @@ public class StoreableTest {
 
     @Test
     public void toStringArrayAccountChecking() {
-        Account account = new Checking(12.23, 23, 3432, Account.Status.CLOSED, Checking.Overdraft.FALSE);
+        Account account = new Checking(12.23, 23, 3432, Account.Status.CLOSED, Checking.Overdraft.OFF);
 
         String[] actual = account.toStringArray();
         String[] expected = new String[] {

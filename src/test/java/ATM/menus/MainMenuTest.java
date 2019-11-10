@@ -18,8 +18,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
-
 public class MainMenuTest {
 
     private ATM atm;
@@ -46,17 +44,17 @@ public class MainMenuTest {
     public void addAccountOptionsTest1() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
         User user = new User("Jim","Dandy","1234",23,123);
         atm.setCurrentUser(user);
-        Account account1 = new Checking(500.00,23,12, Account.Status.CLOSED, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(500.00,23,12, Account.Status.CLOSED, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Checking(600.00,23,15, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account2 = new Checking(600.00,23,15, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account2);
         Account account3 = new Savings(700.00,23,16, .10, Account.Status.OPEN);
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(800.00,23,19, Account.Status.OFAC, Checking.Overdraft.FALSE);
+        Account account4 = new Checking(800.00,23,19, Account.Status.OFAC, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account4);
-        Account account5 = new Checking(900.00,23,22, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account5 = new Checking(900.00,23,22, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account5);
-        Account account6 = new Checking(10900.00,67,21, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account6 = new Checking(10900.00,67,21, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account6);
 
         ArrayList<String> result = menu.addAccountOptions(new ArrayList<String>(Arrays.asList("zarp")));
@@ -80,7 +78,7 @@ public class MainMenuTest {
     @Test
     public void getNameTest() throws ClosedAccountException, FrozenAccountException {
         User user = new User("Jim","Dandy","1234",23,123);
-        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.FALSE);
+        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN, Checking.Overdraft.OFF);
         accountServices.saveAccountToDB(account1);
 
         Assert.assertEquals("Main Menu", menu.getName());

@@ -6,6 +6,7 @@ import ATM.accounts.Investment;
 import ATM.accounts.Savings;
 import ATM.menus.MainMenu;
 import ATM.menus.NewUserMenu;
+import ATM.menus.UserMenu;
 import ATM.services.AccountServices;
 import ATM.services.TransactionServices;
 import ATM.services.TransferServices;
@@ -76,69 +77,12 @@ public class ATM {
     }
 
 
-
-    // load database info from disk
-    public void loadDBs() {
-//        // find accounts, create instances
-//        ArrayList<String[]> accountsInfo = getAccountInfoByUser(this.currentUser);
-//        ArrayList<accounts.Account> accounts = new ArrayList<>();
-//        for (String[] acctInfo : accountsInfo) {
-//            accounts.add(new accounts.Account(...));
-//        }
-//        //
-    }
-
-
-    public User authenticate() {
-        //Read ATM.User's card
-        Console.println("Card Number:");
-        int cardNum = Console.getInteger();
-
-        // find user in ATM.DB
-        String[] userInfo = userServices.getUserInfoByCardNum(cardNum);
-        if (userInfo == null){
-            return null;
-        }
-        // check PW
-        String password = Console.getInput("Enter Password: ");
-        if(password.equals(userInfo[4])) {
-            // 0: ID 1: Last Name 2: First Name 3: cardNum 4: PW
-            this.currentUser = new User(userInfo[2], userInfo[1], userInfo[4], Integer.parseInt(userInfo[0]), Integer.parseInt(userInfo[3]));
-            return this.currentUser;
-        } else {
-            return null;
-        }
-    }
-
-    // log in user - don't return until you do
-    public void getUser() {
-        String header = "Welcome to ZipCode National Bank";
-        int input = Console.getInput(header, new String[] {"Insert Card", "Open an Account"});
-
-        switch (input) {
-            case 1:
-                this.authenticate();
-                if (this.currentUser == null) {
-                    getUser();
-                    return;
-                }
-                break;
-            case 2:
-                new NewUserMenu(this).displayMenu();
-                break;
-        }
-    }
-
-
     public void serviceLoop() {
-        // authenticate a user (or die trying)
-        // only returns null if the magic secret exit code is called
-
         this.transactionServices.linkServices();
         this.accountServices.linkServices();
         //this.userServices.linkServices();
 
-        getUser();
+        new UserMenu(this).displayMenu();
 
         interestRateChange();
         applyInterest();
@@ -167,15 +111,28 @@ public class ATM {
         for (Account account : userAccounts) {
             if (account instanceof Savings) {
                 if (random.nextInt(5) >= 4) {
-                    double newRate = ((Savings) account).getInterestRate() - .05 + .01 * random.nextInt(11);
-                    ((Savings) account).setInterestRate(newRate);
-                    accountServices.saveAccountToDB(account);
-                    Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",account.getBalance())), new Date(), account.getAcctNum(), String.format("Interest rate changed to 0%.2f",newRate), true);
-                    transactionServices.saveTransactionToDB(transaction);
+                    double newRate = getNewRate(random, (Savings) account);
+                    setNewInterestRate(account, newRate);
                 }
             }
         }
     }
+
+    private double getNewRate(Random random, Savings account) {
+        double newRate = account.getInterestRate() - .05 + .01 * random.nextInt(11);
+        if (newRate <= 0.0) {
+            newRate = 0.01;
+        }
+        return newRate;
+    }
+
+    private void setNewInterestRate(Account account, double newRate) {
+        ((Savings) account).setInterestRate(newRate);
+        accountServices.saveAccountToDB(account);
+        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",account.getBalance())), new Date(), account.getAcctNum(), String.format("Interest rate changed to 0%.2f",newRate), true);
+        transactionServices.saveTransactionToDB(transaction);
+    }
+
 
     public void calcInterest(Account account) {
         Double interest = ((Savings) account).getInterestRate() * account.getBalance()/100;

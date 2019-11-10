@@ -7,6 +7,7 @@ import ATM.Exceptions.ClosedAccountException;
 import ATM.Exceptions.FrozenAccountException;
 import ATM.accounts.Account;
 import ATM.accounts.Checking;
+import ATM.accounts.Investment;
 import ATM.accounts.Savings;
 import ATM.services.AccountServices;
 import ATM.services.TransactionServices;
@@ -52,8 +53,10 @@ public class TransferServicesMenuTest {
 
         menu = new TransferServicesMenu(atm, account1, accountServices.getAccountsForUser(user));
 
-        String expected = "Transfer from: Checking Account #12  Balance: ($500.00)";
+        String expected = "Transfer from: Checking Account #12  Balance: $500.00";
         String actual = menu.getHeader();
+
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
@@ -64,10 +67,28 @@ public class TransferServicesMenuTest {
         Account account2 = new Savings(600.00,23,15, .01, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
 
-        menu = new TransferServicesMenu(atm, account1, accountServices.getAccountsForUser(user));
+        menu = new TransferServicesMenu(atm, account2, accountServices.getAccountsForUser(user));
 
-        String expected = "Transfer from: Savings Account #15  Balance: ($600.00)";
+        String expected = "Transfer from: Savings Account #15  Balance: $600.00  Interest Rate: 0.01%%";
         String actual = menu.getHeader();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getHeaderTest3() throws ClosedAccountException, FrozenAccountException {
+        User user = new User("Jim","Dandy","1234",23,123);
+        Account account1 = new Checking(500.00,23,12, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account1);
+        Account account2 = new Investment(600.00,23,15, .04, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account2);
+
+        menu = new TransferServicesMenu(atm, account2, accountServices.getAccountsForUser(user));
+
+        String expected = "Transfer from: Investment Account #15  Balance: $600.00  Risk: 4/10";
+        String actual = menu.getHeader();
+
+        Assert.assertEquals(expected, actual);
     }
 
     @Test (expected = ClosedAccountException.class)
@@ -90,10 +111,6 @@ public class TransferServicesMenuTest {
         accountServices.saveAccountToDB(account2);
 
         menu = new TransferServicesMenu(atm, account2, accountServices.getAccountsForUser(user));
-    }
-
-    @Test
-    public void addAccountOptionsTest() {
     }
 
     @Test
@@ -120,7 +137,7 @@ public class TransferServicesMenuTest {
         expected = "Savings #16 ($700.00)";
         actual = menu.addAccountOptions(new ArrayList<String>()).get(1);
 
-
+        Assert.assertEquals(expected,actual);
     }
 
     @Test

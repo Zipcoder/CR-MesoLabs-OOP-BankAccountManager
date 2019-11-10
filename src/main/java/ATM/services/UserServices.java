@@ -3,6 +3,7 @@ package ATM.services;
 import ATM.ATM;
 import ATM.DB;
 import ATM.User;
+import ATM.Console;
 
 import java.util.ArrayList;
 
@@ -58,6 +59,26 @@ public class UserServices {
 
     public int getUserDBLength(){
         return userDB.length();
+    }
 
+    public User authenticate() {
+        //Read ATM.User's card
+        Console.println("Card Number:");
+        int cardNum = Console.getInteger();
+
+        // find user in ATM.DB
+        String[] userInfo = getUserInfoByCardNum(cardNum);
+        if (userInfo == null){
+            return null;
+        }
+        // check PW
+        String password = Console.getInput("Enter Password: ");
+        if(password.equals(userInfo[4])) {
+            // 0: ID 1: Last Name 2: First Name 3: cardNum 4: PW
+            this.atm.setCurrentUser(new User(userInfo[2], userInfo[1], userInfo[4], Integer.parseInt(userInfo[0]), Integer.parseInt(userInfo[3])));
+            return this.atm.getCurrentUser();
+        } else {
+            return null;
+        }
     }
 }

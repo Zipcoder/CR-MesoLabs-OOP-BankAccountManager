@@ -1,6 +1,7 @@
 package ATM.menus;
 
 import ATM.ATM;
+import ATM.Exceptions.ClosedAccountException;
 import ATM.Exceptions.FrozenAccountException;
 import ATM.accounts.Account;
 import ATM.accounts.Checking;
@@ -53,4 +54,5 @@ public class AccountMenuTest {
         String expected = "Investment Account #9675  Balance: $123.45  Risk: 8/10";
         Assert.assertEquals(expected, actual);
     }
+
 }

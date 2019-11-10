@@ -8,7 +8,7 @@ import ATM.services.UserServices;
 
 public class NewUserMenu implements Menu {
 
-    private String name = "User Menu";
+    private String name = "New User Menu";
     private ATM atm;
     private UserServices userServices;
     private TransactionServices transactionServices;
@@ -19,6 +19,7 @@ public class NewUserMenu implements Menu {
         this.transactionServices = this.atm.getTransactionServices();
     }
 
+    // needs input - no test
     public void displayMenu() {
         String firstName = Console.getInput("Enter Your First Name: ");
         String lastName = Console.getInput("Enter Your Last Name: ");

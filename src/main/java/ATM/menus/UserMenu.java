@@ -7,8 +7,7 @@ import ATM.services.UserServices;
 
 public class UserMenu implements Menu {
 
-    private Console console;
-    private String name = "ATM.User ATM.interfaces.Menu";
+    private String name = "User Menu";
     private ATM atm;
     private UserServices userServices;
 
@@ -17,16 +16,18 @@ public class UserMenu implements Menu {
         this.userServices = this.atm.getUserServices();
     }
 
+    // needs input - no test
     public void displayMenu() {
         String header = "Welcome to ZipCode National Bank";
         int input = Console.getInput(header, new String[] {"Insert Card", "Open an Account"});
         handleChoice(input);
     }
 
+    // needs input - no test
     public void handleChoice(int choice) {
         switch (choice) {
             case 1:
-                //userServices.authenticate();
+                userServices.authenticate();
                 if (this.atm.getCurrentUser() == null) {
                     return;
                 }
@@ -38,7 +39,7 @@ public class UserMenu implements Menu {
     }
 
     public String getName() {
-        return null;
+        return this.name;
     }
 
 }

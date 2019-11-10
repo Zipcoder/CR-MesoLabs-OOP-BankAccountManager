@@ -41,6 +41,7 @@ public class AccountMenu implements Menu {
         this.accountServices = this.atm.getAccountServices();
     }
 
+    // needs input - no test
     public void displayMenu() {
         Console.clearScreen();
 
@@ -67,6 +68,7 @@ public class AccountMenu implements Menu {
         return this.name;
     }
 
+    // needs input - no test
     public void handleChoice(int choice) {
         double amount;
         Transaction transaction;
@@ -93,6 +95,7 @@ public class AccountMenu implements Menu {
         }
     }
 
+    // needs input - no test (underlying method is tested)
     private void attemptTransfer() {
         try {
             new TransferServicesMenu(this.atm, account, accountServices.getAccountsForUser(currentUser)).displayMenu();
@@ -103,6 +106,7 @@ public class AccountMenu implements Menu {
         }
     }
 
+    // needs input - no test (underlying method is tested)
     private void attemptCloseAccount() {
         try {
             if (accountServices.closeAccount(account)) {
@@ -117,6 +121,7 @@ public class AccountMenu implements Menu {
         }
     }
 
+    // needs input - no test (underlying method is tested)
     private void closedAcctNotice() {
         Console.getInput(("Account still contains funds. Do you wish to transfer funds to a different account?"));
         String closeAccountInput = Console.getInput("\nEnter \"Y/N\" or \"exit\" to go back:");
@@ -134,6 +139,7 @@ public class AccountMenu implements Menu {
         }
     }
 
+    // needs input - no test (underlying method is tested)
     private void attemptWithdrawal(double amount) {
         try {
             if (accountServices.accountWithdraw(account, amount)) {
@@ -149,6 +155,7 @@ public class AccountMenu implements Menu {
         }
     }
 
+    // needs input - no test (underlying method is tested)
     private void attemptDeposit(double amount) {
         try {
             if (accountServices.accountDeposit(account, amount)) {

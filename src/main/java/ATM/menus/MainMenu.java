@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class MainMenu implements Menu {
 
     private Console console;
-    private String name = "User Menu";
+    private String name = "Main Menu";
     private ATM atm;
     private UserServices userServices;
     private TransactionServices transactionServices;
@@ -31,6 +31,7 @@ public class MainMenu implements Menu {
         this.transactionServices = atm.getTransactionServices();
     }
 
+    // needs input - no test
     public void displayMenu() {
         String header = "ZCNB Main Menu";
         //maybe Younger Bank and Trust (YBT)
@@ -63,6 +64,7 @@ public class MainMenu implements Menu {
         return choices;
     }
 
+    // needs input - no test
     public void handleChoice(int input) {
         ArrayList<Account> usrAccts = accountServices.getAccountsForUser(atm.getCurrentUser());
         if (input == 1) { // View overall transaction history
@@ -85,9 +87,9 @@ public class MainMenu implements Menu {
             }
             displayMenu();
         }
-
     }
 
+    // needs input - no test
     private void attemptNameChange() {
         String firstName = Console.getInput("First name: ");
         String lastName = Console.getInput("Last name: ");
@@ -98,6 +100,7 @@ public class MainMenu implements Menu {
 //        }
     }
 
+    // needs input - no test
     private void addAccountChoice() {
         Double deposit = Console.getCurrency("Initial deposit amount for this account: ");
         String header = "Choose Account Type:";

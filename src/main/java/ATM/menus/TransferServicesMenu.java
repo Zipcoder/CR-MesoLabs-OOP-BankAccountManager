@@ -40,6 +40,7 @@ public class TransferServicesMenu implements Menu {
         this.userAccounts = userAccounts;
     }
 
+    // needs input - no test
     public void displayMenu() {
         String header = getHeader();
 
@@ -82,6 +83,7 @@ public class TransferServicesMenu implements Menu {
         return userAccountsTrimmed;
     }
 
+    // needs input - no test (underlying method is tested)
     public void handleChoice(int choice) {
         ArrayList<Account> usrAccts = getDestinationAccounts();
         if (choice == usrAccts.size() - 2) { // exit transfer menu

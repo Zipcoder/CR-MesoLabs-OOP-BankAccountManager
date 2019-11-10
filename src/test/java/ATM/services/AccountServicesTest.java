@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class AccountServicesTest {
     private ATM atm;
@@ -355,7 +356,7 @@ public class AccountServicesTest {
     }
 
     @Test
-    public void accountDepositTest() throws FrozenAccountException, ClosedAccountException{
+    public void accountDepositTest() throws FrozenAccountException, ClosedAccountException {
         accountServices.clearAccountDB();
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
@@ -365,8 +366,7 @@ public class AccountServicesTest {
         accountServices.accountDeposit(account1, 50.00);
         double actual = account1.getBalance();
         double expected = 1582.34;
-        Assert.assertEquals(expected, actual,0);
-
+        Assert.assertEquals(expected, actual, 0);
     }
 
     @Test
@@ -383,10 +383,91 @@ public class AccountServicesTest {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test(expected = BalanceRemainingException.class)
+    public void closeAccountWithBalanceTest() throws BalanceRemainingException, FrozenAccountException, ClosedAccountException {
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(10.00, 23, 1232123, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.closeAccount(account1);
+    }
+
+    @Test(expected = FrozenAccountException.class)
+    public void closeFrozenAccountTest() throws BalanceRemainingException, FrozenAccountException, ClosedAccountException {
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.valueOf("OFAC"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.closeAccount(account1);
+    }
+
+    @Test(expected = ClosedAccountException.class)
+    public void alreadyClosedAccountTest() throws BalanceRemainingException, FrozenAccountException, ClosedAccountException {
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.valueOf("CLOSED"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.closeAccount(account1);
+    }
+
     @Test
     public void getAccountDBLengthTest() {
+        accountServices.clearAccountDB();
 
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account1);
+        Account account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account2);
+        Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account3);
+        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account4);
+        int actual = accountServices.getAccountDBLength();
+        int expected = 4;
+        Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void getNewRateTest() {
+        Random random = new Random();
+        accountServices.clearAccountDB();
+        Savings account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account2);
+        Double actual = account2.getInterestRate();
+        Double expected = accountServices.getNewRate(random, account2);
+        Assert.assertEquals(actual, expected, .1);
+    }
+
+    @Test
+    public void setNewRateTest() {
+        accountServices.clearAccountDB();
+        Savings account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account2);
+        account2.setInterestRate(0.03);
+        Double actual = account2.getInterestRate();
+        Double expected = 0.03;
+        Assert.assertEquals(actual, expected, 0);
+    }
+
+    @Test
+    public void calcInterestTest(){
+        accountServices.clearAccountDB();
+        Savings account2 = new Savings(200.00, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account2);
+        accountServices.calcInterest(account2);
+        Double actual = account2.getBalance();
+        Double expected = 200.02;
+        Assert.assertEquals(actual, expected, 0);
+    }
+}
+
+
 
 
     //    @Test
@@ -399,4 +480,3 @@ public class AccountServicesTest {
 //        }
 //        accountDB.clear();
 //    }
-}

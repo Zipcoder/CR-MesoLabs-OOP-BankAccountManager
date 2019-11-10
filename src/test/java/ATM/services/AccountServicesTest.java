@@ -2,6 +2,9 @@ package ATM.services;
 
 import ATM.ATM;
 import ATM.DB;
+import ATM.Exceptions.ClosedAccountException;
+import ATM.Exceptions.FrozenAccountException;
+import ATM.Exceptions.InsufficientFundsException;
 import ATM.User;
 import ATM.accounts.Account;
 import ATM.accounts.Checking;
@@ -274,6 +277,84 @@ public class AccountServicesTest {
         expected = account10.toStringArray();
 
         Assert.assertEquals(actual,expected);
+
+    }
+
+    @Test(expected = InsufficientFundsException.class)
+    public void insufficientFundWithdrawTest() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+
+            accountServices.clearAccountDB();
+            userServices.clearUserDB();
+            User user1 = new User("Jim","Brown","goolybib", 98, 12343);
+            userServices.saveUserToDB(user1);
+            Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));
+            accountServices.saveAccountToDB(account1);
+            accountServices.accountWithdraw(account1, 1600);
+
+
+    }
+
+
+    @Test(expected = FrozenAccountException.class)
+    public void withdrawFrozenAcctException() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OFAC"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.accountWithdraw(account1, 1500);
+
+    }
+
+
+    @Test(expected = ClosedAccountException.class)
+    public void withdrawClosedAcctTest() throws InsufficientFundsException, FrozenAccountException, ClosedAccountException {
+
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("CLOSED"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.accountWithdraw(account1, 1500);
+    }
+
+    @Test
+    public void accountWithdrawTest() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
+        accountServices.clearAccountDB();
+        userServices.clearUserDB();
+        User user1 = new User("Jim","Brown","goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("OPEN"));
+        accountServices.saveAccountToDB(account1);
+        accountServices.accountWithdraw(account1, 32.34);
+        double actual = account1.getBalance();
+        double expected = 1500.00;
+        Assert.assertEquals(actual, expected);
+
+    }
+    @Test(expected = ClosedAccountException.class)
+    public void accountDepositTest() throws FrozenAccountException, ClosedAccountException, InsufficientFundsException {
+            accountServices.clearAccountDB();
+            userServices.clearUserDB();
+            User user1 = new User("Jim","Brown","goolybib", 98, 12343);
+            userServices.saveUserToDB(user1);
+            Account account1 = new Checking(1532.34,23,1232123, Account.Status.valueOf("CLOSED"));
+            accountServices.saveAccountToDB(account1);
+            accountServices.accountDeposit(account1, 50.00);
+            double actual = account1.getBalance();
+            double expected = 1582.34;
+            Assert.assertEquals(actual, expected);
+
+    }
+    @Test
+    public void closeAccountTest(){
+
+    }
+    @Test
+    public void getAccountDBLengthTest(){
 
     }
 

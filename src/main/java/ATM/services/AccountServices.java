@@ -41,7 +41,6 @@ public class AccountServices {
         Account newAccount;
         Transaction transaction;
 
-
         switch (acctType) {
             case "Checking":
                 newAccount = new Checking(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), Account.Status.OPEN);
@@ -183,70 +182,42 @@ public class AccountServices {
     }
 
 
-        public Boolean accountDeposit (Account account,double amount) throws
-        ClosedAccountException, FrozenAccountException {
-            if (account.getAcctStatus() == Account.Status.CLOSED) {
-                throw new ClosedAccountException();
-            } else if (account.getAcctStatus() == Account.Status.OFAC) {
-                throw new FrozenAccountException();
-            } else {
-                saveAccountToDB(account);
-                Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM deposit", true);
-                transactionServices.saveTransactionToDB(transaction);
-                saveAccountToDB(account);
-                return true;
-            }
-        }
-
-
-        public Boolean accountWithdraw (Account account,double amount) throws
-        FrozenAccountException, InsufficientFundsException, ClosedAccountException {
-            if (account.getAcctStatus() == Account.Status.CLOSED) {
-                throw new ClosedAccountException();
-            } else if (account.getAcctStatus() == Account.Status.OFAC) {
-                throw new FrozenAccountException();
-            } else {
-                if (amount <= account.getBalance()) {
-                    account.deposit(-1 * amount);
-                    saveAccountToDB(account);
-                    Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM withdrawal", false);
-                    transactionServices.saveTransactionToDB(transaction);
-                    return true;
-                } else {
-                    throw new InsufficientFundsException();
-                }
-
-            }
-
-/*    account.deposit(deposit);
-
+    public Boolean accountDeposit(Account account, double amount) throws
+            ClosedAccountException, FrozenAccountException {
+        if (account.getAcctStatus() == Account.Status.CLOSED) {
+            throw new ClosedAccountException();
+        } else if (account.getAcctStatus() == Account.Status.OFAC) {
+            throw new FrozenAccountException();
+        } else {
             saveAccountToDB(account);
-
-            transaction =new
-
-            Transaction(deposit, new Date(),account.
-
-            getAcctNum(), "ATM deposit",true);
-
-            saveTransactionToDB(transaction);
-            break;
-            case"3":
-            deposit =Console.getCurrency("Withdrawal amount: ");
-            if(deposit <=account.getBalance())
-
-            {
-            account.deposit(-1 * deposit);
+            Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM deposit", true);
+            transactionServices.saveTransactionToDB(transaction);
             saveAccountToDB(account);
-            transaction = new Transaction(deposit, new Date(), account.getAcctNum(), "ATM withdrawal", false);
-            saveTransactionToDB(transaction);
-            } else
-
-            {
-            Console.println("Insufficient funds");
-            Console.getInput("\nPress Enter");
-            }*/
+            return true;
         }
     }
+
+
+    public Boolean accountWithdraw(Account account, double amount) throws
+            FrozenAccountException, InsufficientFundsException, ClosedAccountException {
+        if (account.getAcctStatus() == Account.Status.CLOSED) {
+            throw new ClosedAccountException();
+        } else if (account.getAcctStatus() == Account.Status.OFAC) {
+            throw new FrozenAccountException();
+        } else {
+            if (amount <= account.getBalance()) {
+                account.deposit(-1 * amount);
+                saveAccountToDB(account);
+                Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM withdrawal", false);
+                transactionServices.saveTransactionToDB(transaction);
+                return true;
+            } else {
+                throw new InsufficientFundsException();
+            }
+
+        }
+    }
+}
 
 
 

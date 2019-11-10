@@ -18,6 +18,7 @@ public class UserServicesTest {
     public void setUp() throws Exception {
         atm = new ATM("testuserDB.csv", "testaccountDB.csv", "testtransactionDB.csv");
         userServices = atm.getUserServices();
+
     }
 
     @Test

@@ -389,7 +389,7 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(10.00, 23, 1232123, Account.Status.valueOf("OPEN"));
+        Account account1 = new Checking(10.00, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
         accountServices.closeAccount(account1);
     }
@@ -400,7 +400,7 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.valueOf("OFAC"));
+        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.OFAC, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
         accountServices.closeAccount(account1);
     }
@@ -411,7 +411,7 @@ public class AccountServicesTest {
         userServices.clearUserDB();
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
         userServices.saveUserToDB(user1);
-        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.valueOf("CLOSED"));
+        Account account1 = new Checking(0.00, 23, 1232123, Account.Status.CLOSED, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
         accountServices.closeAccount(account1);
     }
@@ -420,13 +420,13 @@ public class AccountServicesTest {
     public void getAccountDBLengthTest() {
         accountServices.clearAccountDB();
 
-        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.valueOf("OPEN"));
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account1);
-        Account account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
+        Account account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
-        Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.valueOf("OPEN"));
+        Account account3 = new Investment(234023.23, 42, 48, 0.06, Account.Status.OPEN);
         accountServices.saveAccountToDB(account3);
-        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.valueOf("OPEN"));
+        Account account4 = new Checking(1532.34, 42, 5423, Account.Status.OPEN, Checking.Overdraft.FALSE);
         accountServices.saveAccountToDB(account4);
         int actual = accountServices.getAccountDBLength();
         int expected = 4;
@@ -437,7 +437,7 @@ public class AccountServicesTest {
     public void getNewRateTest() {
         Random random = new Random();
         accountServices.clearAccountDB();
-        Savings account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
+        Savings account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
         Double actual = account2.getInterestRate();
         Double expected = accountServices.getNewRate(random, account2);
@@ -447,7 +447,7 @@ public class AccountServicesTest {
     @Test
     public void setNewRateTest() {
         accountServices.clearAccountDB();
-        Savings account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
+        Savings account2 = new Savings(120.43, 12, 749, 0.01, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
         account2.setInterestRate(0.03);
         Double actual = account2.getInterestRate();
@@ -458,7 +458,7 @@ public class AccountServicesTest {
     @Test
     public void calcInterestTest(){
         accountServices.clearAccountDB();
-        Savings account2 = new Savings(200.00, 12, 749, 0.01, Account.Status.valueOf("OPEN"));
+        Savings account2 = new Savings(200.00, 12, 749, 0.01, Account.Status.OPEN);
         accountServices.saveAccountToDB(account2);
         accountServices.calcInterest(account2);
         Double actual = account2.getBalance();

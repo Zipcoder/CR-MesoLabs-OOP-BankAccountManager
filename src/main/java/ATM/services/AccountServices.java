@@ -113,7 +113,7 @@ public class AccountServices {
     // account instance from info (pre-existing account)
     public Account getAccountByInfo(String[] info) {
         if (info[3].equals("Checking")) {
-            return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Account.Status.valueOf(info[5]), Checking.Overdraft.FALSE);
+            return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Account.Status.valueOf(info[5]), Checking.Overdraft.valueOf(info[4]));
         } else if (info[3].equals("Savings")) {
             return new Savings(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]), Account.Status.valueOf(info[5]));
         } else if (info[3].equals("Investment")) {

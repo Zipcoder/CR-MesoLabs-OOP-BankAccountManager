@@ -15,6 +15,8 @@ public class TransactionServices {
     private ATM atm;
     private DB transactionDB;   // 0: credit/debit 1: accountID 2: amount (signed) 3: timeStamp 4: description
     private AccountServices accountServices;
+    private UserServices userServices;
+
 
     public TransactionServices(DB transactionDB, ATM atm) {
         this.transactionDB = transactionDB;
@@ -26,7 +28,9 @@ public class TransactionServices {
     }
 
     public void linkServices() {
+        this.userServices = atm.getUserServices();
         this.accountServices = atm.getAccountServices();
+
     }
 
 

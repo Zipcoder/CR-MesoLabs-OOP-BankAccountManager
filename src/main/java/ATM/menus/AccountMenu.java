@@ -123,15 +123,16 @@ public class AccountMenu implements Menu {
 
     // needs input - no test (underlying method is tested)
     private void closedAcctNotice() {
-        Console.getInput(("Account still contains funds. Do you wish to transfer funds to a different account?"));
-        String closeAccountInput = Console.getInput("\nEnter \"Y/N\" or \"exit\" to go back:");
+        boolean closeAccountInput = Console.getInputYN("Account still contains funds. Do you wish to transfer funds to a different account? ");
         try {
-            if (closeAccountInput.equals("n")){
-                //gives user the money
+            if (!closeAccountInput){//gives user the money
                 accountServices.accountWithdraw(account, account.getBalance());
                 accountServices.closeAccount(account);
-            } else if(closeAccountInput.equals("y")) {
+                Console.getInput("Funds withdrawn and account closed; press Enter to continue");
+            } else { //transfers money
                 new TransferServicesMenu(atm, account, accountServices.getAccountsForUser(currentUser)).displayMenu();
+                accountServices.closeAccount(account);
+                Console.getInput("Funds withdrawn and account closed; press Enter to continue");
             }
         } catch (ClosedAccountException e) {
             Console.getInput("Error - account is closed; press Enter to continue");

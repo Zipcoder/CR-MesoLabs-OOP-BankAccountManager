@@ -11,6 +11,11 @@ public class UserServices {
 
     private DB userDB;
     private ATM atm;
+    private String firstName;
+    private String lastName;
+    private String password;
+    private Integer userID;
+    private Integer cardNumber;
 
     public UserServices(DB userDB, ATM atm) {
         this.userDB = userDB;
@@ -81,4 +86,35 @@ public class UserServices {
             return null;
         }
     }
+
+    public User createNewUser(String firstName, String lastName, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.userID = genUserID();
+        this.cardNumber = genCardNum();
+        User user = new User(firstName, lastName, password, userID, cardNumber);
+        return user;
+    }
+
+    public Integer genUserID(){
+        Integer newUserID;
+        newUserID = getMaxUserNumber() + 1;
+        return newUserID;
+    }
+
+    public static Integer genCardNum() {
+        String numString = "";
+        for (int i = 0; i < 8; i++) {
+            Integer num;
+            if(i == 0 || i == 7) {
+                num = (int)(Math.random() * 9 + 1);
+            } else {
+                num = (int)(Math.random() * 10);
+            }
+            numString += num.toString();
+        }
+        return Integer.parseInt(numString);
+    }
+
 }

@@ -201,5 +201,18 @@ public class UserServicesTest {
             Assert.assertNotEquals(actual,expected);
         }
 
+    @Test
+    public void genCardNumTest() {
+
+        System.out.println("Testing Card Number Gen");
+
+        for (int i = 0; i < 10; i++) {
+            Integer cardNum = UserServices.genCardNum();
+
+            System.out.println(cardNum);
+            Assert.assertEquals(8,  cardNum.toString().length());
+        }
+    }
+
     }
 

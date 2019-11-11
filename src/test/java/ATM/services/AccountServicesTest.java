@@ -653,7 +653,7 @@ public class AccountServicesTest {
 
         double expected;
         double actual;
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 50; i++) {
             accountServices.interestRateChange();
 
             ArrayList<Account> accts = accountServices.getAccountsForUser(user1);
@@ -682,6 +682,67 @@ public class AccountServicesTest {
             expected = 2000.0;
             actual = accts.get(4).getBalance();
             Assert.assertEquals(expected, actual, .01);
+        }
+    }
+
+    @Test
+    public void deleteAccountFromDBTest() {
+        Account account1 = new Checking(1500.00, 98, 1232123, Account.Status.OPEN, Checking.Overdraft.OFF);
+        accountServices.saveAccountToDB(account1);
+        Account account2 = new Savings(10000.00, 98, 749, 0.01, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account2);
+        Account account3 = new Savings(234023.23, 4, 48, 0.06, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account3);
+
+        Assert.assertEquals(3,accountServices.getAccountDBLength());
+        accountServices.deleteAccountFromDB(account2);
+        Assert.assertEquals("48",accountServices.getAccountInfoByRow(1)[0]);
+        Assert.assertEquals(2,accountServices.getAccountDBLength());
+        accountServices.deleteAccountFromDB(account1);
+        Assert.assertEquals("48",accountServices.getAccountInfoByRow(0)[0]);
+        Assert.assertEquals(1,accountServices.getAccountDBLength());
+    }
+
+    @Test
+    public void investmentReturnsTest() {
+
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        atm.setCurrentUser(user1);
+
+        Account account1 = new Checking(1500.00, 98, 1232123, Account.Status.OPEN, Checking.Overdraft.OFF);
+        accountServices.saveAccountToDB(account1);
+        Account account2 = new Investment(10000.00, 98, 749, 0.01, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account2);
+        Account account3 = new Investment(234023.23, 4, 48, 0.06, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account3);
+        Account account4 = new Investment(1000.00, 98, 5423, 0.05,Account.Status.OPEN);
+        accountServices.saveAccountToDB(account4);
+        Account account5 = new Investment(2000.00, 98, 543, 0.05,Account.Status.CLOSED);
+        accountServices.saveAccountToDB(account5);
+        Account account6 = new Investment(2000.00, 98, 53, 0.05,Account.Status.OFAC);
+        accountServices.saveAccountToDB(account6);
+
+        double expected;
+        double actual;
+        for (int i = 0; i < 50; i++) {
+            accountServices.applyReturns();
+
+            ArrayList<Account> accts = accountServices.getAccountsForUser(user1);
+            expected = account2.getBalance();
+            Assert.assertNotEquals(expected, accts.get(1).getBalance());
+            accts.get(1).setBalance(10000.0);
+            accountServices.saveAccountToDB(accts.get(1));
+
+            expected = account5.getBalance();
+            Assert.assertEquals(expected, accts.get(3).getBalance(), .01);
+            accts.get(3).setBalance(2000.0);
+            accountServices.saveAccountToDB(accts.get(3));
+
+            expected = account6.getBalance();
+            Assert.assertEquals(expected, accts.get(4).getBalance(), .01);
+            accts.get(4).setBalance(2000.0);
+            accountServices.saveAccountToDB(accts.get(4));
         }
     }
 }

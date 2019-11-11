@@ -4,6 +4,7 @@ import ATM.ATM;
 import ATM.DB;
 import ATM.User;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,11 @@ public class UserServicesTest {
     public void setUp() throws Exception {
         atm = new ATM("testuserDB.csv", "testaccountDB.csv", "testtransactionDB.csv");
         userServices = atm.getUserServices();
+    }
 
+    @After
+    public void tearDown() throws Exception {
+        userServices.clearUserDB();
     }
 
     @Test
@@ -38,8 +43,6 @@ public class UserServicesTest {
 
     @Test
     public void getMaxUserNumber() {
-
-
         userServices.clearUserDB();
 
         int actual = userServices.getMaxUserNumber();
@@ -223,7 +226,7 @@ public class UserServicesTest {
         Assert.assertEquals(expectedUserID,userServices.genUserID());
     }
 
-    /*
+
     @Test
     public void createNewUserTest(){
         String testFirstName = "John";
@@ -231,9 +234,9 @@ public class UserServicesTest {
         String testPassword = "password";
         Integer testUserID = 9999;
         Integer testUserCardNum = 99999999;
-        userServices.createNewUser(testFirstName, testLastName, testPassword);
+        atm.setCurrentUser(userServices.createNewUser(testFirstName, testLastName, testPassword));
 
-        Assert.assertEquals("password", this.user.getPassword());
+        Assert.assertEquals("password", atm.getCurrentUser().getPassword());
         User user1 = new User("Jim", "Brown", "goolybib", 12, 12343);
         userServices.saveUserToDB(user1);
         User user2 = new User("Ji123m", "Bro23wn", "gool321ybib", 122, 1234313);
@@ -242,11 +245,10 @@ public class UserServicesTest {
         userServices.saveUserToDB(user3);
 
         int actual = userServices.getUserDBLength();
-        int expected = 3;
+        int expected = 4;
 
         Assert.assertEquals(expected, actual);
     }
-    */
 
 }
 

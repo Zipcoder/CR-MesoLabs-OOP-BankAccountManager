@@ -21,9 +21,6 @@ public class User implements Storeable {
         this.cardNumber = cardNumber;
     }
 
-
-
-
     public Integer getUserID() {
         return userID;
     }
@@ -40,4 +37,11 @@ public class User implements Storeable {
         return result;
     }
 
+    public Integer getCardNumber() {
+        return cardNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

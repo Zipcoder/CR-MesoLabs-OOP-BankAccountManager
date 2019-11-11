@@ -110,14 +110,10 @@ public class UserServices {
     }
 
     public User createNewUser(String firstName, String lastName, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.userID = genUserID();
-        this.cardNumber = genCardNum();
+        int userID = genUserID();
+        int cardNumber = genCardNum();
         User user = new User(firstName, lastName, password, userID, cardNumber);
         saveUserToDB(user);
-        Console.getInput(String.format("Your card number is %d.\nPlease write this down somewhere. You will need it to log in later.\n[press return to continue]", cardNumber));
         return user;
     }
 

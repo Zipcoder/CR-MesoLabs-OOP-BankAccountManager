@@ -24,12 +24,17 @@ public class NewUserMenu implements Menu {
         String firstName = Console.getInput("Enter Your First Name: ");
         String lastName = Console.getInput("Enter Your Last Name: ");
         String password = Console.getInput("Choose Your Password: ");
-        //pass this to buildANewUser
+
+        createNewUser(firstName, lastName, password);
+    }
+
+    public void createNewUser(String firstName, String lastName, String password) {
         if (firstName.equals("") || lastName.equals("") || password.equals("")){
-            Console.getInput("Names and passwords cannot be empty. [press return to retry]");
+            Console.getInput("Names and passwords cannot be empty. [press Enter to retry]");
             displayMenu();
-        }else {
+        } else {
             this.atm.setCurrentUser(userServices.createNewUser(firstName, lastName, password));
+            Console.getInput(String.format("Your card number is %d.\nPlease write this down somewhere. You will need it to log in later.\n[press return to continue]", this.atm.getCurrentUser().getCardNumber()));
         }
     }
 

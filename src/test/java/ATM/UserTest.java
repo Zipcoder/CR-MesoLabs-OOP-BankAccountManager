@@ -16,5 +16,15 @@ public class UserTest {
     public void tearDown() throws Exception {
     }
 
+    @Test
+    public void getCardNumberTest() {
+        User user = new User("J","J","123",12,456);
+        Assert.assertEquals(456,(int) user.getCardNumber());
+    }
 
+    @Test
+    public void getPasswordTest() {
+        User user = new User("J","J","123",12,456);
+        Assert.assertEquals("123",user.getPassword());
+    }
 }

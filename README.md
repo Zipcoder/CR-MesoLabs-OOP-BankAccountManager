@@ -1,4 +1,4 @@
-# Access Control Lab - Bank accounts.Account 
+# Access Control Lab - Bank Account 
 The original lab can be found [here](https://gist.github.com/DavidGinzberg/5ccd3191eed52b04c4c3541fa2b2cbf7)
 ## Notes for Use
 - The DB class defines database objects and a number of attendant methods to delete, search, modify, and add rows in the database

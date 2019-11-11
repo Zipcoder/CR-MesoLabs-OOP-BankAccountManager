@@ -1,7 +1,6 @@
 package ATM.menus;
 
 import ATM.ATM;
-import ATM.Exceptions.ClosedAccountException;
 import ATM.Exceptions.FrozenAccountException;
 import ATM.accounts.Account;
 import ATM.accounts.Checking;
@@ -10,8 +9,6 @@ import ATM.accounts.Savings;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class AccountMenuTest {
 
@@ -22,7 +19,7 @@ public class AccountMenuTest {
 
     @Test
     public void getName() throws FrozenAccountException {
-        Account account = new Checking(123.45, 123, 9675, Account.Status.OPEN);
+        Account account = new Checking(123.45, 123, 9675, Account.Status.OPEN, Checking.Overdraft.OFF);
         AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
         Assert.assertEquals("Account Menu", acctMenu.getName());
 
@@ -30,7 +27,7 @@ public class AccountMenuTest {
 
     @Test
     public void getHeaderTest() throws FrozenAccountException{
-        Account account = new Checking(123.45, 123, 9675, Account.Status.OPEN);
+        Account account = new Checking(123.45, 123, 9675, Account.Status.OPEN, Checking.Overdraft.OFF);
         AccountMenu acctMenu = new AccountMenu(new ATM("users.csv", "accounts.csv", "transactions.csv"), account);
         String actual = acctMenu.getHeader();
         String expected = "Checking Account #9675  Balance: $123.45";

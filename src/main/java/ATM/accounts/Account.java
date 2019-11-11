@@ -1,28 +1,20 @@
 package ATM.accounts;
 
-
 import java.util.Random;
-import ATM.User;
-
-
 
 import ATM.DB;
 import ATM.interfaces.Storeable;
 
-
 abstract public class Account implements Storeable {
 
-    public Double balance;
-    public Integer ownerID;
-    public Integer acctNum;
+    private Double balance;
+    private Integer ownerID;
+    private Integer acctNum;
     public enum Status {
         OPEN, CLOSED, OFAC
     }
     private Status acctStatus;
     Random random = new Random();
-
-
-
 
     public Account(Double balance, Integer ownerID, Integer acctNum, Status acctStatus) {
 
@@ -33,26 +25,6 @@ abstract public class Account implements Storeable {
         this.acctNum = acctNum;
         this.acctStatus = acctStatus;
     }
-
-    public Integer acctNumGenerator () {
-        int acctNum = random.nextInt( 98999 + 1) + 1000;
-        return acctNum;
-    }
-
-
-    //Checks if the account number is already in the database
-//        public Integer checkAcctNumExists (acctNum) {
-//        if (acctNum == accountServices.geta{
-//            acctNumGenerator();
-//        }
-//        else {return acctNum};
-//    }
-
-//    public void generateAccountNum () {
-//        acctNumGenerator();
-//        checkAcctNumExists();
-//    }
-
 
     public Double getBalance(){
         return balance;
@@ -70,6 +42,10 @@ abstract public class Account implements Storeable {
         return acctStatus;
     }
 
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
     public void setAcctStatus(Status acctStatus) {
         this.acctStatus = acctStatus;
     }
@@ -81,11 +57,10 @@ abstract public class Account implements Storeable {
     }
 
     public void withdraw(Double amount){
-        if (this.balance > amount) {
+        if (this.balance >= amount) {
             this.balance -= amount;
         }
     }
-
 
     public Boolean equals(Account account) {
         return DB.serialize(this.toStringArray()).equals(DB.serialize(account.toStringArray()));

@@ -3,6 +3,7 @@ package ATM.interfaces;
 import ATM.accounts.Account;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
+import ATM.accounts.Checking;
 
 public interface Storeable {
 
@@ -19,13 +20,13 @@ public interface Storeable {
                 typeSpecificProperty = ((Savings) this).getInterestRate().toString();
             } else {
                 acctType = "Checking";
-                typeSpecificProperty = "";
+                typeSpecificProperty = ((Checking) this).getOverdraft().toString();
             }
 
             String[] result = new String[] {
-                    ((Account) this).acctNum.toString(),
-                    ((Account) this).ownerID.toString(),
-                    ((Account) this).balance.toString(),
+                    ((Account) this).getAcctNum().toString(),
+                    ((Account) this).getOwnerID().toString(),
+                    ((Account) this).getBalance().toString(),
                     acctType,
                     typeSpecificProperty,
                     String.valueOf(((Account) this).getAcctStatus())

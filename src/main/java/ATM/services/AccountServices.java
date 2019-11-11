@@ -13,7 +13,6 @@ import ATM.accounts.Checking;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
 import ATM.Console;
-import ATM.menus.TransferServicesMenu;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,7 +79,7 @@ public class AccountServices {
     public void createCheckingAccount(double deposit, User currentUser) {
         Account newAccount;
         Transaction transaction;
-        newAccount = new Checking(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), Account.Status.OPEN);
+        newAccount = new Checking(deposit, currentUser.getUserID(), (int) (Math.random() * 1000), Account.Status.OPEN, Checking.Overdraft.OFF);
         this.saveAccountToDB(newAccount);
 
         transaction = new Transaction(deposit, new Date(), newAccount.getAcctNum(), "Opened account", true);
@@ -113,7 +112,7 @@ public class AccountServices {
     // account instance from info (pre-existing account)
     public Account getAccountByInfo(String[] info) {
         if (info[3].equals("Checking")) {
-            return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Account.Status.valueOf(info[5]));
+            return new Checking(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Account.Status.valueOf(info[5]), Checking.Overdraft.valueOf(info[4]));
         } else if (info[3].equals("Savings")) {
             return new Savings(Double.parseDouble(info[2]), Integer.parseInt(info[1]), Integer.parseInt(info[0]), Double.parseDouble(info[4]), Account.Status.valueOf(info[5]));
         } else if (info[3].equals("Investment")) {
@@ -194,16 +193,15 @@ public class AccountServices {
         return true;
     }
 
-
-    public Boolean accountDeposit(Account account,double amount) throws ClosedAccountException,FrozenAccountException {
-        if (account.getAcctStatus()==Account.Status.CLOSED){
+    public Boolean accountDeposit(Account account, double amount) throws ClosedAccountException, FrozenAccountException {
+        if (account.getAcctStatus() == Account.Status.CLOSED) {
             throw new ClosedAccountException();
-        } else if(account.getAcctStatus()==Account.Status.OFAC){
+        } else if (account.getAcctStatus() == Account.Status.OFAC) {
             throw new FrozenAccountException();
         }
         saveAccountToDB(account);
-        account.balance+=amount;
-        Transaction transaction=new Transaction(amount,new Date(),account.getAcctNum(),"ATM deposit",true);
+        account.setBalance(account.getBalance() + amount);
+        Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM deposit", true);
         transactionServices.saveTransactionToDB(transaction);
         saveAccountToDB(account);
         return true;
@@ -211,25 +209,57 @@ public class AccountServices {
     }
 
 
-    public Boolean accountWithdraw(Account account,double amount) throws FrozenAccountException,InsufficientFundsException,ClosedAccountException {
+    public Boolean attemptAccountWithdrawal(Account account, double amount) throws FrozenAccountException, InsufficientFundsException, ClosedAccountException {
         if (account.getAcctStatus() == Account.Status.CLOSED) {
             throw new ClosedAccountException();
         } else if (account.getAcctStatus() == Account.Status.OFAC) {
             throw new FrozenAccountException();
+        } else if (account.getBalance() < amount) {
+            if (!(account instanceof Checking)) { // savings or investment
+                throw new InsufficientFundsException();
+            } else if (((Checking) account).getOverdraft().equals(Checking.Overdraft.ON)) { // overdraft on
+                throw new InsufficientFundsException();
+            } else if (((Checking) account).getOverdraft().equals(Checking.Overdraft.AUTO)) { // autotransfer on
+                return attemptAutoTransfer(account, amount);
+            }
         }
-
-        if (amount <= account.getBalance()) {
-            account.deposit(-1 * amount);
-            saveAccountToDB(account);
-            Transaction transaction = new Transaction(amount, new Date(), account.getAcctNum(), "ATM withdrawal", false);
-            transactionServices.saveTransactionToDB(transaction);
-            return true;
-        } else {
-            throw new InsufficientFundsException();
-        }
-
+        performWithdrawal(account, amount);
+        return true;
     }
 
+    public Boolean attemptAutoTransfer(Account account, double amount) throws InsufficientFundsException {
+        User user = this.atm.getCurrentUser();
+        ArrayList<Account> userAccounts = getAccountsForUser(user);
+        double amountNeeded = amount - account.getBalance();
+
+        for (Account acct : userAccounts) { // find an account that we can transfer from
+            if (!acct.getAcctNum().equals(account.getAcctNum())
+                    && acct.getAcctStatus().equals(Account.Status.OPEN)
+                    && acct.getBalance() > amountNeeded) {
+                performAutoTransfer(account, amountNeeded, acct);
+                return true;
+            }
+        }
+        throw new InsufficientFundsException();
+    }
+
+    public void performAutoTransfer(Account account, double amountNeeded, Account acct) {
+        account.withdraw(account.getBalance()); // remove money from first account
+        transactionServices.saveTransactionToDB(new Transaction(-1 * account.getBalance(),new Date(), account.getAcctNum(), "ATM withdrawal", false));
+        saveAccountToDB(account);
+        acct.withdraw(amountNeeded); // remove the rest from the other account
+        transactionServices.saveTransactionToDB(new Transaction(-1 * amountNeeded,new Date(), acct.getAcctNum(), "ATM overdraft debit", false));
+        saveAccountToDB(acct);
+    }
+
+    public void performWithdrawal(Account account, double amount) {
+        account.deposit(-1 * amount);
+        saveAccountToDB(account);
+        //account.setBalance(account.getBalance() + amount);
+        Transaction transaction = new Transaction(-1 * amount, new Date(), account.getAcctNum(), "ATM deposit", false);
+        transactionServices.saveTransactionToDB(transaction);
+        saveAccountToDB(account);
+    }
 
 
     public void applyInterest() {
@@ -266,16 +296,16 @@ public class AccountServices {
     public void setNewInterestRate(Account account, double newRate) {
         ((Savings) account).setInterestRate(newRate);
         saveAccountToDB(account);
-        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",account.getBalance())), new Date(), account.getAcctNum(), String.format("Interest rate changed to 0%.2f",newRate), true);
+        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f", account.getBalance())), new Date(), account.getAcctNum(), String.format("Interest rate changed to 0%.2f", newRate), true);
         transactionServices.saveTransactionToDB(transaction);
     }
 
 
     public void calcInterest(Account account) {
-        Double interest = ((Savings) account).getInterestRate() * account.getBalance()/100;
+        Double interest = ((Savings) account).getInterestRate() * account.getBalance() / 100;
         account.deposit(interest);
         saveAccountToDB(account);
-        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",interest)), new Date(), account.getAcctNum(), "Interest earned", true);
+        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f", interest)), new Date(), account.getAcctNum(), "Interest earned", true);
         transactionServices.saveTransactionToDB(transaction);
     }
 
@@ -290,11 +320,11 @@ public class AccountServices {
 
     public void calcReturns(Account account) {
         Double multiplier = ((Investment) account).getRisk() * (2 * Math.random() - .8);
-        Double earnings =  Math.round((multiplier * account.getBalance()*100d))/100d;
+        Double earnings = Math.round((multiplier * account.getBalance() * 100d)) / 100d;
         account.deposit(earnings);
         saveAccountToDB(account);
         Boolean isCredit = (earnings > 0);
-        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f",earnings)), new Date(), account.getAcctNum(), "Investment returns", isCredit);
+        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f", earnings)), new Date(), account.getAcctNum(), "Investment returns", isCredit);
         transactionServices.saveTransactionToDB(transaction);
     }
 }

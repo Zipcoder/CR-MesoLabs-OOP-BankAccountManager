@@ -1,8 +1,5 @@
 package ATM.accounts;
 
-import ATM.accounts.Account;
-import ATM.accounts.Checking;
-import ATM.accounts.Investment;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,7 +9,7 @@ public class AccountTest {
     @Test
     public void getBalance() {
         // Given
-        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"));
+        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         Double expected = 0.0;
 
 
@@ -24,7 +21,7 @@ public class AccountTest {
     @Test
     public void deposit_test() {
         // Given
-        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"));
+        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         Double expected = 40.0;
 
         //When
@@ -39,7 +36,7 @@ public class AccountTest {
     @Test
     public void withdraw_test() {
         // Given
-        Account account = new Checking(80.0, 3,3, Account.Status.valueOf("OPEN"));
+        Account account = new Checking(80.0, 3,3, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         Double expected = 40.0;
 
         //When
@@ -58,7 +55,7 @@ public class AccountTest {
     @Test
     public void getOwnerID() {
         // Given
-        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"));
+        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         Integer expected = 3;
 
 
@@ -70,7 +67,7 @@ public class AccountTest {
     @Test
     public void getAcctNum() {
         // Given
-        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"));
+        Account account = new Checking(0.0, 3,3, Account.Status.valueOf("OPEN"), Checking.Overdraft.OFF);
         Integer expected = 3;
 
 

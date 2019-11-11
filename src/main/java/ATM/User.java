@@ -24,15 +24,9 @@ public class User implements Storeable {
 
 
 
-
-    public String getPassword() {
-        return password;
-    }
-
     public Integer getUserID() {
         return userID;
     }
-
 
     @Override
     public String[] toStringArray() {

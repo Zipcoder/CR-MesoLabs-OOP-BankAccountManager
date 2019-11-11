@@ -20,11 +20,6 @@ public class Transaction implements Storeable {
         this.isCredit = isCredit;
     }
 
-    public String print() {
-        return amount + " " + description + timeStamp;
-    }
-
-
     @Override
     public String[] toStringArray() {
         String type;

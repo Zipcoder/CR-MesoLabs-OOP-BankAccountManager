@@ -87,9 +87,10 @@ public class UserServices {
         return userDB.length();
     }
 
+    // no test - needs input
     public User authenticate() {
         //Read ATM.User's card
-        Console.println("Card Number:");
+        Console.print("Card Number: ");
         int cardNum = Console.getInteger();
 
         // find user in ATM.DB

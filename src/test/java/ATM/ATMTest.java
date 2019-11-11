@@ -100,16 +100,6 @@ public class ATMTest {
     }
 
 
-
-
-//    @Test
-//    public void transactionHistoryShowTest() {
-//        DB transactionDB = new DB("transactions.csv");
-//
-//
-//        atm.showTransactions();
-//    }
-
     // convenience methods for dev environment to clear the DBs - only called from the IDE manually
 //    @Test
 //    public void clearUserDB() {

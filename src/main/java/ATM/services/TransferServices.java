@@ -42,8 +42,8 @@ public class TransferServices {
 
         checkTransferExceptions(sourceAccount, targetAccount, amountToDeposit);
 
-        targetAccount.balance = targetAccount.balance + amountToDeposit;
-        sourceAccount.balance = sourceAccount.balance - amountToDeposit;
+        targetAccount.setBalance(targetAccount.getBalance() + amountToDeposit);
+        sourceAccount.setBalance(sourceAccount.getBalance() - amountToDeposit);
         accountServices.saveAccountToDB(targetAccount);
         accountServices.saveAccountToDB(sourceAccount);
 
@@ -54,7 +54,7 @@ public class TransferServices {
     }
 
     public void checkTransferExceptions(Account sourceAccount, Account targetAccount, double amountToDeposit) throws InsufficientFundsException, ClosedAccountException, FrozenAccountException {
-        if (amountToDeposit > sourceAccount.balance) {
+        if (amountToDeposit > sourceAccount.getBalance()) {
             throw new InsufficientFundsException();
         }
         else if (targetAccount.getAcctStatus() == Account.Status.OFAC) {

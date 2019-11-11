@@ -73,7 +73,7 @@ public class DBTest {
     @Test
     public void fileNametoPathTest() {
         String input = "610393892.csv";
-        String expected = "/Users/josh/Desktop/Projects/CR-MesoLabs-OOP-BankAccountManager/data/610393892.csv";
+        String expected = System.getProperty("user.dir")+"/data/610393892.csv";
         Assert.assertEquals(expected, DB.fileNameToPath(input, System.getProperty("user.dir")));
     }
 

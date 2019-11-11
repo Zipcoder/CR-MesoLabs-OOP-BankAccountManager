@@ -257,7 +257,7 @@ public class AccountServices {
         account.deposit(-1 * amount);
         saveAccountToDB(account);
         //account.setBalance(account.getBalance() + amount);
-        Transaction transaction = new Transaction(-1 * amount, new Date(), account.getAcctNum(), "ATM deposit", false);
+        Transaction transaction = new Transaction(-1 * amount, new Date(), account.getAcctNum(), "ATM withdrawal", false);
         transactionServices.saveTransactionToDB(transaction);
         saveAccountToDB(account);
     }

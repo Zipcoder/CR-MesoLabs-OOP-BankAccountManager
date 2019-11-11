@@ -43,11 +43,6 @@ public class TransactionServices {
         }
 
         ArrayList<Integer> rows = new ArrayList<>();
-//        int [] recordRowNums = null;
-//        for (int accountNum : accountNums) {
-//            recordRowNums = this.transactionDB.findPartialRowMultiple(new String[]{Integer.toString(accountNum)}, new int[]{1});
-//
-//        }
         ArrayList<String[]> transData = transactionDB.readAllRows();
 
         for (int i = 0; i < transData.size(); i++) {

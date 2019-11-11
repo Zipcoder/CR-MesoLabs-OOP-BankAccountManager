@@ -250,5 +250,37 @@ public class UserServicesTest {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
+    public void nameChangeTest1() {
+        User user1 = new User("Jim", "Brown", "goolybib", 12, 12343);
+        userServices.saveUserToDB(user1);
+        boolean actual = userServices.changeName(user1, "", "Halpert");
+        Assert.assertFalse(actual);
+    }
+
+    @Test
+    public void nameChangeTest2() {
+        User user1 = new User("Jim", "Brown", "goolybib", 12, 12343);
+        userServices.saveUserToDB(user1);
+        boolean actual = userServices.changeName(user1, "Jim", "");
+        Assert.assertFalse(actual);
+    }
+
+    @Test
+    public void nameChangeTest3() {
+        User user1 = new User("Jim", "Brown", "goolybib", 12, 12343);
+        userServices.saveUserToDB(user1);
+        boolean actual = userServices.changeName(user1, "Jim", "Halpert");
+        Assert.assertTrue(actual);
+    }
+
+    @Test
+    public void nameChangeTest4() {
+        User user1 = new User("Jim", "Brown", "goolybib", 12, 12343);
+        userServices.saveUserToDB(user1);
+        boolean actual = userServices.changeName(user1, "Jim", "Halpert");
+        String[] info = userServices.getUserInfoByID(12);
+        Assert.assertEquals("Halpert",info[1]);
+    }
 }
 

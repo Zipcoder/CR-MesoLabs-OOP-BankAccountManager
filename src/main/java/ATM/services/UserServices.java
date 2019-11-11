@@ -111,4 +111,8 @@ public class UserServices {
         return Integer.parseInt(numString);
     }
 
+    public boolean changeName (User user, String firstName, String lastName) {
+        return false;
+    }
+
 }

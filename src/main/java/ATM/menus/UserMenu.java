@@ -40,7 +40,7 @@ public class UserMenu implements Menu {
                 }
                 break;
             case 2:
-                new NewUserMenu(this.atm);
+                new NewUserMenu(this.atm).displayMenu();
                 break;
         }
     }

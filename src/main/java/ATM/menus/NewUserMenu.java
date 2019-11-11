@@ -25,10 +25,12 @@ public class NewUserMenu implements Menu {
         String lastName = Console.getInput("Enter Your Last Name: ");
         String password = Console.getInput("Choose Your Password: ");
         //pass this to buildANewUser
-        if (firstName == "" || lastName == "" || password == ""){
+        if (firstName.equals("") || lastName.equals("") || password.equals("")){
             Console.getInput("Names and passwords cannot be empty. [press return to retry]");
+            displayMenu();
+        }else {
+            this.atm.setCurrentUser(userServices.createNewUser(firstName, lastName, password));
         }
-        this.atm.setCurrentUser(userServices.createNewUser(firstName,lastName,password));
     }
 
     public void handleChoice(int choice) {

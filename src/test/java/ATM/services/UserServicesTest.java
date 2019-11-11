@@ -207,12 +207,31 @@ public class UserServicesTest {
         System.out.println("Testing Card Number Gen");
 
         for (int i = 0; i < 10; i++) {
-            Integer cardNum = UserServices.genCardNum();
+            Integer cardNum = userServices.genCardNum();
 
             System.out.println(cardNum);
             Assert.assertEquals(8,  cardNum.toString().length());
         }
     }
 
+    @Test
+    public void genUserIDTest(){
+        int currentHighestUserID = userServices.getMaxUserNumber();
+        Integer expectedUserID = currentHighestUserID +1;
+        Assert.assertEquals(expectedUserID,userServices.genUserID());
     }
+
+    @Test
+    public void createNewUserTest(){
+        String testFirstName = "John";
+        String testLastName = "Doe";
+        String testPassword = "password";
+        Integer testUserID = 9999;
+        Integer testUserCardNum = 99999999;
+        userServices.createNewUser(testFirstName, testLastName, testPassword);
+
+        Assert.assertEquals("password", this.user.getPassword());
+    }
+
+}
 

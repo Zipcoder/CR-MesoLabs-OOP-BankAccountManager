@@ -111,4 +111,15 @@ public class UserServices {
         return Integer.parseInt(numString);
     }
 
+    public boolean changeName (User user, String firstName, String lastName) {
+        if (!firstName.equals("") && !lastName.equals("")) {
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            saveUserToDB(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

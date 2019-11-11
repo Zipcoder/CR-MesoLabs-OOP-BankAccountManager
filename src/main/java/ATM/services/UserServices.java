@@ -112,7 +112,11 @@ public class UserServices {
     }
 
     public boolean changeName (User user, String firstName, String lastName) {
-        return false;
+        if (!firstName.equals("") && !lastName.equals("")) {
+            user.
+            return false;
+        }
+        else
     }
 
 }

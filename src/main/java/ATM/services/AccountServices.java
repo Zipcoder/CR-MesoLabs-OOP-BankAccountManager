@@ -36,6 +36,7 @@ public class AccountServices {
         this.transactionServices = this.atm.getTransactionServices();
     }
 
+    // no test - needs input (underlying methods tested)
     public void addAccount(double deposit, String acctType, User currentUser) {
 
         switch (acctType) {
@@ -328,10 +329,3 @@ public class AccountServices {
         transactionServices.saveTransactionToDB(transaction);
     }
 }
-
-
-
-
-
-
-

@@ -20,8 +20,6 @@ abstract public class Account implements Storeable {
 
         this.balance = balance;
         this.ownerID = ownerID;
-        // TODO: make account number here, via something better than wild-assed guess
-        //generateAccountNum();
         this.acctNum = acctNum;
         this.acctStatus = acctStatus;
     }

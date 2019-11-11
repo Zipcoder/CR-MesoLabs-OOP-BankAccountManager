@@ -301,7 +301,6 @@ public class AccountServices {
         transactionServices.saveTransactionToDB(transaction);
     }
 
-
     public void calcInterest(Account account) {
         Double interest = ((Savings) account).getInterestRate() * account.getBalance() / 100;
         account.deposit(interest);

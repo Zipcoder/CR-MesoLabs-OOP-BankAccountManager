@@ -10,6 +10,7 @@ import ATM.accounts.Account;
 import ATM.accounts.Checking;
 import ATM.accounts.Investment;
 import ATM.accounts.Savings;
+import ATM.Transaction;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -704,6 +705,56 @@ public class AccountServicesTest {
     }
 
     @Test
+    public void createCheckingTest() {
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        atm.setCurrentUser(user1);
+
+        accountServices.createCheckingAccount(1000.00, user1);
+
+        ArrayList<Account> accounts = accountServices.getAccountsForUser(user1);
+        Assert.assertEquals(1000.0, accounts.get(0).getBalance(), .01);
+        Assert.assertTrue(accounts.get(0) instanceof Checking);
+
+        ArrayList<Transaction> trans = atm.getTransactionServices().getTransactionsForAccount(accounts.get(0));
+        Assert.assertEquals(1,trans.size());
+    }
+
+    @Test
+    public void createSavingsTest() {
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        atm.setCurrentUser(user1);
+
+        accountServices.createSavingsAccount(1000.00, user1);
+
+        ArrayList<Account> accounts = accountServices.getAccountsForUser(user1);
+        Assert.assertEquals(1000.0, accounts.get(0).getBalance(), .01);
+        Assert.assertEquals(.02, ((Savings) accounts.get(0)).getInterestRate(), .01);
+        Assert.assertTrue(accounts.get(0) instanceof Savings);
+
+        ArrayList<Transaction> trans = atm.getTransactionServices().getTransactionsForAccount(accounts.get(0));
+        Assert.assertEquals(1,trans.size());
+    }
+
+    @Test
+    public void createInvestmentTest() {
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        atm.setCurrentUser(user1);
+
+        accountServices.createInvestmentAccount(1000.00, user1,4);
+
+        ArrayList<Account> accounts = accountServices.getAccountsForUser(user1);
+        Assert.assertEquals(1000.0, accounts.get(0).getBalance(), .01);
+        Assert.assertEquals(.04, ((Investment)accounts.get(0)).getRisk(), .01);
+        Assert.assertTrue(accounts.get(0) instanceof Investment);
+
+        ArrayList<Transaction> trans = atm.getTransactionServices().getTransactionsForAccount(accounts.get(0));
+        Assert.assertEquals(1,trans.size());
+    }
+
+    @Test
     public void investmentReturnsTest() {
 
         User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
@@ -744,6 +795,8 @@ public class AccountServicesTest {
             accts.get(4).setBalance(2000.0);
             accountServices.saveAccountToDB(accts.get(4));
         }
+
+
     }
 }
 

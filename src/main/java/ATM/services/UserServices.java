@@ -11,32 +11,6 @@ public class UserServices {
 
     private DB userDB;
     private ATM atm;
-    private String firstName;
-    private String lastName;
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public Integer getUserID() {
-        return userID;
-    }
-
-    public Integer getCardNumber() {
-        return cardNumber;
-    }
-
-    private String password;
-    private Integer userID;
-    private Integer cardNumber;
 
     public UserServices(DB userDB, ATM atm) {
         this.userDB = userDB;

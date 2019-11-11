@@ -539,7 +539,7 @@ public class AccountServicesTest {
         accountServices.saveAccountToDB(account2);
         Double actual = account2.getInterestRate();
         Double expected = accountServices.getNewRate(random, account2);
-        Assert.assertEquals(actual, expected, .1);
+        Assert.assertEquals(expected, actual, .1);
     }
 
     @Test
@@ -550,7 +550,7 @@ public class AccountServicesTest {
         account2.setInterestRate(0.03);
         Double actual = account2.getInterestRate();
         Double expected = 0.03;
-        Assert.assertEquals(actual, expected, 0);
+        Assert.assertEquals(expected,actual, 0);
     }
 
     @Test
@@ -561,7 +561,128 @@ public class AccountServicesTest {
         accountServices.calcInterest(account2);
         Double actual = account2.getBalance();
         Double expected = 200.02;
-        Assert.assertEquals(actual, expected, 0);
+        Assert.assertEquals(expected, actual,  0);
+    }
+
+    @Test
+    public void setInterestRateTest() {
+        Savings account2 = new Savings(200.00, 12, 749, 0.01, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account2);
+
+        accountServices.setNewInterestRate(account2, .05);
+        double expected = .05;
+        double actual = Double.parseDouble(accountServices.getAccountInfoByID(749)[4]);
+        Assert.assertEquals(expected,actual, .001);
+    }
+
+    @Test
+    public void setInterestRateTest2() {
+        Savings account2 = new Savings(200.00, 12, 749, 0.01, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account2);
+
+        accountServices.setNewInterestRate(account2, .05);
+        atm.getTransactionServices().getTransactionsForAccount(account2);
+        String expected = "Interest rate changed to 00.05";
+        String actual = atm.getTransactionServices().getTransactionInfoByRow(0)[4];
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void applyInterestTest() {
+
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        atm.setCurrentUser(user1);
+
+        Account account1 = new Checking(1500.00, 98, 1232123, Account.Status.OPEN, Checking.Overdraft.OFF);
+        accountServices.saveAccountToDB(account1);
+        Account account2 = new Savings(10000.00, 98, 749, 0.01, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account2);
+        Account account3 = new Savings(234023.23, 4, 48, 0.06, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account3);
+        Account account4 = new Savings(1000.00, 98, 5423, 0.05,Account.Status.OPEN);
+        accountServices.saveAccountToDB(account4);
+        Account account5 = new Savings(2000.00, 98, 543, 0.05,Account.Status.CLOSED);
+        accountServices.saveAccountToDB(account5);
+        Account account6 = new Savings(2000.00, 98, 53, 0.05,Account.Status.OFAC);
+        accountServices.saveAccountToDB(account6);
+
+        accountServices.applyInterest();
+
+        ArrayList<Account> accts = accountServices.getAccountsForUser(user1);
+        double expected = 10001.00;
+        double actual = accts.get(1).getBalance();
+        Assert.assertEquals(expected, actual, .01);
+
+        expected = 1000.5;
+        actual = accts.get(2).getBalance();
+        Assert.assertEquals(expected, actual, .01);
+
+        expected = 1500.0;
+        actual = accts.get(0).getBalance();
+        Assert.assertEquals(expected, actual, .01);
+
+        expected = 2000.0;
+        actual = accts.get(3).getBalance();
+        Assert.assertEquals(expected, actual, .01);
+
+        expected = 2000.0;
+        actual = accts.get(4).getBalance();
+        Assert.assertEquals(expected, actual, .01);
+    }
+
+    @Test
+    public void interestRateChangeTest() {
+
+        User user1 = new User("Jim", "Brown", "goolybib", 98, 12343);
+        userServices.saveUserToDB(user1);
+        atm.setCurrentUser(user1);
+
+        Account account1 = new Checking(1500.00, 98, 1232123, Account.Status.OPEN, Checking.Overdraft.OFF);
+        accountServices.saveAccountToDB(account1);
+        Account account2 = new Savings(10000.00, 98, 749, 0.01, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account2);
+        Account account3 = new Savings(234023.23, 4, 48, 0.06, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account3);
+        Account account4 = new Savings(1000.00, 98, 5423, 0.05,Account.Status.OPEN);
+        accountServices.saveAccountToDB(account4);
+        Account account5 = new Savings(2000.00, 98, 543, 0.05,Account.Status.CLOSED);
+        accountServices.saveAccountToDB(account5);
+        Account account6 = new Savings(2000.00, 98, 53, 0.05,Account.Status.OFAC);
+        accountServices.saveAccountToDB(account6);
+
+        double expected;
+        double actual;
+        for (int i = 0; i < 100; i++) {
+            accountServices.interestRateChange();
+
+            ArrayList<Account> accts = accountServices.getAccountsForUser(user1);
+            expected = 0.01;
+            actual = ((Savings) accts.get(1)).getInterestRate();
+            Assert.assertTrue(actual >= 0.0);
+            Assert.assertTrue(actual <= 0.07);
+            ((Savings) accts.get(1)).setInterestRate(.01);
+            accountServices.saveAccountToDB(accts.get(1));
+
+            expected = .05;
+            actual = ((Savings) accts.get(2)).getInterestRate();
+            Assert.assertTrue(actual >= 0.0);
+            Assert.assertTrue(actual <= 0.11);
+            ((Savings) accts.get(2)).setInterestRate(.05);
+            accountServices.saveAccountToDB(accts.get(2));
+
+            expected = .05;
+            actual = ((Savings) accts.get(3)).getInterestRate();
+            Assert.assertEquals(expected, actual, .01);
+
+            expected = .05;
+            actual = ((Savings) accts.get(4)).getInterestRate();
+            Assert.assertEquals(expected, actual, .01);
+
+            expected = 2000.0;
+            actual = accts.get(4).getBalance();
+            Assert.assertEquals(expected, actual, .01);
+        }
     }
 }
 

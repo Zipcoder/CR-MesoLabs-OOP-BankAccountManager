@@ -324,8 +324,6 @@ public class AccountServices {
         Double earnings = Math.round((multiplier * account.getBalance() * 100d)) / 100d;
         account.deposit(earnings);
         saveAccountToDB(account);
-        Boolean isCredit = (earnings > 0);
-        Transaction transaction = new Transaction(Double.parseDouble(String.format("%.2f", earnings)), new Date(), account.getAcctNum(), "Investment returns", isCredit);
-        transactionServices.saveTransactionToDB(transaction);
+        transactionServices.saveTransactionToDB(new Transaction(Double.parseDouble(String.format("%.2f", earnings)), new Date(), account.getAcctNum(), "Investment returns", earnings > 0));
     }
 }

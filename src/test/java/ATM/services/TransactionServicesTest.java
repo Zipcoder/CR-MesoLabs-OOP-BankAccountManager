@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class TransactionServicesTest {
@@ -195,14 +196,14 @@ public class TransactionServicesTest {
     }
 
     @Test
-    public void getTransactionInfoByRowTest() {
+    public void getTransactionByUserTest() {
         transactionsServices.clearTransactionsDB();
         userServices.clearUserDB();
         Assert.assertEquals((int) 0, (int) transactionsServices.getTransactionDB().length());
 
-        User user1 = new User("Jim", "Brown", "goolybib", 12, 12343);
+        User user1 = new User("Jim", "Brown", "goolybib", 35, 12343);
         userServices.saveUserToDB(user1);
-        User user2 = new User("Ji123m", "Bro23wn", "gool321ybib", 35, 1234313);
+        User user2 = new User("Ji123m", "Bro23wn", "gool321ybib", 12, 1234313);
         userServices.saveUserToDB(user2);
         User user3 = new User("Jane", "Himne", "gasdsdool321ybib", 41, 313);
         userServices.saveUserToDB(user3);
@@ -213,22 +214,66 @@ public class TransactionServicesTest {
         accountServices.saveAccountToDB(account2);
         Account account3 = new Investment(234023.23, 41, 41, 0.06, Account.Status.OPEN);
         accountServices.saveAccountToDB(account3);
+        Account account4 = new Savings(10000.00, 12, 750, 0.01, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account4);
 
         Transaction trans1 = new Transaction(123.42, new Date(2014, 1, 6, 11, 23, 40), 123123, "Opened account", true);
         transactionsServices.saveTransactionToDB(trans1);
-        Transaction trans2 = new Transaction(-23.57, new Date(2015, 2, 7, 10, 23, 3), 12, "Withdrawal", false);
+        Transaction trans2 = new Transaction(-23.57, new Date(2015, 2, 7, 10, 23, 3), 749, "Withdrawal", false);
         transactionsServices.saveTransactionToDB(trans2);
         Transaction trans3 = new Transaction(200.42, new Date(2014, 1, 8, 5, 20, 40), 35, "Opened account", true);
         transactionsServices.saveTransactionToDB(trans3);
-        Transaction trans4 = new Transaction(-40.57, new Date(2015, 2, 9, 6, 39, 3), 41, "Withdrawal", false);
+        Transaction trans4 = new Transaction(-40.57, new Date(2015, 2, 9, 6, 39, 3), 750, "Withdrawal", false);
         transactionsServices.saveTransactionToDB(trans4);
-        Transaction trans5 = new Transaction(-30.57, new Date(2015, 2, 9, 7, 40, 13), 41, "Withdrawal", false);
+        Transaction trans5 = new Transaction(-30.57, new Date(2015, 2, 9, 7, 40, 13), 749, "Withdrawal", false);
         transactionsServices.saveTransactionToDB(trans5);
 
-        String[] expected = transactionsServices.getTransactionInfoByRow(0);
-        String[] actual = new String[]{"credit", "123123", "123.42", "Fri Feb 06 11:23:40 EST 3914", "Opened account"};
+        ArrayList<Transaction> expected = new ArrayList<Transaction>(Arrays.asList(trans2,trans4,trans5));
+        ArrayList<Transaction> actual = transactionsServices.getTransactionsForUser(user2);
 
-        Assert.assertArrayEquals(expected, actual);
+        for (int i = 0; i < expected.size(); i++) {
+            Assert.assertArrayEquals(expected.get(i).toStringArray(), actual.get(i).toStringArray());
+        }
+    }
 
+    @Test
+    public void getTransactionForAccountTest() {
+        transactionsServices.clearTransactionsDB();
+        userServices.clearUserDB();
+        Assert.assertEquals((int) 0, (int) transactionsServices.getTransactionDB().length());
+
+        User user1 = new User("Jim", "Brown", "goolybib", 35, 12343);
+        userServices.saveUserToDB(user1);
+        User user2 = new User("Ji123m", "Bro23wn", "gool321ybib", 12, 1234313);
+        userServices.saveUserToDB(user2);
+        User user3 = new User("Jane", "Himne", "gasdsdool321ybib", 41, 313);
+        userServices.saveUserToDB(user3);
+
+        Account account1 = new Checking(1532.34, 23, 1232123, Account.Status.OPEN, Checking.Overdraft.OFF);
+        accountServices.saveAccountToDB(account1);
+        Account account2 = new Savings(10000.00, 12, 749, 0.01, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account2);
+        Account account3 = new Investment(234023.23, 41, 41, 0.06, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account3);
+        Account account4 = new Savings(10000.00, 12, 750, 0.01, Account.Status.OPEN);
+        accountServices.saveAccountToDB(account4);
+
+        Transaction trans1 = new Transaction(123.42, new Date(2014, 1, 6, 11, 23, 40), 123123, "Opened account", true);
+        transactionsServices.saveTransactionToDB(trans1);
+        Transaction trans2 = new Transaction(-23.57, new Date(2015, 2, 7, 10, 23, 3), 749, "Withdrawal", false);
+        transactionsServices.saveTransactionToDB(trans2);
+        Transaction trans3 = new Transaction(200.42, new Date(2014, 1, 8, 5, 20, 40), 35, "Opened account", true);
+        transactionsServices.saveTransactionToDB(trans3);
+        Transaction trans4 = new Transaction(-40.57, new Date(2015, 2, 9, 6, 39, 3), 750, "Withdrawal", false);
+        transactionsServices.saveTransactionToDB(trans4);
+        Transaction trans5 = new Transaction(-30.57, new Date(2015, 2, 9, 7, 40, 13), 749, "Withdrawal", false);
+        transactionsServices.saveTransactionToDB(trans5);
+
+        ArrayList<Transaction> expected = new ArrayList<Transaction>(Arrays.asList(trans2,trans5));
+        ArrayList<Transaction> actual = transactionsServices.getTransactionsForAccount(account2);
+
+        for (int i = 0; i < expected.size(); i++) {
+            Assert.assertArrayEquals(expected.get(i).toStringArray(), actual.get(i).toStringArray());
+        }
     }
 }
